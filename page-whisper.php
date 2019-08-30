@@ -1,0 +1,128 @@
+<?php
+/**
+ * 轻语
+ *
+ * @package custom
+ */
+if (!defined('__TYPECHO_ROOT_DIR__')) exit;
+$this->need('header.php');
+
+function threadedComments($comments, $options) {
+	$commentClass = '';
+	if ($comments->authorId) {
+		if ($comments->authorId == $comments->ownerId) {
+			$commentClass .= ' comment-by-author';
+		} else {
+			$commentClass .= ' comment-by-user';
+		}
+	}
+?>
+<li id="<?php $comments->theId(); ?>" class="comment-body<?php
+	if ($comments->levels > 0) {
+		echo ' comment-child';
+	} else {
+		echo ' comment-parent';
+	}
+echo $commentClass;
+?>">
+<?php if ($comments->levels == 0) { ?>
+<div class="comment-author">
+<?php $comments->gravatar('32'); ?>
+<cite class="mdui-typo" style="line-height:32px"><?php CommentAuthor($comments); ?></cite>
+<?php if ($comments->status == 'waiting') { ?>
+<em class="comment-awaiting-moderation">您的评论正等待审核！</em>
+<?php } ?>
+</div>
+<div class="comment-content mdui-typo" style="margin-top:14px;">
+<?php echo strip_tags(hrefOpen(Markdown::convert($comments->text)), '<p><br><strong><a><img><pre><code>' . Helper::options()->commentsHTMLTagAllowed); ?>
+</div>
+<div class="comment-meta comment-reply">
+<time><?php $comments->dateWord(); ?></time>
+<?php if (Typecho_Widget::widget('Widget_Archive')->allow('comment') && Helper::options()->commentsThreaded) { ?>
+<span><?php $comments->reply('评论'); ?></span>
+<?php } ?>
+</div>
+<?php } else { ?>
+<div class="comment-author comment-content">
+<?php $comments->gravatar('16'); ?>
+<cite class="mdui-typo" style="line-height:20px"><?php CommentAuthor($comments); ?></cite>
+<span><?php echo strip_tags($comments->text, '<br>'); ?></span>
+<?php if ($comments->status == 'waiting') { ?>
+<em>您的评论正等待审核！</em>
+<?php } ?>
+</div>
+<?php } ?>
+<?php if ($comments->children) { ?>
+<div class="comment-children">
+<?php $comments->threadedComments($options); ?>
+</div>
+<?php } ?>
+</li>
+<?php } ?>
+<div id="main">
+<?php if (!empty($this->options->Breadcrumbs) && in_array('Pageshow', $this->options->Breadcrumbs)): ?>
+<div class="breadcrumbs">
+<a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->title() ?>
+</div>
+<?php endif; ?>
+<article class="post">
+<h1 class="post-title"><a href="<?php $this->permalink() ?>"><?php $this->title() ?></a></h1>
+<div class="post-content mdui-typo">
+<?php $this->content(); ?>
+</div>
+<?php
+// linceses
+$linceses = $this->fields->linceses;
+if ($linceses && $linceses != 'NONE') {
+    $linceseslist = array(
+        'BY' => '署名 4.0 国际 (CC BY 4.0)',
+        'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
+        'BY-ND' => '署名-禁止演绎 4.0 国际 (CC BY-ND 4.0)',
+        'BY-NC' => '署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)',
+        'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
+        'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)');
+    $lincesestext = $linceseslist[$linceses];
+?>
+<div class="copyright">本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/<?=strtolower($linceses)?>/4.0/deed.zh" target="_blank" class="external"><?=$lincesestext?></a> 许可协议进行许可。
+</div>
+<?php
+} else {
+?>
+<div class="copyright">本篇文章未指定许可协议。
+</div>
+<?php }; ?>
+</article>
+<div id="comments" class="whisper<?php if($this->user->pass('editor', true)): ?> permission<?php endif; ?>">
+<?php $this->comments()->to($comments); ?>
+<?php if ($comments->have()): ?>
+<?php $comments->listComments(); ?>
+<?php $comments->pageNav('上一页', '下一页', 0, '..'); ?>
+<?php endif; ?>
+<?php if($this->allow('comment')): ?>
+<div id="<?php $this->respondId(); ?>" class="respond">
+<div class="cancel-comment-reply">
+<?php $comments->cancelReply('取消评论'); ?>
+</div>
+<h3 id="response">发表<?php echo $this->user->pass('editor', true) ? '轻语' : '评论' ?></h3>
+<form method="post"<?php if($this->user->pass('editor', true)): ?> action="<?php $this->commentUrl() ?>"<?php endif; ?> id="comment-form"<?php if(!$this->user->hasLogin()): ?> class="comment-form clearfix"<?php endif; ?>>
+<p <?php if(!$this->user->hasLogin()): ?>class="textarea"<?php endif; ?>>
+<textarea name="text" id="textarea" placeholder="说点什么..." required ><?php $this->remember('text'); ?></textarea>
+</p>
+<p <?php if(!$this->user->hasLogin()): ?>class="textbutton"<?php endif; ?>>
+<?php if(!$this->user->hasLogin()): ?>
+<input type="text" name="author" id="author" class="text" placeholder="称呼 *" value="<?php $this->remember('author'); ?>" required />
+<input type="email" name="mail" id="mail" class="text" placeholder="邮箱<?php if ($this->options->commentsRequireMail): ?> *<?php endif; ?>" value="<?php $this->remember('mail'); ?>"<?php if ($this->options->commentsRequireMail): ?> required<?php endif; ?> />
+<input type="url" name="url" id="url" class="text" placeholder="http://<?php if ($this->options->commentsRequireURL): ?> *<?php endif; ?>" value="<?php $this->remember('url'); ?>"<?php if ($this->options->commentsRequireURL): ?> required<?php endif; ?> />
+<?php endif; ?>
+<button type="submit" class="submit mdui-btn mdui-btn-raised mdui-btn-dense mdui-color-theme-accent mdui-ripple">提交评论</button>
+</p>
+</form>
+</div>
+<?php if ($this->options->commentsThreaded): ?>
+<script>(function(){window.TypechoComment={dom:function(id){return document.getElementById(id)},create:function(tag,attr){var el=document.createElement(tag);for(var key in attr){el.setAttribute(key,attr[key])}return el},reply:function(cid,coid){var comment=this.dom(cid),parent=comment.parentNode,response=this.dom('<?php $this->respondId(); ?>'),input=this.dom('comment-parent'),form='form'==response.tagName?response:response.getElementsByTagName('form')[0],textarea=response.getElementsByTagName('textarea')[0];if(null==input){input=this.create('input',{'type':'hidden','name':'parent','id':'comment-parent'});form.appendChild(input)}input.setAttribute('value',coid);if(null==this.dom('comment-form-place-holder')){var holder=this.create('div',{'id':'comment-form-place-holder'});response.parentNode.insertBefore(holder,response)}form.setAttribute('action', '<?php $this->commentUrl() ?>');<?php if($this->user->pass('editor', true)): ?>this.dom('response').innerHTML='发表评论';<?php endif; ?>comment.appendChild(response);this.dom('cancel-comment-reply-link').style.display='';if(null!=textarea&&'text'==textarea.name){textarea.focus()}return false},cancelReply:function(){var response=this.dom('<?php $this->respondId(); ?>'),holder=this.dom('comment-form-place-holder'),input=this.dom('comment-parent'),form='form'==response.tagName?response:response.getElementsByTagName('form')[0];if(null!=input){input.parentNode.removeChild(input)}if(null==holder){return true}this.dom('cancel-comment-reply-link').style.display='none';form.removeAttribute('action');<?php if($this->user->pass('editor', true)): ?>this.dom('response').innerHTML='发表轻语';<?php endif; ?>holder.parentNode.insertBefore(response,holder);return false}}})();</script>
+<?php endif; ?>
+<?php endif; ?>
+</div>
+</div>
+<?php $this->need('sidebar.php'); ?>
+<?php $this->need('footer.php'); ?>
