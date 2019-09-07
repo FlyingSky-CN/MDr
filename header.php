@@ -110,11 +110,11 @@
         <?php endif; ?>
         <link rel="stylesheet" href="<?php cjUrl('style.min.css?v=15') ?>" />
     </head>
-    <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-theme-accent-<?=$this->options->mdrAccent?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
+    <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
-        <div class="mdui-appbar mdui-appbar-fixed" style="background: #fff;z-index:5000;">
+        <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawer'}">
                     <i class="mdui-icon material-icons">menu</i>
@@ -132,7 +132,7 @@
                 </form>
             </div>
         </div>
-        <div class="mdui-drawer mdui-color-white <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawer" style="z-index: 4000;">
+        <div class="mdui-drawer <?php if($_COOKIE['dark']!='1'){?>mdui-color-white<?php } ?> <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawer" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
