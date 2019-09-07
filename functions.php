@@ -6,17 +6,78 @@ define('INITIAL_VERSION_NUMBER', '1.0.0');
 if (Helper::options()->GravatarUrl) define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 function themeConfig($form) {
-    echo '<p style="font-size:14px;" id="use-intro">
-    <span style="display: block;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    font-size: 16px;">感谢您使用 MDr 主题</span>
-    <span style="display: block;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    font-size: 14px;opacity:0.5">版本 <code>1.0.0</code></span>
-    <a href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
-    </p><style>h2{margin-bottom:10px;}h2 small {opacity:0.5}</style>';
+    echo '
+    <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
+    <style>
+        h2 {
+            margin-bottom:10px;
+        }
+        h2 small {
+            opacity:0.5;
+        }
+        #mdr-botnav.slideDown {bottom: -365px;}
+        #mdr-botnav.slideUp {bottom: 0;}
+    </style>
+    <p style="font-size:14px;">
+        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
+        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code>1.0.0</code></span>
+        <a href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
+    </p>
+    <div style="position: fixed;right: 0;left: 0;min-height: 36px;background-color: #292d33;display: flex;padding: 0;margin: 0 auto;overflow: hidden;white-space: nowrap;z-index: 9999;padding: 0 10px;transition: all 1s ease-in-out;" id="mdr-botnav" class="row slideUp">
+        <nav id="typecho-nav-list">
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-color">主题色</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-cdn">CDN</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-nav">边栏</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-pjax">Ajax</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-dark">黑暗模式</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-music">背景音乐</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-func">附加功能</a>
+                </li>
+            </ul>
+            <ul class="root">
+                <li class="parent">
+                    <a href="#mdr-custom">自定义</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <script>
+        (function() {
+            new Headroom(document.querySelector("#mdr-botnav"), { 
+                classes: {
+                    pinned: "slideDown", // 向上滚动时设置的class
+                    unpinned: "slideUp" // 向下滚动时所设置的class
+                }
+            }).init();    
+        }());
+    </script>
+    ';
     
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
@@ -381,7 +442,7 @@ function themeConfig($form) {
 	);
 	$form->addInput($MyLinks);
 	
-	$AttUrlReplace = new Typecho_Widget_Helper_Form_Element_Textarea('AttUrlReplace', NULL, NULL, _t('文章内的链接地址替换'), _t('按照格式输入你的CDN链接以替换原链接，格式 <b class="notice">原地址=替换地址</b> ，例如：<br><b>http://www.example.com/usr/uploads/=http://cdn.example.com/usr/uploads/</b><br>建议用在图片等静态资源的链接上，可设置多个规则，换行即可，一行一个'));
+	$AttUrlReplace = new Typecho_Widget_Helper_Form_Element_Textarea('AttUrlReplace', NULL, NULL, _t('文章内的链接地址替换'), _t('按照格式输入你的CDN链接以替换原链接，格式 <b class="notice">原地址=替换地址</b><br>建议用在图片等静态资源的链接上，可设置多个规则，换行即可，一行一个'));
 	$form->addInput($AttUrlReplace);
 
     $WaySit = new Typecho_Widget_Helper_Form_Element_Textarea('WaySit', NULL, NULL, _t('导航位内容'), _t('位于侧边栏'));
