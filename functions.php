@@ -228,9 +228,9 @@ EOF;
             true => _t('开'),
             false => _t('关')
         ),
-        false,
+        true,
         _t('抽屉导航栏彩色按钮'),
-        _t('开启时抽屉导航栏图标为彩色，关闭后则为黑色')
+        _t('开启时抽屉导航栏图标为彩色，关闭后则为灰色')
     );
     $form->addInput($mdrNavColorBut);
     

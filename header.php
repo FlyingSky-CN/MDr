@@ -132,7 +132,7 @@
                 </form>
             </div>
         </div>
-        <div class="mdui-drawer <?php if($_COOKIE['dark']!='1'){?>mdui-color-white<?php } ?> <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawer" style="z-index: 4000;">
+        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawer" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
