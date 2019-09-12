@@ -115,7 +115,7 @@
             <div class="mdui-progress-indeterminate"></div>
         </div>
         <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
-            <div class="mdui-toolbar">
+            <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawer'}">
                     <i class="mdui-icon material-icons">menu</i>
                 </a>
@@ -208,7 +208,5 @@
                 <?php endif; ?>
             </ul>
         </div>
-
-    
     <div class="mdui-container">
 

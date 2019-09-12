@@ -6,7 +6,8 @@ define('INITIAL_VERSION_NUMBER', '1.0.1');
 if (Helper::options()->GravatarUrl) define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 function themeConfig($form) {
-    echo '
+    echo <<<EOF
+    
     <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
     <style>
         h2 {
@@ -77,7 +78,8 @@ function themeConfig($form) {
             }).init();    
         }());
     </script>
-    ';
+    
+EOF;
     
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
