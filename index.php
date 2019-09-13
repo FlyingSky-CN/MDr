@@ -30,7 +30,7 @@ $this->need('header.php');
         </a>
     </div>
     <?php endif; ?>
-    <div class="mdui-card-primary">
+    <div class="mdui-card-primary" style="padding-bottom:8px;">
         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
         <div class="mdui-card-primary-subtitle">
               <?php $this->date(); ?>
