@@ -124,5 +124,4 @@ if ($linceses && $linceses != 'NONE') {
 <?php endif; ?>
 </div>
 </div>
-<?php $this->need('sidebar.php'); ?>
 <?php $this->need('footer.php'); ?>

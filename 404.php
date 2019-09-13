@@ -6,5 +6,4 @@
 <p>你想查看的页面已被转移或删除了</p>
 </div>
 </div>
-<?php $this->need('sidebar.php'); ?>
 <?php $this->need('footer.php'); ?>

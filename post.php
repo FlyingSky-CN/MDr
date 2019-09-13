@@ -79,5 +79,4 @@ if ($linceses && $linceses != 'NONE') {
 </div>
 </div>
 </div>
-<?php $this->need('sidebar.php'); ?>
 <?php $this->need('footer.php'); ?>

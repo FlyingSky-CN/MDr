@@ -35,5 +35,4 @@ if ($linceses && $linceses != 'NONE') {
 </article>
 <?php $this->need('comments.php'); ?>
 </div>
-<?php $this->need('sidebar.php'); ?>
 <?php $this->need('footer.php'); ?>
