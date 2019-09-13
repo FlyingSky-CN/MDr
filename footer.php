@@ -438,14 +438,12 @@ console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;bac
         $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         $('.mdui-appbar').css('background-color','#212121');
-        $('.mdui-drawer').removeClass('mdui-color-white');
     }
     function offDarkMode() {
         $('body').removeClass('mdui-theme-layout-dark');
         $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         $('.mdui-appbar').css('background-color','#ffffff');
-        $('.mdui-drawer').addClass('mdui-color-white');
     }
 </script>
 <script>
