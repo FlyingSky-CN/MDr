@@ -1,21 +1,18 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-</div>
-<div class="mdui-container" style="margin-top: 16px;">
-<div class="mdui-divider"></div>
-<div class="mdui-typo" style="padding-top: 32px;padding-bottom: 32px;">
-Copyright &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> &amp; <a href="http://www.offodd.com/17.html" target="_blank">Initial</a> & <a>MDr</a>.<br>
-<?php if (!empty($this->options->ButtomText)): ?>
-<?=$this->options->ButtomText?>
-<?php endif; ?>
-<?php if ($this->options->SiteTime): ?>
-网站已运行 <span id="runtime_span"></span> .
-<script>function show_runtime(){window.setTimeout("show_runtime()",1000);X=new Date("<?=$this->options->SiteTime?>");Y=new Date();T=(Y.getTime()-X.getTime());M=24*60*60*1000;a=T/M;A=Math.floor(a);b=(a-A)*24;B=Math.floor(b);c=(b-B)*60;C=Math.floor((b-B)*60);D=Math.floor((c-C)*60);runtime_span.innerHTML=""+A+" 天 "+B+" 时 "+C+" 分 "+D+" 秒"}show_runtime();</script>
-<?php endif; ?>
-<?php if ($this->options->ICPbeian): ?>
-<p><?php $this->options->ICPbeian(); ?></p>
-<?php endif; ?>
-</div>
-</div>
+            <div class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
+                Copyright &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> &amp; <a href="http://www.offodd.com/17.html" target="_blank">Initial</a> & <a>MDr</a>.<br>
+                <?php if (!empty($this->options->ButtomText)): ?>
+                <?=$this->options->ButtomText?>
+                <?php endif; ?>
+                <?php if ($this->options->SiteTime): ?>
+                网站已运行 <span id="runtime_span"></span> .
+                <script>function show_runtime(){window.setTimeout("show_runtime()",1000);X=new Date("<?=$this->options->SiteTime?>");Y=new Date();T=(Y.getTime()-X.getTime());M=24*60*60*1000;a=T/M;A=Math.floor(a);b=(a-A)*24;B=Math.floor(b);c=(b-B)*60;C=Math.floor((b-B)*60);D=Math.floor((c-C)*60);runtime_span.innerHTML=""+A+" 天 "+B+" 时 "+C+" 分 "+D+" 秒"}show_runtime();</script>
+                <?php endif; ?>
+                <?php if ($this->options->ICPbeian): ?>
+                <p><?php $this->options->ICPbeian(); ?></p>
+                <?php endif; ?>
+            </div>
+        </div>
 <?php if ($this->options->scrollTop || ($this->options->MusicSet && $this->options->MusicUrl) || $this->options-DarkMode): ?>
 <div id="cornertool">
 <ul>
@@ -34,11 +31,9 @@ Copyright &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl
 </ul>
 </div>
 <?php endif; ?>
-<script src="https://ssl.captcha.qq.com/TCaptcha.js"></script>
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
 <!-- MDUI END -->
-<script src='<?php cjUrl('notie.js') ?>'></script>
 <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg): ?>
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
 <?php endif; if ($this->options->PjaxOption): ?>
@@ -65,7 +60,7 @@ jQuery.fn.Shake = function(n, d) {
 	});
 	return this
 };
-$(document).pjax('a[target!=_blank]', {
+$(document).pjax('a[target!=_blank]', { 
 	container: '#main',
 	fragment: '#main',
 	timeout: 10000
@@ -112,33 +107,30 @@ function ac() {
 	l = '';
 	c();
 	$('#comment-form').submit(function() {
-		notie('评论正在发送中...', {
-			type: 'info',
-			autoHide: true,
-			timeout: 5000,
-			width: 200
-		});
+        mdui.snackbar({
+            message: '评论正在发送中...',
+            position: 'right-top',
+            timeout: 5000
+        });
 		$.ajax({
 			url: $(this).attr('action'),
 			type: 'post',
 			data: $(this).serializeArray(),
 			error: function() {
-				notie('提交失败，请检查网络并重试或者联系管理员。', {
-					type: 'error',
-					autoHide: true,
-					timeout: 5000,
-					width: 200
-				});
+                mdui.snackbar({
+                    message: '提交失败，请检查网络并重试或者联系管理员。',
+                    position: 'right-top',
+                    timeout: 5000
+                });
 				return false
 			},
 			success: function(d) {
 				if (!$(g, d).length) {
-					notie('您输入的内容不符合规则或者回复太频繁，请修改内容或者稍等片刻。', {
-						type: 'error',
-						autoHide: true,
-						timeout: 5000,
-						width: 200
-					});
+					mdui.snackbar({
+                        message: '您输入的内容不符合规则或者回复太频繁，请修改内容或者稍等片刻。',
+                        position: 'right-top',
+                        timeout: 5000
+                    });
 					return false
 				} else {
 					k = $(g, d).html().match(/id=\"?comment-\d+/g).join().match(/\d+/g).sort(function(a, b) {
@@ -166,12 +158,11 @@ function ac() {
 					$(j).val('');
 					$(i + ', #cancel-comment-reply-link').unbind('click');
 					c();
-					notie('评论已发送。', {
-						type: 'info',
-						autoHide: true,
-						timeout: 5000,
-						width: 200
-					});
+					mdui.snackbar({
+                        message: '评论已发送。',
+                        position: 'right-top',
+                        timeout: 5000
+                    });
 					if (k) {
 						$body.animate({
 							scrollTop: $('#comment-' + k).offset().top - 50
@@ -235,12 +226,11 @@ function apt() {
 					aps()
 				} else {
 					$(ap_m).removeAttr("class").text("- 阅读全文 -");
-					notie('提交失败，请检查网络并重试或者联系管理员。', {
-						type: 'warning',
-						autoHide: true,
-						timeout: 3000,
-						width: 200
-					});
+					mdui.snackbar({
+                        message: '提交失败，请检查网络并重试或者联系管理员。',
+                        position: 'right-top',
+                        timeout: 3000
+                    });
 					ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
 					return false
 				}
@@ -256,24 +246,22 @@ function aps() {
 		data: ap_btn.serializeArray(),
 		error: function() {
 			$(ap_m).removeAttr("class").text("- 阅读全文 -");
-			notie('提交失败，请检查网络并重试或者联系管理员。', {
-				type: 'warning',
-				autoHide: true,
-				timeout: 3000,
-				width: 200
-			});
+			mdui.snackbar({
+                message: '提交失败，请检查网络并重试或者联系管理员。',
+                position: 'right-top',
+                timeout: 3000
+            });
 			ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
 			return false
 		},
 		success: function(d) {
 			if (!$('h1.post-title', d).length) {
 				$(ap_m).removeAttr("class").text("- 阅读全文 -");
-				notie('对不起,您输入的密码错误。', {
-					type: 'error',
-					autoHide: true,
-					timeout: 3000,
-					width: 200
-				});
+				mdui.snackbar({
+                    message: '对不起,您输入的密码错误。',
+                    position: 'right-top',
+                    timeout: 3000
+                });
 				ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 10);
 				$(":password").val("");
 				return false
@@ -335,17 +323,16 @@ function aln() {
 		$.ajax({
 			url: b,
 			error: function() {
-				notie('请求失败，请检查网络并重试或者联系管理员。', {
-					type: 'warning',
-					autoHide: true,
-					timeout: 3000,
-					width: 200
-				});
+				mdui.snackbar({
+                    message: '请求失败，请检查网络并重试或者联系管理员。',
+                    position: 'right-top',
+                    timeout: 3000
+                });
 				$(a).removeAttr("class").text("查看更多");
 				return false
 			},
 			success: function(d) {
-				var c = $(d).find("#main .post"),
+				var c = $(d).find("#main .mdui-card"),
 				e = $(d).find(a).attr("href");
 				if (c) {
 					$('.ajaxload').before(c)
@@ -389,7 +376,7 @@ function aln() {
 <?php if ($this->options->scrollTop || $this->options->HeadFixed || $this->options->SidebarFixed): ?>
 <script>window.onscroll=function(){var a=document.documentElement.scrollTop||document.body.scrollTop;<?php if ($this->options->scrollTop): ?>var b=document.getElementById("top");if(a>=200){b.removeAttribute("class")}else{b.setAttribute("class","hidden")}b.onclick=function totop(){var a=document.documentElement.scrollTop||document.body.scrollTop;if(a>0){requestAnimationFrame(totop);window.scrollTo(0,a-(a/5))}else{cancelAnimationFrame(totop)}};<?php endif; if ($this->options->HeadFixed): ?>var d=document.getElementById("header");if(a>0&&a<30){d.style.padding=(15-a/2)+"px 0"}else if(a>=30){d.style.padding=0}else{d.removeAttribute("style")};<?php endif; if ($this->options->SidebarFixed): ?>var e=document.getElementById("main");var f=document.getElementById("secondary");var g=document.documentElement.clientHeight;var h=<?php echo $this->options->HeadFixed ? 0 : 41 ?>;if(e.offsetHeight>f.offsetHeight){if(f.offsetHeight>g-71&&a>f.offsetHeight+101-g){if(a<e.offsetHeight+101-g){f.style.marginTop=(a-f.offsetHeight-101+g)+"px"}else{f.style.marginTop=(e.offsetHeight-f.offsetHeight)+"px"}}else if(f.offsetHeight<=g-71&&a>30+h){if(a<e.offsetHeight-f.offsetHeight+h){f.style.marginTop=(a-30-h)+"px"}else{f.style.marginTop=(e.offsetHeight-f.offsetHeight-30)+"px"}}else{f.removeAttribute("style")}}<?php endif; ?>}</script>
 <?php endif; if ($this->options->MusicSet && $this->options->MusicUrl): ?>
-<script>(function(){var a=document.getElementById("audio");var b=document.getElementById("music");var c=<?php Playlist() ?>;<?php if ($this->options->MusicVol): ?>var d=<?php $this->options->MusicVol(); ?>;if(d>=0&&d<=1){a.volume=d}<?php endif; ?>a.src=c.shift();a.addEventListener('play',g);a.addEventListener('pause',h);a.addEventListener('ended',f);a.addEventListener('error',f);a.addEventListener('canplay',j);function f(){if(!c.length){a.removeEventListener('play',g);a.removeEventListener('pause',h);a.removeEventListener('ended',f);a.removeEventListener('error',f);a.removeEventListener('canplay',j);b.style.display="none";notie('本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。', {type:'error', autoHide:true, timeout: 5000,width:200});}else{a.src=c.shift();a.play()}}function g(){b.setAttribute("class","play");a.addEventListener('timeupdate',k)}function h(){b.removeAttribute("class");a.removeEventListener('timeupdate',k)}function j(){c.push(a.src)}function k(){b.getElementsByTagName("i")[0].style.width=(a.currentTime/a.duration*100).toFixed(1)+"%"}b.onclick=function(){if(a.canPlayType('audio/mpeg')!=""||a.canPlayType('audio/ogg;codes="vorbis"')!=""||a.canPlayType('audio/mp4;codes="mp4a.40.5"')!=""){if(a.paused){if(a.error){f()}else{a.play()}}else{a.pause()}}else{notie('对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。', {type:'warning', autoHide:true, timeout: 3000,width:200});}};b.removeAttribute("class")})();</script>
+<script>(function(){var a=document.getElementById("audio");var b=document.getElementById("music");var c=<?php Playlist() ?>;<?php if ($this->options->MusicVol): ?>var d=<?php $this->options->MusicVol(); ?>;if(d>=0&&d<=1){a.volume=d}<?php endif; ?>a.src=c.shift();a.addEventListener('play',g);a.addEventListener('pause',h);a.addEventListener('ended',f);a.addEventListener('error',f);a.addEventListener('canplay',j);function f(){if(!c.length){a.removeEventListener('play',g);a.removeEventListener('pause',h);a.removeEventListener('ended',f);a.removeEventListener('error',f);a.removeEventListener('canplay',j);b.style.display="none";mdui.snackbar({message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',position: 'right-top',timeout: 5000});}else{a.src=c.shift();a.play()}}function g(){b.setAttribute("class","play");a.addEventListener('timeupdate',k)}function h(){b.removeAttribute("class");a.removeEventListener('timeupdate',k)}function j(){c.push(a.src)}function k(){b.getElementsByTagName("i")[0].style.width=(a.currentTime/a.duration*100).toFixed(1)+"%"}b.onclick=function(){if(a.canPlayType('audio/mpeg')!=""||a.canPlayType('audio/ogg;codes="vorbis"')!=""||a.canPlayType('audio/mp4;codes="mp4a.40.5"')!=""){if(a.paused){if(a.error){f()}else{a.play()}}else{a.pause()}}else{mdui.snackbar({message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',position: 'right-top',timeout: 5000});}};b.removeAttribute("class")})();</script>
 <?php endif; if ($this->options->CustomContent): $this->options->CustomContent(); ?>
 
 <?php endif; ?>
@@ -453,13 +440,13 @@ function switchDarkMode(){
         onDarkMode();
         document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
         console.log('Dark mode on');
-        notie('已开启 Dark Mode ，早 6 点之前保持开启。', {type:'info', autoHide:true, timeout: 3000,width:200});
+        mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: 'right-top',timeout: 1000});
         document.getElementById("darkmode").innerHTML="亮";
     }else{
        offDarkMode();
         document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
         console.log('Dark mode off');
-        notie('已关闭 Dark Mode ', {type:'info', autoHide:true, timeout: 1000,width:200});
+        mdui.snackbar({message: '已关闭 Dark Mode ',position: 'right-top',timeout: 1000});
         document.getElementById("darkmode").innerHTML="暗";
     }
 }
@@ -469,13 +456,13 @@ function switchDarkMode(){
             onDarkMode();
             document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
             console.log('Dark mode on');
-            notie('已开启 Dark Mode，早 6 点之前保持开启。 ', {type:'info', autoHide:true, timeout: 3000,width:200});
+            mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: 'right-top',timeout: 1000});
             document.getElementById("darkmode").innerHTML="亮";
         }else{
             offDarkMode();
             document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
             console.log('Dark mode off');
-            notie('已关闭 Dark Mode ', {type:'info', autoHide:true, timeout: 1000,width:200});
+            mdui.snackbar({message: '已关闭 Dark Mode ',position: 'right-top',timeout: 1000});
             document.getElementById("darkmode").innerHTML="暗";
         }
     }else{
