@@ -345,6 +345,18 @@ EOF;
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
 	$form->addInput($mdrNotice);
     
+    $mdrCornertool = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrCornertool',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        ture,
+        _t('界面滚动条'),
+        _t('强迫症犯了')
+    );
+    $form->addInput($mdrCornertool);
+    
     $mdrPray = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPray',
         array(

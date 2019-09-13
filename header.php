@@ -19,6 +19,23 @@
         <!-- MDUI STR -->
         <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
         <!-- MDUI END -->
+        <?php if (!$this->options->mdrCornertool) { ?>
+        <style>
+            *::-webkit-scrollbar {
+                width:0px!important;
+                height:0px!important
+            }
+            *::-webkit-scrollbar-thumb {
+                background:#444!important
+            }
+            *::-webkit-scrollbar-track {
+                background:#f3f3f3!important
+            }
+            *::-webkit-scrollbar-corner {
+                background:#f3f3f3!important
+            }
+        </style>
+        <?php } ?>
         <?php if ($this->options->mdrPray) { ?>
         <style>
             body {
@@ -80,10 +97,6 @@
                 border: 1px solid #424242;
             }
             /* 滚动条 */
-            .mdui-theme-layout-dark *::-webkit-scrollbar {
-                width: 5px;
-                height: 5px;
-            }
             .mdui-theme-layout-dark *::-webkit-scrollbar-thumb {
                 background: #aaa;
             }
@@ -108,31 +121,27 @@
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('style.min.css?v=15') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=4') ?>" />
     </head>
-    <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
+    <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
         <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
-                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawer'}">
+                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
                 </a>
                 <a href="<?php $this->options->siteUrl(); ?>" class="mdui-typo-title">
                     <?php if ($this->options->customTitle): $this->options->customTitle(); else: $this->options->title(); endif; ?>
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
-                <form method="post" action="<?php $this->options->siteUrl(); ?>">
-                    <div class="mdui-textfield mdui-textfield-expandable mdui-float-right">
-                        <span class="mdui-textfield-icon mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">search</i></span>
-                        <input class="mdui-textfield-input" type="text" id="s" name="s" placeholder="Search"/>
-                        <span class="mdui-textfield-close mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">close</i></span>
-                    </div>
-                </form>
+                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawerR'}">
+                    <i class="mdui-icon material-icons">more_vert</i>
+                </a>
             </div>
         </div>
-        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawer" style="z-index: 4000;">
+        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawerL" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
@@ -207,6 +216,9 @@
                 </li>
                 <?php endif; ?>
             </ul>
+        </div>
+        <div class="mdui-drawer mdui-drawer-right" id="mdxDrawerR" style="z-index: 4000;">
+            <?php $this->need('sidebar.php'); ?>
         </div>
     <div class="mdui-container">
 
