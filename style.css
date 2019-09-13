@@ -507,9 +507,6 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
 .post-content .thumb, .post-content .more {
     text-align:center
 }
-.protected input {
-    width:auto
-}
 .rewards, .post .tags {
     clear:both
 }
