@@ -32,15 +32,6 @@ $this->need('header.php');
     <?php endif; ?>
     <div class="mdui-card-primary" style="padding-bottom:8px;">
         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-        <div class="mdui-card-primary-subtitle">
-              <?php $this->date(); ?>
-            | <?php $this->category(',', false); ?>
-            | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
-            | <?php Postviews($this); ?>
-            <?php if ($this->options->WordCount): ?>
-            | <?php WordCount($this->cid); ?>
-            <?php endif; ?>
-        </div>
     </div>
     <div class="mdui-card-content" style="padding: 0px 16px;">
         <?php if ($this->options->PjaxOption && $this->hidden): ?>
@@ -61,8 +52,33 @@ $this->need('header.php');
         <p><?php $this->excerpt(200, ''); ?></p>
         <?php endif; ?>
     </div>
-    <div class="mdui-card-actions" align="center">
-        <a href="<?php $this->permalink() ?>" class="mdui-btn mdui-ripple" style="width:100%">阅读全文</a>
+    <div class="mdui-card-actions">
+        <button class="mdui-float-left mdui-btn mdui-ripple" mdui-menu="{target: '#post-info-<?=$this->cid ?>', position: 'top'}" style="text-transform:none"><?php $this->date(); ?></button>
+        <ul class="mdui-menu" id="post-info-<?=$this->cid ?>">
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php $this->category(',', false); ?>
+                </a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php Postviews($this); ?>
+                </a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+                </a>
+            </li>
+            <?php if ($this->options->WordCount): ?>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php WordCount($this->cid); ?>
+                </a>
+            </li>
+            <?php endif; ?>
+        </ul>
+        <a href="<?php $this->permalink() ?>" class="mdui-float-right mdui-btn mdui-ripple">阅读全文</a>
     </div>
 </div>
 <?php endwhile; ?>
