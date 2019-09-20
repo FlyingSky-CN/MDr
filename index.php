@@ -28,11 +28,42 @@ $this->need('header.php');
         <a href="<?php $this->permalink() ?>">
         <?php echo postThumb($this); ?>
         </a>
+        <?php if ($this->options->mdrPostTitle != 'normal') { ?>
+        <div class="mdui-card-media-covered mdui-card-media-covered-transparent <?php if ($this->options->mdrPostTitle == 'top') { ?>mdui-card-media-covered-top<?php } ?>">
+            <div class="mdui-card-primary" style="padding-bottom:8px;">
+                <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
+                <div class="mdui-card-primary-subtitle">
+                      <?php $this->date(); ?>
+                    | <?php $this->category(',', false); ?>
+                    | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+                    | <?php Postviews($this); ?>
+                    <?php if ($this->options->WordCount): ?>
+                    | <?php WordCount($this->cid); ?>
+                    <?php endif; ?>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
     </div>
     <?php endif; ?>
+    <?php if ($this->options->mdrPostTitle == 'normal' || !postThumb($this) ) { ?>
     <div class="mdui-card-primary" style="padding-bottom:8px;">
         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+        <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
+        <div class="mdui-card-primary-subtitle">
+              <?php $this->date(); ?>
+            | <?php $this->category(',', false); ?>
+            | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+            | <?php Postviews($this); ?>
+            <?php if ($this->options->WordCount): ?>
+            | <?php WordCount($this->cid); ?>
+            <?php endif; ?>
+        </div>
+        <?php } ?>
     </div>
+    <?php } ?>
     <div class="mdui-card-content" style="padding: 0px 16px;">
         <?php if ($this->options->PjaxOption && $this->hidden): ?>
         <form method="post" style="margin: 14px 0px;">
@@ -52,7 +83,8 @@ $this->need('header.php');
         <p><?php $this->excerpt(200, ''); ?></p>
         <?php endif; ?>
     </div>
-    <div class="mdui-card-actions">
+    <div class="mdui-card-actions" align="center">
+        <?php if ($this->options->mdrPostInfo == 'menu') { ?>
         <button class="mdui-float-left mdui-btn mdui-ripple" mdui-menu="{target: '#post-info-<?=$this->cid ?>', position: 'top'}" style="text-transform:none"><?php $this->date(); ?></button>
         <ul class="mdui-menu" id="post-info-<?=$this->cid ?>">
             <li class="mdui-menu-item">
@@ -78,7 +110,8 @@ $this->need('header.php');
             </li>
             <?php endif; ?>
         </ul>
-        <a href="<?php $this->permalink() ?>" class="mdui-float-right mdui-btn mdui-ripple">阅读全文</a>
+        <?php } ?>
+        <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple"<?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%"<?php } ?>>阅读全文</a>
     </div>
 </div>
 <?php endwhile; ?>

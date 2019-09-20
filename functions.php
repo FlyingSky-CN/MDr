@@ -413,15 +413,28 @@ EOF;
 	0 => _t('关闭')),
 	1, _t('返回顶部'), _t('默认开启，启用将在右下角显示“返回顶部”按钮'));
 	$form->addInput($scrollTop);
+	
+	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
+	$form->addInput($mdrNotice);
 
 	$ShowLinks = new Typecho_Widget_Helper_Form_Element_Checkbox('ShowLinks', array('sidebar' => _t('侧边栏')), NULL, _t('首页显示链接'));
 	$form->addInput($ShowLinks->multiMode());
 
 	$ShowWhisper = new Typecho_Widget_Helper_Form_Element_Checkbox('ShowWhisper', array('index' => _t('首页'), 'sidebar' => _t('侧边栏')), NULL, _t('显示最新的“轻语”'));
 	$form->addInput($ShowWhisper->multiMode());
-
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
-	$form->addInput($mdrNotice);
+	
+	$mdrPostInfo = new Typecho_Widget_Helper_Form_Element_Radio('mdrPostInfo', 
+	array('menu' => _t('作为弹出菜单'),
+	'subtitle' => _t('作为副标题')),
+	'menu', _t('文章信息显示方式'), _t('默认为弹出菜单，为文章列表中文章的信息显示方式'));
+	$form->addInput($mdrPostInfo);
+	
+	$mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio('mdrPostTitle', 
+	array('normal' => _t('在图片下方'),
+	'button' => _t('覆盖在图片底部(如果有)'),
+	'top' => _t('覆盖在图片顶部(如果有)')),
+	'normal', _t('文章标题显示方式'), _t('默认在图片下方'));
+	$form->addInput($mdrPostTitle);
 
 	$subTitle = new Typecho_Widget_Helper_Form_Element_Text('subTitle', NULL, NULL, _t('自定义站点副标题'), _t('浏览器副标题，仅在当前页面为首页时显示，显示格式为：<b>标题 - 副标题</b>，留空则不显示副标题'));
 	$form->addInput($subTitle);
