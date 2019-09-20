@@ -21,7 +21,7 @@ function themeConfig($form) {
     </style>
     <p style="font-size:14px;">
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
-        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code>1.0.0</code></span>
+        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code>1.0.1</code></span>
         <a href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
     </p>
     <div style="position: fixed;right: 0;left: 0;min-height: 36px;background-color: #292d33;display: flex;padding: 0;margin: 0 auto;overflow: hidden;white-space: nowrap;z-index: 9999;padding: 0 10px;transition: all 1s ease-in-out;" id="mdr-botnav" class="row slideUp">
@@ -84,7 +84,7 @@ EOF;
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
     
-    $mdrPrimary = new Typecho_Widget_Helper_Form_Element_Radio(
+    $mdrPrimary = new Typecho_Widget_Helper_Form_Element_Select(
         'mdrPrimary',
         array(
             'red' => _t('red'),
@@ -113,7 +113,7 @@ EOF;
     );
     $form->addInput($mdrPrimary);
     
-    $mdrAccent = new Typecho_Widget_Helper_Form_Element_Radio(
+    $mdrAccent = new Typecho_Widget_Helper_Form_Element_Select(
         'mdrAccent',
         array(
             'red' => _t('red'),
@@ -139,7 +139,7 @@ EOF;
     );
     $form->addInput($mdrAccent);
     
-    $mdrAccentD = new Typecho_Widget_Helper_Form_Element_Radio(
+    $mdrAccentD = new Typecho_Widget_Helper_Form_Element_Select(
         'mdrAccentD',
         array(
             'red' => _t('red'),
@@ -495,8 +495,7 @@ function themeInit($archive) {
 
 function cjUrl($path) {
 	$options = Helper::options();
-	$ver = '?ver=10.0.1.8';//TODO 记得改回去
-	$options->themeUrl($path.$ver);
+	$options->themeUrl($path);
 }
 
 function hrefOpen($obj) {
