@@ -9,7 +9,7 @@
     </div>
 </div>
 <div class="widget">
-    <form method="post" action="<?php $this->options->siteUrl(); ?>">
+    <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
         <div class="mdui-textfield mdui-textfield-floating-label">
             <label class="mdui-textfield-label">Search</label>
             <input class="mdui-textfield-input" type="text" id="s" name="s"/>

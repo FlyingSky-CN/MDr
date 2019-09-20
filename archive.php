@@ -1,7 +1,7 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-<div class="breadcrumbs"><a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->archiveTitle(array(
+<div style="margin-top:24px;"><a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->archiveTitle(array(
 'category'  =>  _t('分类 %s 下的文章'),
 'search'    =>  _t('包含关键字 %s 的文章'),
 'tag'       =>  _t('标签 %s 下的文章'),
@@ -10,41 +10,104 @@
 ), '', ''); ?></div>
 <?php if ($this->have()): ?>
 <?php while($this->next()): ?>
-<article class="post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>">
-<h2 class="post-title"><a href="<?php $this->permalink() ?>"><?php $this->title() ?></a></h2>
-<ul class="post-meta">
-<li><?php $this->date(); ?></li>
-<li><?php $this->category(',', false); ?></li>
-<li><?php $this->commentsNum('暂无评论', '%d 条评论'); ?></li>
-<li><?php Postviews($this); ?></li>
-<?php if ($this->options->WordCount): ?>
-<li><?php WordCount($this->cid); ?></li>
-<?php endif; ?>
-</ul>
-<div class="post-content">
-<?php if ($this->options->PjaxOption && $this->hidden): ?>
-<form method="post">
-<p class="word">请输入密码访问</p>
-<p>
-<input type="password" class="text" name="protectPassword" />
-<input type="submit" class="submit" value="提交" />
-</p>
-</form>
-<?php else: ?>
-<?php if (postThumb($this)): ?>
-<p class="thumb"><?php echo postThumb($this); ?></p>
-<?php endif; ?>
-<p><?php $this->excerpt(200, ''); ?></p>
-<?php endif; ?>
-<p class="more"><a href="<?php $this->permalink() ?>" title="<?php $this->title() ?>">- 阅读全文 -</a></p>
+<div class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
+    <?php if ($this->options->PjaxOption && !$this->hidden and postThumb($this)): ?>
+    <div class="mdui-card-media">
+        <a href="<?php $this->permalink() ?>">
+        <?php echo postThumb($this); ?>
+        </a>
+        <?php if ($this->options->mdrPostTitle != 'normal') { ?>
+        <div class="mdui-card-media-covered mdui-card-media-covered-transparent <?php if ($this->options->mdrPostTitle == 'top') { ?>mdui-card-media-covered-top<?php } ?>">
+            <div class="mdui-card-primary" style="padding-bottom:8px;">
+                <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
+                <div class="mdui-card-primary-subtitle">
+                      <?php $this->date(); ?>
+                    | <?php $this->category(',', false); ?>
+                    | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+                    | <?php Postviews($this); ?>
+                    <?php if ($this->options->WordCount): ?>
+                    | <?php WordCount($this->cid); ?>
+                    <?php endif; ?>
+                </div>
+                <?php } ?>
+            </div>
+        </div>
+        <?php } ?>
+    </div>
+    <?php endif; ?>
+    <?php if ($this->options->mdrPostTitle == 'normal' || !postThumb($this) ) { ?>
+    <div class="mdui-card-primary" style="padding-bottom:8px;">
+        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+        <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
+        <div class="mdui-card-primary-subtitle">
+              <?php $this->date(); ?>
+            | <?php $this->category(',', false); ?>
+            | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+            | <?php Postviews($this); ?>
+            <?php if ($this->options->WordCount): ?>
+            | <?php WordCount($this->cid); ?>
+            <?php endif; ?>
+        </div>
+        <?php } ?>
+    </div>
+    <?php } ?>
+    <div class="mdui-card-content" style="padding: 0px 16px;">
+        <?php if ($this->options->PjaxOption && $this->hidden): ?>
+        <form method="post" style="margin: 14px 0px;">
+            <div class="mdui-row">
+                <div class="mdui-col-xs-12 mdui-col-md-6">
+                    <div class="mdui-textfield" style="padding-bottom: 32px;">
+                        <label class="mdui-textfield-label">请输入密码访问</label>
+                        <input class="mdui-textfield-input" type="password" class="text" name="protectPassword"/>
+                    </div>
+                </div>
+                <div class="mdui-col-xs-12 mdui-col-md-6" style="padding-top:40px">
+                    <input type="submit" class="mdui-btn mdui-ripple" value="提交" />
+                </div>
+            </div>
+        </form>
+        <?php else: ?>
+        <p><?php $this->excerpt(200, ''); ?></p>
+        <?php endif; ?>
+    </div>
+    <div class="mdui-card-actions" align="center">
+        <?php if ($this->options->mdrPostInfo == 'menu') { ?>
+        <button class="mdui-float-left mdui-btn mdui-ripple" mdui-menu="{target: '#post-info-<?=$this->cid ?>', position: 'top'}" style="text-transform:none"><?php $this->date(); ?></button>
+        <ul class="mdui-menu" id="post-info-<?=$this->cid ?>">
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php $this->category(',', false); ?>
+                </a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php Postviews($this); ?>
+                </a>
+            </li>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+                </a>
+            </li>
+            <?php if ($this->options->WordCount): ?>
+            <li class="mdui-menu-item">
+                <a class="mdui-ripple">
+                  <?php WordCount($this->cid); ?>
+                </a>
+            </li>
+            <?php endif; ?>
+        </ul>
+        <?php } ?>
+        <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple"<?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%"<?php } ?>>阅读全文</a>
+    </div>
 </div>
-</article>
 <?php endwhile; ?>
 <?php else: ?>
-<article class="post">
+<div class="error-page">
 <h2 class="post-title">没有找到内容</h2>
-<p style="margin-bottom: 0px;">你想找的东西可能被吃了</p>
-</article>
+<p>你想找的东西可能被吃了</p>
+</div>
 <?php endif; ?>
 <?php $this->pageNav('上一页', $this->options->AjaxLoad ? '查看更多' : '下一页', 0, '..', $this->options->AjaxLoad ? array('wrapClass' => 'page-navigator ajaxload') : ''); ?>
 </div>
