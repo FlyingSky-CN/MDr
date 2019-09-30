@@ -399,7 +399,7 @@ EOF;
 	$ViewImg = new Typecho_Widget_Helper_Form_Element_Radio('ViewImg', 
 	array(1 => _t('启用'),
 	0 => _t('关闭')),
-	1, _t('图片灯箱'), _t('默认开启'));
+	1, _t('图片灯箱'), _t('<b>当前版本不可用</b>'));
 	$form->addInput($ViewImg);
 
 	$compressHtml = new Typecho_Widget_Helper_Form_Element_Radio('compressHtml', 
