@@ -1,11 +1,11 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
             <div class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
-                Copyright &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> &amp; <a href="http://www.offodd.com/17.html" target="_blank">Initial</a> & <a>MDr</a>.<br>
+                &copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> & <a href="https://blog.fsky7.com/archives/60/">MDr</a>.<br>
                 <?php if (!empty($this->options->ButtomText)): ?>
                 <?=$this->options->ButtomText?>
                 <?php endif; ?>
                 <?php if ($this->options->SiteTime): ?>
-                网站已运行 <span id="runtime_span"></span> .
+                博客已上线 <span id="runtime_span"></span> .
                 <script>function show_runtime(){window.setTimeout("show_runtime()",1000);X=new Date("<?=$this->options->SiteTime?>");Y=new Date();T=(Y.getTime()-X.getTime());M=24*60*60*1000;a=T/M;A=Math.floor(a);b=(a-A)*24;B=Math.floor(b);c=(b-B)*60;C=Math.floor((b-B)*60);D=Math.floor((c-C)*60);runtime_span.innerHTML=""+A+" 天 "+B+" 时 "+C+" 分 "+D+" 秒"}show_runtime();</script>
                 <?php endif; ?>
                 <?php if ($this->options->ICPbeian): ?>
@@ -84,7 +84,7 @@ function() {
 	$('#s').val(""); <?php if ($this->options->SidebarFixed) : ?>$("#secondary").removeAttr("style"); <?php endif; ?>
 }).on('pjax:end',
 function() {
-	ViewImage(); 
+    mdrcd();
 	<?php if ($this->options->AjaxLoad) : ?>al(); <?php endif; ?>cl();
 	ac();
 	ap(); 
@@ -97,6 +97,12 @@ function() {
 	} 
 	<?php endif; ?>
 });
+function mdrcd() {
+    if ( document.body.clientWidth < 1024 ) {
+        mdui.Drawer('#mdrDrawerL').close();
+        mdui.Drawer('#mdrDrawerR').close();
+    }
+}
 function ac() {
 	$body = $('html,body');
 	var g = '.comment-list',
@@ -354,22 +360,6 @@ function aln() {
 		})
 	}
 }
-</script>
-<?php endif; ?>
-<?php if ($this->options->ViewImg): ?>
-<script src='<?php cjUrl('viewimage.js?v=1') ?>'></script>
-<script>
-    function ViewImage() {
-        jQuery.viewImage({
-            'target' : '.post img',
-            'exclude': '.thumb img, .link-logo',
-            'delay'  : 300
-        });
-        console.log("ViewImage set");
-    };
-    $(document).ready(function (){
-        ViewImage();
-    });
 </script>
 <?php endif; ?>
 <?php $this->footer(); ?>
