@@ -2,22 +2,27 @@
 <?php $this->need('header.php'); ?>
 <div id="main">
 <?php if (!empty($this->options->Breadcrumbs) && in_array('Postshow', $this->options->Breadcrumbs)): ?>
-<div class="breadcrumbs">
-<a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->category(); ?> &raquo; <?php if (!empty($this->options->Breadcrumbs) && in_array('Text', $this->options->Breadcrumbs)): ?>正文<?php else: $this->title(); endif; ?>
+<div class="mdui-card" style="margin-top:20px;background-color: rgba(180, 180, 180, 0.25);">
+    <span class="mdui-chip-icon" style="border-radius:2px;"><i class="mdui-icon material-icons">chevron_right</i></span>
+    <span class="mdui-chip-title">
+        <a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->category(); ?> &raquo; <?php if (!empty($this->options->Breadcrumbs) && in_array('Text', $this->options->Breadcrumbs)): ?>正文<?php else: $this->title(); endif; ?>
+    </span>
 </div>
 <?php endif; ?>
-<article class="post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>">
-<h1 class="post-title"><a href="<?php $this->permalink() ?>"><?php $this->title() ?></a></h1>
-<ul class="post-meta">
-<li><?php $this->date(); ?></li>
-<li><?php $this->category(','); ?></li>
-<li><a href="<?php $this->permalink() ?>#comments"><?php $this->commentsNum('暂无评论', '%d 条评论'); ?></a></li>
-<li><?php Postviews($this); ?></li>
-<?php if ($this->options->WordCount): ?>
-<li><?php WordCount($this->cid); ?></li>
-<?php endif; ?>
-</ul>
-<div class="post-content mdui-typo">
+<div class="mdui-card <?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top:20px;">
+    <div class="mdui-card-primary">
+        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+        <div class="mdui-card-primary-subtitle">
+              <?php $this->date(); ?>
+            | <?php $this->category(','); ?>
+            | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+            | <?php Postviews($this); ?>
+            <?php if ($this->options->WordCount): ?>
+            | <?php WordCount($this->cid); ?>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
 <?php if ($this->options->TimeNotice): ?>
 <?php 
 $time=time() - $this->modified;
@@ -37,7 +42,7 @@ window.onload=function (){
 <?php } ?>
 <?php endif; ?>
 <?php $this->content(); ?>
-</div>
+
 <?php
 // linceses
 $linceses = $this->fields->linceses;
@@ -59,7 +64,8 @@ if ($linceses && $linceses != 'NONE') {
 <div class="copyright">本篇文章未指定许可协议。
 </div>
 <?php }; ?>
-</article>
+</div>
+</div>
 <p class="tags mdui-typo" style="margin-bottom: 0px;">标签: <?php $this->tags(', ', true, 'none'); ?></p>
 <?php $this->need('comments.php'); ?>
 <div class="mdui-row" style="margin-top: 32px;margin-bottom: 16px;">
