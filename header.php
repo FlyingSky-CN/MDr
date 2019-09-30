@@ -51,7 +51,7 @@
         <?php if ($this->options->DarkMode): ?>
         <style>
             /* Dark mode */
-            .mdui-theme-layout-dark .post-title a {
+            .mdui-theme-layout-dark a {
                 color: #fff!important;
             }
             .mdui-theme-layout-dark .post-meta li {
@@ -85,11 +85,6 @@
             .mdui-theme-layout-dark .comment-list li, .mdui-theme-layout-dark .whisper .comment-list li, .mdui-theme-layout-dark .comment-list .respond {
                 border-color: #424242;
             }
-            .mdui-theme-layout-dark .author-icon {
-                background: linear-gradient(135deg,transparent 30%,rgba(111, 111, 111, 0.8) 0) left,linear-gradient(-135deg,transparent 30%,rgba(111, 111, 111, 0.8) 0) right;
-                background-size: 50% 100%;
-                background-repeat: no-repeat;
-            }
             .mdui-theme-layout-dark .whisper .comment-child {
                 background: none;
             }
@@ -121,7 +116,7 @@
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('style.css?v=7') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=9') ?>" />
     </head>
     <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
@@ -129,19 +124,19 @@
         </div>
         <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
-                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawerL'}">
+                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
                 </a>
                 <a href="<?php $this->options->siteUrl(); ?>" class="mdui-typo-title">
                     <?php if ($this->options->customTitle): $this->options->customTitle(); else: $this->options->title(); endif; ?>
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
-                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdxDrawerR'}">
+                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerR'}">
                     <i class="mdui-icon material-icons">more_vert</i>
                 </a>
             </div>
         </div>
-        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdxDrawerL" style="z-index: 4000;">
+        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
@@ -217,7 +212,7 @@
                 <?php endif; ?>
             </ul>
         </div>
-        <div class="mdui-drawer mdui-drawer-right" id="mdxDrawerR" style="z-index: 3000;padding-bottom:128px;">
+        <div class="mdui-drawer mdui-drawer-right" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
             <?php $this->need('sidebar.php'); ?>
         </div>
         <div class="mdui-container">
