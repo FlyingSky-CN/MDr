@@ -1,8 +1,0 @@
-/**
- * ViewImage.min.js 1.2.0
- * https://tokinx.github.io/ViewImage/
- */
- console.log("\n %c ViewImage %c 灯箱 %c \n","color: #fff; background: #3274ff; padding:5px 0; border: 1px solid #3274ff;","color: #3274ff; background: #fff; padding:5px 0; border: 1px solid #3274ff;","");
-(function(b){b.extend({viewImage:function(d){var c=b.extend({target:".view-image img",exclude:""},d);b(c.exclude).attr("view-image",!1);b(c.target).click(function(a){a={t:b(this),z:.9,m:Math.min,ww:b(window).width(),wh:b(window).height()};console.log(a.t);if(!b(this).attr("view-image")&&!b(this).is(c.exclude)&&(a.t.attr("src")||a.t.attr("href").match(/.+\.(jpg|jpeg|webp|gif|png)/gi)))return a.t.attr("src")?(a.is="zoom-out"===a.t[0].style.cursor,a.os=a.t.offset(),a.w=a.t.width(),a.h=a.t.height(),a.scale=
-a.is?1:a.m(a.m(a.t[0].naturalWidth,a.ww*a.z)/a.w,a.m(a.t[0].naturalHeight,a.wh*a.z)/a.h),a.X=a.is?0:(-a.os.left+(a.ww-a.w)/2)/a.scale,a.Y=a.is?0:(-a.os.top+(a.wh-a.h)/2+b(document).scrollTop())/a.scale,a.t.attr("style",(a.is?"":"position: relative;z-index: 9999;")+"transition: transform 0.4s;transform: scale("+a.scale+") translate("+a.X+"px, "+a.Y+"px);cursor: zoom-"+(a.is?"in":"out")+";")):(a.c=".vi-"+Math.random().toString(36).substr(2),b("body").append("<div class='"+a.c.substr(1)+"' style='position: fixed;background: rgba(255, 255, 255, "+
-a.z+");top: 0;left: 0;right: 0;bottom: 0;z-index: 9999;'></div>"),b(a.c).html("<img src="+a.t.attr("href")+" style='position: absolute;top: 50%;left: 50%;max-width: 90%;max-height: 90%;transform: translate(-50%,-50%);'>"),b(a.c).click(function(){b(this).remove()})),!1})}})})(jQuery);
