@@ -369,6 +369,18 @@ EOF;
     );
     $form->addInput($mdrPray);
 
+    $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrHitokoto',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        true,
+        _t('一言 API'),
+        _t('显示在网站底部，API by <a href="https://blog.lwl12.com/read/hitokoto-api.html" target="_blank">LWL12</a>')
+    );
+	$form->addInput($mdrHitokoto);
+
 	$Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox('Breadcrumbs', 
 	array('Postshow' => _t('文章内显示'),
 	'Text' => _t('↪文章标题替换为“正文”'),

@@ -4,6 +4,9 @@
                 <?php if (!empty($this->options->ButtomText)): ?>
                 <?=$this->options->ButtomText?>
                 <?php endif; ?>
+		  <?php if ($this->options->mdrHitokoto): ?>
+                <script type="text/javascript" src="https://api.lwl12.com/hitokoto/v1?encode=js&charset=utf-8"></script><span id="lwlhitokoto"><script>lwlhitokoto()</script></span><br>
+                <?php endif;  ?>
                 <?php if ($this->options->SiteTime): ?>
                 博客已上线 <span id="runtime_span"></span> .
                 <script>function show_runtime(){window.setTimeout("show_runtime()",1000);X=new Date("<?=$this->options->SiteTime?>");Y=new Date();T=(Y.getTime()-X.getTime());M=24*60*60*1000;a=T/M;A=Math.floor(a);b=(a-A)*24;B=Math.floor(b);c=(b-B)*60;C=Math.floor((b-B)*60);D=Math.floor((c-C)*60);runtime_span.innerHTML=""+A+" 天 "+B+" 时 "+C+" 分 "+D+" 秒"}show_runtime();</script>
