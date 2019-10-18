@@ -369,6 +369,18 @@ EOF;
     );
     $form->addInput($mdrPray);
 
+    $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrHitokoto',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        true,
+        _t('一言 API'),
+        _t('显示在网站底部，API by <a href="https://blog.lwl12.com/read/hitokoto-api.html" target="_blank">LWL12</a>')
+    );
+	$form->addInput($mdrHitokoto);
+
 	$Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox('Breadcrumbs', 
 	array('Postshow' => _t('文章内显示'),
 	'Text' => _t('↪文章标题替换为“正文”'),
@@ -480,7 +492,13 @@ EOF;
 
 	$ICPbeian = new Typecho_Widget_Helper_Form_Element_Text('ICPbeian', NULL, NULL, _t('ICP备案号'), _t('在这里输入ICP备案号，留空则不显示'));
 	$form->addInput($ICPbeian);
-	
+
+	$beianProvince = new Typecho_Widget_Helper_Form_Element_Text('beianProvince', NULL, NULL, _t('公网安备案所在省份'), _t('在这里输入公网安备案所在省份缩写，如北京=京，山东=鲁，留空则不显示'));
+	$form->addInput($beianProvince);
+
+	$beianNumber = new Typecho_Widget_Helper_Form_Element_Text('beianNumber', NULL, NULL, _t('公网安备案号'), _t('在这里输入公网安备案号，留空则不显示'));
+	$form->addInput($beianNumber);
+
 	$ButtomText = new Typecho_Widget_Helper_Form_Element_Textarea('ButtomText', NULL, NULL, _t('底部自定义内容'), _t('位于底部版权下方建站时间上方'));
 	$form->addInput($ButtomText);
 
