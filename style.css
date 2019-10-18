@@ -632,12 +632,6 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     color:#fff;
     background:rgba(0, 0, 0, .7)
 }
-#top:before {
-    content:"\25b2"
-}
-#top:hover:before {
-    content:"Top"
-}
 #music:before {
     content:"\266b"
 }
