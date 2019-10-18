@@ -13,14 +13,18 @@
                 <?php endif; ?>
             </div>
         </div>
+        
 <?php if ($this->options->scrollTop || ($this->options->MusicSet && $this->options->MusicUrl) || $this->options-DarkMode): ?>
-<div id="cornertool">
-<ul>
+<div class="mdui-fab-fixed" style="z-index: 9999;">
 <?php if ($this->options->scrollTop): ?>
-<li id="top" class="hidden"></li>
+<div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" style="display:block;margin-top:8px;" id="top">
+	<i class="mdui-icon material-icons"></i>
+</div>
 <?php endif; ?>
 <?php if ($this->options->DarkMode): ?>
-<li id="darkmode" onclick="switchDarkMode()"><?php if($_COOKIE['dark']=='1'){echo"亮";}else{echo"暗";} ?></li>
+<div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" onclick="switchDarkMode()" style="display:block;margin-top:8px;">
+	<i class="mdui-icon material-icons">brightness_4</i>
+</div>
 <?php endif; ?>
 <?php if ($this->options->MusicSet && $this->options->MusicUrl): ?>
 <li id="music" class="hidden">
@@ -28,9 +32,10 @@
 <audio id="audio" preload="none"></audio>
 </li>
 <?php endif; ?>
-</ul>
 </div>
 <?php endif; ?>
+
+
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
 <!-- MDUI END -->
@@ -364,7 +369,59 @@ function aln() {
 <?php endif; ?>
 <?php $this->footer(); ?>
 <?php if ($this->options->scrollTop || $this->options->HeadFixed || $this->options->SidebarFixed): ?>
-<script>window.onscroll=function(){var a=document.documentElement.scrollTop||document.body.scrollTop;<?php if ($this->options->scrollTop): ?>var b=document.getElementById("top");if(a>=200){b.removeAttribute("class")}else{b.setAttribute("class","hidden")}b.onclick=function totop(){var a=document.documentElement.scrollTop||document.body.scrollTop;if(a>0){requestAnimationFrame(totop);window.scrollTo(0,a-(a/5))}else{cancelAnimationFrame(totop)}};<?php endif; if ($this->options->HeadFixed): ?>var d=document.getElementById("header");if(a>0&&a<30){d.style.padding=(15-a/2)+"px 0"}else if(a>=30){d.style.padding=0}else{d.removeAttribute("style")};<?php endif; if ($this->options->SidebarFixed): ?>var e=document.getElementById("main");var f=document.getElementById("secondary");var g=document.documentElement.clientHeight;var h=<?php echo $this->options->HeadFixed ? 0 : 41 ?>;if(e.offsetHeight>f.offsetHeight){if(f.offsetHeight>g-71&&a>f.offsetHeight+101-g){if(a<e.offsetHeight+101-g){f.style.marginTop=(a-f.offsetHeight-101+g)+"px"}else{f.style.marginTop=(e.offsetHeight-f.offsetHeight)+"px"}}else if(f.offsetHeight<=g-71&&a>30+h){if(a<e.offsetHeight-f.offsetHeight+h){f.style.marginTop=(a-30-h)+"px"}else{f.style.marginTop=(e.offsetHeight-f.offsetHeight-30)+"px"}}else{f.removeAttribute("style")}}<?php endif; ?>}</script>
+<script>
+    window.onscroll = function() {
+    var a = document.documentElement.scrollTop || document.body.scrollTop; 
+    <?php if ($this -> options -> scrollTop): ?>
+    var b = document.getElementById("top");
+    if (a >= 200) {
+        b.classList.remove("mdui-fab-hide")
+    } else {
+        b.classList.add("mdui-fab-hide")
+    }
+    b.onclick = function totop() {
+        var a = document.documentElement.scrollTop || document.body.scrollTop;
+        if (a > 0) {
+            requestAnimationFrame(totop);
+            window.scrollTo(0, a - (a / 5))
+        } else {
+            cancelAnimationFrame(totop)
+        }
+    };
+    <?php endif; if ($this -> options -> HeadFixed): ?>
+    var d = document.getElementById("header");
+    if (a > 0 && a < 30) {
+        d.style.padding = (15 - a / 2) + "px 0"
+    } else if (a >= 30) {
+        d.style.padding = 0
+    } else {
+        d.removeAttribute("style")
+    }; 
+    <?php endif; if ($this -> options -> SidebarFixed): ?>
+    var e = document.getElementById("main");
+    var f = document.getElementById("secondary");
+    var g = document.documentElement.clientHeight;
+    var h = <?php echo $this->options->HeadFixed ? 0 : 41 ?> ;
+    if (e.offsetHeight > f.offsetHeight) {
+        if (f.offsetHeight > g - 71 && a > f.offsetHeight + 101 - g) {
+            if (a < e.offsetHeight + 101 - g) {
+                f.style.marginTop = (a - f.offsetHeight - 101 + g) + "px"
+            } else {
+                f.style.marginTop = (e.offsetHeight - f.offsetHeight) + "px"
+            }
+        } else if (f.offsetHeight <= g - 71 && a > 30 + h) {
+            if (a < e.offsetHeight - f.offsetHeight + h) {
+                f.style.marginTop = (a - 30 - h) + "px"
+            } else {
+                f.style.marginTop = (e.offsetHeight - f.offsetHeight - 30) + "px"
+            }
+        } else {
+            f.removeAttribute("style")
+        }
+    } 
+    <?php endif; ?>
+}
+</script>
 <?php endif; if ($this->options->MusicSet && $this->options->MusicUrl): ?>
 <script>(function(){var a=document.getElementById("audio");var b=document.getElementById("music");var c=<?php Playlist() ?>;<?php if ($this->options->MusicVol): ?>var d=<?php $this->options->MusicVol(); ?>;if(d>=0&&d<=1){a.volume=d}<?php endif; ?>a.src=c.shift();a.addEventListener('play',g);a.addEventListener('pause',h);a.addEventListener('ended',f);a.addEventListener('error',f);a.addEventListener('canplay',j);function f(){if(!c.length){a.removeEventListener('play',g);a.removeEventListener('pause',h);a.removeEventListener('ended',f);a.removeEventListener('error',f);a.removeEventListener('canplay',j);b.style.display="none";mdui.snackbar({message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',position: 'right-top',timeout: 5000});}else{a.src=c.shift();a.play()}}function g(){b.setAttribute("class","play");a.addEventListener('timeupdate',k)}function h(){b.removeAttribute("class");a.removeEventListener('timeupdate',k)}function j(){c.push(a.src)}function k(){b.getElementsByTagName("i")[0].style.width=(a.currentTime/a.duration*100).toFixed(1)+"%"}b.onclick=function(){if(a.canPlayType('audio/mpeg')!=""||a.canPlayType('audio/ogg;codes="vorbis"')!=""||a.canPlayType('audio/mp4;codes="mp4a.40.5"')!=""){if(a.paused){if(a.error){f()}else{a.play()}}else{a.pause()}}else{mdui.snackbar({message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',position: 'right-top',timeout: 5000});}};b.removeAttribute("class")})();</script>
 <?php endif; if ($this->options->CustomContent): $this->options->CustomContent(); ?>
@@ -396,11 +453,8 @@ function cl(){
     }
 }
 cl();
-console.log("\n %c Initial By JIElive %c http://www.offodd.com %c \n","color:#fff;background:#000;padding:5px 0;border: 1px solid #000;","color:#fff;background:#fff;padding:5px 0;border: 1px solid #000;","")</script>
-<script>
-console.log("\n %c Fly By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;background:#444;padding:5px 0;border: 1px solid #444;","color:#fff;background:#fff;padding:5px 0;border: 1px solid #444;","");</script>
-<script>
-console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;","color:#fff;background:#fff;padding:5px 0;border: 1px solid #6cf;","");</script>
+console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;","color:#fff;background:#fff;padding:5px 0;border: 1px solid #6cf;","");
+</script>
 <?php if ($this->options->DarkMode): ?>
 <?php 
     if ($this->options->DarkModeFD && $this->options->DarkModeDomain) {
@@ -429,15 +483,13 @@ function switchDarkMode(){
     if (night == '0'){
         onDarkMode();
         document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-        console.log('Dark mode on');
+        console.log('Dark mode on 1');
         mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: 'right-top',timeout: 1000});
-        document.getElementById("darkmode").innerHTML="亮";
     }else{
        offDarkMode();
         document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-        console.log('Dark mode off');
+        console.log('Dark mode off 1');
         mdui.snackbar({message: '已关闭 Dark Mode ',position: 'right-top',timeout: 1000});
-        document.getElementById("darkmode").innerHTML="暗";
     }
 }
 (function(){
@@ -445,15 +497,11 @@ function switchDarkMode(){
         if(new Date().getHours() > 22 || new Date().getHours() < 6){
             onDarkMode();
             document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-            console.log('Dark mode on');
-            mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: 'right-top',timeout: 1000});
-            document.getElementById("darkmode").innerHTML="亮";
+            console.log('Dark mode on 2');
         }else{
             offDarkMode();
             document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-            console.log('Dark mode off');
-            mdui.snackbar({message: '已关闭 Dark Mode ',position: 'right-top',timeout: 1000});
-            document.getElementById("darkmode").innerHTML="暗";
+            console.log('Dark mode off 2');
         }
     }else{
         var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
@@ -468,10 +516,8 @@ document.addEventListener('visibilitychange', function () {
     var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
     if(dark == '0'){
         offDarkMode();
-        document.getElementById("darkmode").innerHTML="暗";
     }else if(dark == '1'){
         onDarkMode();
-        document.getElementById("darkmode").innerHTML="亮";
     }
 });
 </script>
