@@ -23,10 +23,13 @@ function threadedComments($comments, $options) {
             </div>
             <div class="mdui-card-header-subtitle"><?php $comments->date(); ?></div>
         </div>
-        <div class="mdui-card-content" style="padding: 0px 16px;">
+        <div class="mdui-card-content mdui-typo" style="padding: 0px 16px;">
             <?php $comments->content(); ?>
         </div>
         <div class="mdui-card-actions" align="right">
+            <?php if ($comments->status == 'waiting') { ?>
+            <span class="mdui-btn mdui-btn-dense">您的评论正等待审核！</span>
+            <?php } ?>
             <span class="mdui-btn mdui-ripple mdui-btn-dense"><?php $comments->reply(); ?></span>
         </div>
         <?php if ($comments->children) { ?>
@@ -35,13 +38,7 @@ function threadedComments($comments, $options) {
         </div>
         <?php } ?>
     </div>
-
-            
-            <?php if ($comments->status == 'waiting') { ?>
-            <em class="comment-awaiting-moderation">您的评论正等待审核！</em>
-            <?php } ?>
-
-    <?php } ?>
+<?php } ?>
 
 <div id="comments">
     <?php $this->comments()->to($comments); ?>
