@@ -31,3 +31,11 @@
 <?php $this->need('comments.php'); ?>
 </div>
 <?php $this->need('footer.php'); ?>
+<script>
+var cards = $(".mdui-col");
+for (var i = 0; i < cards.length; i++) {
+  var target1 = Math.floor(Math.random() * cards.length - 1) + 1;
+  var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
+  cards.eq(target1).before(cards.eq(target2));
+}
+</script>
