@@ -274,7 +274,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
     min-width:150px;
     max-width:50%;
     max-height:50%;
-    border:1em solid transparent;
+    padding:15px 15px 15px 15px;
     border-right-width:.3em;
     overflow:auto
 }
