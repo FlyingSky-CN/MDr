@@ -270,7 +270,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
 }
 #catalog-col {
     right:50%;
-    margin-right:-515px;
+    margin-right:-535px;
     min-width:150px;
     max-width:50%;
     max-height:50%;
@@ -279,7 +279,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
     overflow:auto
 }
 #catalog-col.catalog {
-    margin-right:-535px
+    bottom:25px;
 }
 .post-content .cl-offset {
     position:relative;
