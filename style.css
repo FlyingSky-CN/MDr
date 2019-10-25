@@ -670,6 +670,11 @@ button, input[type=submit], .menu-parent a, .rewards a {
 #archives li {
     margin:5px 0
 }
+@media(min-width:1023px) {
+    #mdrDrawerR {
+        overflow-y: hidden;
+    }
+}
 @media(min-width:601px) {
     .menu-parent .menu-parent .menu-child {
         top:5px;
