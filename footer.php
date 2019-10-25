@@ -20,7 +20,6 @@
             </div>
         </div>
         
-<?php if ($this->options->scrollTop || ($this->options->MusicSet && $this->options->MusicUrl) || $this->options-DarkMode): ?>
 <div class="mdui-fab-fixed" style="z-index: 9999;" id="cornertool">
 <?php if ($this->options->scrollTop): ?>
 <div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" style="display:block;margin-top:8px;" id="top">
@@ -39,7 +38,6 @@
 </li>
 <?php endif; ?>
 </div>
-<?php endif; ?>
 
 
 <!-- MDUI STR -->
@@ -394,37 +392,10 @@ function aln() {
             cancelAnimationFrame(totop)
         }
     };
-    <?php endif; if ($this -> options -> HeadFixed): ?>
-    var d = document.getElementById("header");
-    if (a > 0 && a < 30) {
-        d.style.padding = (15 - a / 2) + "px 0"
-    } else if (a >= 30) {
-        d.style.padding = 0
-    } else {
-        d.removeAttribute("style")
-    }; 
     <?php endif; if ($this -> options -> SidebarFixed): ?>
-    var e = document.getElementById("main");
-    var f = document.getElementById("secondary");
-    var g = document.documentElement.clientHeight;
-    var h = <?php echo $this->options->HeadFixed ? 0 : 41 ?> ;
-    if (e.offsetHeight > f.offsetHeight) {
-        if (f.offsetHeight > g - 71 && a > f.offsetHeight + 101 - g) {
-            if (a < e.offsetHeight + 101 - g) {
-                f.style.marginTop = (a - f.offsetHeight - 101 + g) + "px"
-            } else {
-                f.style.marginTop = (e.offsetHeight - f.offsetHeight) + "px"
-            }
-        } else if (f.offsetHeight <= g - 71 && a > 30 + h) {
-            if (a < e.offsetHeight - f.offsetHeight + h) {
-                f.style.marginTop = (a - 30 - h) + "px"
-            } else {
-                f.style.marginTop = (e.offsetHeight - f.offsetHeight - 30) + "px"
-            }
-        } else {
-            f.removeAttribute("style")
-        }
-    } 
+    var e = document.getElementById("main"),
+        f = document.getElementById("mdrDrawerR");
+        f.style.marginTop = "-" + a + "px"
     <?php endif; ?>
 }
 </script>
@@ -441,21 +412,13 @@ function cl(){
         c=document.getElementById("cornertool"),
         d;
     if(a&&!b){
-        if(c){
-            d=document.createElement("div");
-            d.setAttribute("id","catalog");
-            d.setAttribute("onclick","Catalogswith()");
-            d.setAttribute("class","mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
-            d.setAttribute("style","display:block;margin-top:8px;");
-            d.innerHTML='<i class="mdui-icon material-icons">&#xe5d2;</i>';
-            c.appendChild(d);
-        }else{
-            /*cornertool=false;
-            c=document.createElement("div");
-            c.setAttribute("id","cornertool");
-            c.innerHTML='<ul><li id="catalog" onclick="Catalogswith()"><span></span></li></ul>';
-            document.body.appendChild(c)*/
-        }
+        d=document.createElement("div");
+        d.setAttribute("id","catalog");
+        d.setAttribute("onclick","Catalogswith()");
+        d.setAttribute("class","mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
+        d.setAttribute("style","display:block;margin-top:8px;");
+        d.innerHTML='<i class="mdui-icon material-icons">&#xe5d2;</i>';
+        c.appendChild(d);
     }if(!a&&b){
         cornertool?c.removeChild(b):document.body.removeChild(c)
     }if(a&&b){
