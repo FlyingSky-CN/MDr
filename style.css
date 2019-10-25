@@ -730,13 +730,13 @@ button, input[type=submit], .menu-parent a, .rewards a {
         margin:0
     }
     #catalog-col.catalog {
-        right:50px;
+        right:80px;
         margin:0
     }
 }
 @media(max-width:990px) {
     #catalog-col.catalog {
-        right:45px
+        right:70px
     }
 }
 @media(max-width:768px) {

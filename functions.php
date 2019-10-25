@@ -369,6 +369,19 @@ EOF;
     );
     $form->addInput($mdrPray);
 
+
+    $RandomLinks = new Typecho_Widget_Helper_Form_Element_Radio(
+        'RandomLinks',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        ture,
+        _t('友情链接随机排序'),
+        _t('开启后友情链接将按照随机顺序排列')
+    );
+    $form->addInput($RandomLinks);
+
     $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrHitokoto',
         array(
