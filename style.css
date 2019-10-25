@@ -698,6 +698,11 @@ button, input[type=submit], .menu-parent a, .rewards a {
         margin:0
     }
 }
+@media(max-width:1023px) {
+    #mdrDrawerR {
+        padding-top: 70px;
+    }
+}
 @media(max-width:990px) {
     #catalog-col.catalog {
         right:70px
