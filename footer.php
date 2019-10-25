@@ -21,7 +21,7 @@
         </div>
         
 <?php if ($this->options->scrollTop || ($this->options->MusicSet && $this->options->MusicUrl) || $this->options-DarkMode): ?>
-<div class="mdui-fab-fixed" style="z-index: 9999;">
+<div class="mdui-fab-fixed" style="z-index: 9999;" id="cornertool">
 <?php if ($this->options->scrollTop): ?>
 <div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" style="display:block;margin-top:8px;" id="top">
 	<i class="mdui-icon material-icons"></i>
@@ -436,24 +436,27 @@ function aln() {
 <script>
 var cornertool=true;
 function cl(){
-    var a=document.getElementById("catalog-col"),b=document.getElementById("catalog"),c=document.getElementById("cornertool"),d;
+    var a=document.getElementById("catalog-col"),
+        b=document.getElementById("catalog"),
+        c=document.getElementById("cornertool"),
+        d;
     if(a&&!b){
         if(c){
-            c=c.getElementsByTagName("ul")[0];
-            d=document.createElement("li");
+            d=document.createElement("div");
             d.setAttribute("id","catalog");
             d.setAttribute("onclick","Catalogswith()");
-            d.appendChild(document.createElement("span"));
-            c.appendChild(d)
+            d.setAttribute("class","mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
+            d.setAttribute("style","display:block;margin-top:8px;");
+            c.appendChild(d);
         }else{
-            cornertool=false;
+            /*cornertool=false;
             c=document.createElement("div");
             c.setAttribute("id","cornertool");
             c.innerHTML='<ul><li id="catalog" onclick="Catalogswith()"><span></span></li></ul>';
-            document.body.appendChild(c)
+            document.body.appendChild(c)*/
         }
     }if(!a&&b){
-        cornertool?c.getElementsByTagName("ul")[0].removeChild(b):document.body.removeChild(c)
+        cornertool?c.removeChild(b):document.body.removeChild(c)
     }if(a&&b){
         b.className=a.className
     }

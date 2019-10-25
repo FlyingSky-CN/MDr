@@ -61,7 +61,7 @@ button, input[type=submit] {
     background:#ddd;
     border:0
 }
-button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
+button, input[type=submit], .menu-parent a, .rewards a {
     cursor:pointer
 }
 .browsehappy {
@@ -133,7 +133,7 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     display:block;
     max-height:30px
 }
-.menu-parent ul, #catalog-col, .rewards img, #cornertool li, #music span, #catalog:before, #catalog:after, #catalog span {
+.menu-parent ul, #catalog-col, .rewards img, #music span, #catalog:before, #catalog:after, #catalog span {
     transition:.2s;
     -webkit-transition:.2s
 }
@@ -141,11 +141,11 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     position:relative;
     float:right
 }
-.menu-parent:hover>ul, #catalog-col.catalog, .rewards a:hover img, #cornertool li {
+.menu-parent:hover>ul, #catalog-col.catalog, .rewards a:hover img {
     visibility:visible;
     opacity:1
 }
-.menu-parent ul, #catalog-col, .rewards img, #cornertool .hidden {
+.menu-parent ul, #catalog-col, .rewards img {
     visibility:hidden;
     opacity:0
 }
@@ -189,7 +189,7 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     border-right:7px solid transparent;
     border-bottom:7px solid rgba(238, 238, 238, .95)
 }
-.menu-parent li, #cornertool li:before, .whisper .comment-list .respond, .whisper.permission .respond {
+.menu-parent li, .whisper .comment-list .respond, .whisper.permission .respond {
     display:block
 }
 .menu-parent ul a {
@@ -266,7 +266,7 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     font-size:.875em;
     line-height:1.5
 }
-#catalog-col, #cornertool {
+#catalog-col {
     position:fixed;
     bottom:5px;
     z-index:5000
@@ -540,7 +540,7 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
     padding-right:16px;
     white-space:normal!important;
 }
-.widget-list, .widget-tile, .links, #cornertool ul {
+.widget-list, .widget-tile, .links {
     list-style:none;
     padding:0
 }
@@ -606,31 +606,13 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
 .l_logo i {
     font:16px/1 Segoe UI Symbol
 }
-#footer .links, #cornertool ul {
+#footer .links {
     margin:0;
     text-align:center
 }
 #footer .links li {
     display:inline-block;
     margin:0 3px 2px
-}
-#cornertool {
-    right:50%;
-    margin-right:-580px
-}
-#cornertool .hidden {
-    left:20px
-}
-#cornertool li {
-    position:relative;
-    display:block;
-    left:0;
-    width:40px;
-    height:40px;
-    line-height:40px;
-    margin-top:5px;
-    color:#fff;
-    background:rgba(0, 0, 0, .7)
 }
 #music:before {
     content:"\266b"
@@ -751,19 +733,10 @@ button, input[type=submit], .menu-parent a, .rewards a, #cornertool li {
         right:50px;
         margin:0
     }
-    #cornertool {
-        right:5px;
-        margin:0
-    }
 }
 @media(max-width:990px) {
     #catalog-col.catalog {
         right:45px
-    }
-    #cornertool li {
-        width:35px;
-        height:35px;
-        line-height:35px
     }
 }
 @media(max-width:768px) {
