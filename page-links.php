@@ -27,11 +27,6 @@
 </div>
 <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
 <?php Links(); ?>
-</div>
-<?php $this->need('comments.php'); ?>
-</div>
-<?php $this->need('footer.php'); ?>
-<?php if ($this->options->RandomLinks): ?>
 <script>
 var cards = $(".mdui-col");
 for (var i = 0; i < cards.length; i++) {
@@ -40,4 +35,9 @@ for (var i = 0; i < cards.length; i++) {
   cards.eq(target1).before(cards.eq(target2));
 }
 </script>
+</div>
+<?php $this->need('comments.php'); ?>
+</div>
+<?php $this->need('footer.php'); ?>
+<?php if ($this->options->RandomLinks): ?>
 <?php endif; ?>
