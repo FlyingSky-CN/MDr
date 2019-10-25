@@ -12,9 +12,6 @@ ul li p, #footer p, .whisper .comment-author {
 h1.post-title {
     font-size:1.5em
 }
-#catalog-col b {
-    font-size:1.2em
-}
 table {
     width:100%;
     border-collapse:collapse;
@@ -133,7 +130,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
     display:block;
     max-height:30px
 }
-.menu-parent ul, #catalog-col, .rewards img, #music span, #catalog:before, #catalog:after, #catalog span {
+.menu-parent ul, #catalog-col, .rewards img, #music span {
     transition:.2s;
     -webkit-transition:.2s
 }
@@ -277,24 +274,12 @@ button, input[type=submit], .menu-parent a, .rewards a {
     min-width:150px;
     max-width:50%;
     max-height:50%;
-    color:#eee;
-    background:rgba(0, 0, 0, .7);
     border:1em solid transparent;
     border-right-width:.3em;
     overflow:auto
 }
 #catalog-col.catalog {
     margin-right:-535px
-}
-#catalog-col>ul {
-    margin:1em .5em 0 0
-}
-#catalog-col ul {
-    padding-left:20px
-}
-#catalog-col a {
-    color:#eee;
-    border:0
 }
 .post-content .cl-offset {
     position:relative;
@@ -666,27 +651,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     height:100%;
     width:0;
     background:#eee
-}
-#catalog span, #catalog:before, #catalog:after {
-    position:absolute;
-    display:block;
-    top:50%;
-    left:50%;
-    margin:-1px 0 0 -6px;
-    width:12px;
-    height:1px;
-    background:currentColor
-}
-#catalog:before {
-    content:"";
-    margin-top:-5px
-}
-#catalog:after {
-    content:"";
-    margin-top:3px
-}
-#catalog.catalog {
-    left:-5px
 }
 #catalog.catalog:before {
     margin:-4px 0 0 -11px;

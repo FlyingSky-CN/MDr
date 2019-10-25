@@ -369,19 +369,6 @@ EOF;
     );
     $form->addInput($mdrPray);
 
-
-    $RandomLinks = new Typecho_Widget_Helper_Form_Element_Radio(
-        'RandomLinks',
-        array(
-            true => _t('开'),
-            false => _t('关')
-        ),
-        ture,
-        _t('友情链接随机排序'),
-        _t('开启后友情链接将按照随机顺序排列')
-    );
-    $form->addInput($RandomLinks);
-
     $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrHitokoto',
         array(
@@ -645,7 +632,7 @@ function getCatalog() {
 		for ($i=0; $i<=$to_depth; $i++) {
 			$index .= '</li>'."\n".'</ul>'."\n";
 		}
-	$index = '<div id="catalog-col">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("catalog");document.getElementById("catalog").classList.toggle("catalog")}</script>'."\n".'</div>'."\n";
+	$index = '<div id="catalog-col" class="mdui-card">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("catalog");document.getElementById("catalog").classList.toggle("catalog")}</script>'."\n".'</div>'."\n";
 	}
 	return $index;
 }
