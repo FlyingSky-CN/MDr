@@ -31,6 +31,7 @@
 <?php $this->need('comments.php'); ?>
 </div>
 <?php $this->need('footer.php'); ?>
+<?php if ($this->options->RandomLinks): ?>
 <script>
 var cards = $(".mdui-col");
 for (var i = 0; i < cards.length; i++) {
@@ -39,3 +40,4 @@ for (var i = 0; i < cards.length; i++) {
   cards.eq(target1).before(cards.eq(target2));
 }
 </script>
+<?php endif; ?>
