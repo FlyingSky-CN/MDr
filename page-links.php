@@ -28,7 +28,7 @@
 <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
 <?php Links(); ?>
 <script>
-var cards = $(".mdui-col");
+var cards = document.getElementById("mdrLinks");
 for (var i = 0; i < cards.length; i++) {
   var target1 = Math.floor(Math.random() * cards.length - 1) + 1;
   var target2 = Math.floor(Math.random() * cards.length - 1) + 1;

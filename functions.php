@@ -833,7 +833,7 @@ function Links($short = false) {
                 $link .= '<a'.($url ? ' href="'.$url.'"' : '').($icon==1&&$url ? ' class="l_logo"' : '').' title="'.$description.'" target="_blank"><span>'.($url ? $name : '<del>'.$name.'</del>').'</span></a>'."\n";
             } else {
                 $link .= '
-                <div class="mdui-col" style="padding-top: 16px;">
+                <div class="mdui-col" id="mdrLinks" style="padding-top: 16px;">
                     <a href="'.$url.'" target="_blank">
                         <div class="mdui-card mdui-card-media">
                             <img class="link-logo" style="min-height: 100px;background: #fff" src="'.$logo.'"/>
