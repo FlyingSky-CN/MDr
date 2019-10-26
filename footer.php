@@ -393,9 +393,11 @@ function aln() {
         }
     };
     <?php endif; if ($this -> options -> SidebarFixed): ?>
-    var e = document.getElementById("main"),
-        f = document.getElementById("mdrDrawerR");
-        f.style.marginTop = "-" + a + "px"
+	if ($(window).width() > 1007){
+		var e = document.getElementById("main"),
+			f = document.getElementById("mdrDrawerR");
+			f.style.marginTop = "-" + a + "px"
+	}
     <?php endif; ?>
 }
 </script>
