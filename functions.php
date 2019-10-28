@@ -163,8 +163,12 @@ EOF;
         _t('主题强调色 ( Dark Mode )'),
         _t('默认为 pink ，详情参见 <a href="https://www.mdui.org/docs/color" target="_blank">颜色和主题 - MDUI 文档</a>')
     );
-    $form->addInput($mdrAccentD);
-    
+	$form->addInput($mdrAccentD);
+	
+	$mdrChrome = new Typecho_Widget_Helper_Form_Element_Text('mdrChrome', NULL, NULL, _t('Chrome 顶栏颜色'));
+	$mdrChrome->input->setAttribute('class', 'mini');
+	$form->addInput($mdrChrome);
+
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>'));
 	$form->addInput($mdrNotice);
     
