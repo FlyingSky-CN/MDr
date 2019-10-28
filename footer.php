@@ -444,12 +444,16 @@ console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;bac
         $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         $('.mdui-appbar').css('background-color','#212121');
+		var meta = document.getElementsByTagName('meta');
+		meta["theme-color"].setAttribute('content','#000000');
     }
     function offDarkMode() {
         $('body').removeClass('mdui-theme-layout-dark');
         $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         $('.mdui-appbar').css('background-color','#ffffff');
+		var meta = document.getElementsByTagName('meta');
+		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
     }
 </script>
 <script>
