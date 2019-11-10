@@ -392,10 +392,28 @@ EOF;
             false => _t('关')
         ),
         true,
-        _t('一言 API'),
-        _t('显示在网站底部，API by <a href="https://blog.lwl12.com/read/hitokoto-api.html" target="_blank">LWL12</a>')
+        _t('一言 API 开关'),
+        _t('显示在网站底部，API by <a href="https://hitokoto.cn" target="_blank">hitokoto.cn</a>')
     );
 	$form->addInput($mdrHitokoto);
+
+	$mdrHitokotoc = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrHitokotoc', 
+		array(
+		'' => _t('随机'),
+		'a' => _t('动画'),
+		'b' => _t('漫画'),
+		'c' => _t('游戏'), 
+		'd' => _t('小说'), 
+		'e' => _t('原创'), 
+		'f' => _t('来自网络'), 
+		'g' => _t('其他')
+		),
+		'',
+        _t('一言 API 分类'),
+        _t('默认随机显示')
+		);
+	$form->addInput($mdrHitokotoc);
 
 	$Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox('Breadcrumbs', 
 	array('Postshow' => _t('文章内显示'),

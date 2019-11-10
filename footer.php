@@ -5,7 +5,8 @@
                 <?=$this->options->ButtomText?>
                 <?php endif; ?>
 		  <?php if ($this->options->mdrHitokoto): ?>
-                <script type="text/javascript" src="https://api.lwl12.com/hitokoto/v1?encode=js&charset=utf-8"></script><span id="lwlhitokoto"><script>lwlhitokoto()</script></span><br>
+				<script src="https://v1.hitokoto.cn/?encode=js&c=<?php $this->options->mdrHitokotoc(); ?>&select=%23hitokoto" defer></script>
+				<span id="hitokoto">一言获取中...</span><br>
                 <?php endif;  ?>
                 <?php if ($this->options->SiteTime): ?>
                 博客已上线 <span id="runtime_span"></span> .
