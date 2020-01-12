@@ -17,7 +17,7 @@ function threadedComments($comments, $options) {
 		}
 	}
 ?>
-<li id="<?php $comments->theId(); ?>" class="comment-body<?php
+<li id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php
 	if ($comments->levels > 0) {
 		echo ' comment-child';
 	} else {

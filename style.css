@@ -433,7 +433,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     border:0
 }
 .whisper .comment-list li.comment-parent {
-    background:0;
     border:0;
     border-bottom:1px solid #eee;
     margin-top:10px;
