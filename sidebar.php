@@ -1,13 +1,5 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
-<div class="mdui-appbar mdui-hidden-md-up">
-    <div class="mdui-toolbar">
-        <a class="mdui-btn mdui-btn-icon">
-            <i class="mdui-icon material-icons">close</i>
-        </a>
-        <a class="mdui-typo-title"><?php if ($this->options->customTitle): $this->options->customTitle(); else: $this->options->title(); endif; ?></a>
-    </div>
-</div>
 <div class="widget">
     <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
         <div class="mdui-textfield mdui-textfield-floating-label">

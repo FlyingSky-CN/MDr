@@ -684,7 +684,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
 }
 @media(max-width:1023px) {
     #mdrDrawerR {
-        padding-top: 70px;
+        padding-top: 56px;
     }
 }
 @media(max-width:990px) {
