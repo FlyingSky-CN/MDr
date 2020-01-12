@@ -35,8 +35,8 @@
 <?php if ($this->options->MusicSet && $this->options->MusicUrl): ?>
 <div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" style="display:block;margin-top:8px;">
 <div class="hidden" id="music">
-<div class="mdui-icon material-icons">music_note</div>
 <span><i></i></span>
+<div class="mdui-icon material-icons">music_note</div>
 <audio id="audio" preload="none"></audio>
 </div>
 </div>
