@@ -29,11 +29,11 @@
 <?php Links(); ?>
 <?php if ($this->options->RandomLinks): ?>
 <script>
-var cards = document.getElementById("mdrLinks");
+var cards = document.getElementsByClassName('mdui-col');
 for (var i = 0; i < cards.length; i++) {
   var target1 = Math.floor(Math.random() * cards.length - 1) + 1;
   var target2 = Math.floor(Math.random() * cards.length - 1) + 1;
-  cards.eq(target1).before(cards.eq(target2));
+  cards[target1].before(cards[target2]);
 }
 </script>
 <?php endif; ?>
