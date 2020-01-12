@@ -427,8 +427,6 @@ function cl(){
         c.appendChild(d);
     }if(!a&&b){
         cornertool?c.removeChild(b):document.body.removeChild(c)
-    }if(a&&b){
-        b.className=a.className
     }
 }
 cl();
