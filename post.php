@@ -32,10 +32,10 @@ if ($time>=$lock) {
 ?>
 <script defer>
 <?php if ($_GET['_pjax']) { ?>
-mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: 'right-top',timeout:5000});
+mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: '<?=$this->options->mdrSnackbar?>',timeout:5000});
 <?php } else { ?>
 window.onload=function (){
-    mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: 'right-top',timeout:5000});
+    mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: '<?=$this->options->mdrSnackbar?>',timeout:5000});
 }
 <?php } ?>
 </script>

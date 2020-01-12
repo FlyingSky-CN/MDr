@@ -125,7 +125,7 @@ function ac() {
 	$('#comment-form').submit(function() {
         mdui.snackbar({
             message: '评论正在发送中...',
-            position: 'right-top',
+            position: '<?=$this->options->mdrSnackbar?>',
             timeout: 5000
         });
 		$.ajax({
@@ -135,7 +135,7 @@ function ac() {
 			error: function() {
                 mdui.snackbar({
                     message: '提交失败，请检查网络并重试或者联系管理员。',
-                    position: 'right-top',
+                    position: '<?=$this->options->mdrSnackbar?>',
                     timeout: 5000
                 });
 				return false
@@ -144,7 +144,7 @@ function ac() {
 				if (!$(g, d).length) {
 					mdui.snackbar({
                         message: '您输入的内容不符合规则或者回复太频繁，请修改内容或者稍等片刻。',
-                        position: 'right-top',
+                        position: '<?=$this->options->mdrSnackbar?>',
                         timeout: 5000
                     });
 					return false
@@ -176,7 +176,7 @@ function ac() {
 					c();
 					mdui.snackbar({
                         message: '评论已发送。',
-                        position: 'right-top',
+                        position: '<?=$this->options->mdrSnackbar?>',
                         timeout: 5000
                     });
 					if (k) {
@@ -244,7 +244,7 @@ function apt() {
 					$(ap_m).removeAttr("class").text("- 阅读全文 -");
 					mdui.snackbar({
                         message: '提交失败，请检查网络并重试或者联系管理员。',
-                        position: 'right-top',
+                        position: '<?=$this->options->mdrSnackbar?>',
                         timeout: 3000
                     });
 					ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
@@ -264,7 +264,7 @@ function aps() {
 			$(ap_m).removeAttr("class").text("- 阅读全文 -");
 			mdui.snackbar({
                 message: '提交失败，请检查网络并重试或者联系管理员。',
-                position: 'right-top',
+                position: '<?=$this->options->mdrSnackbar?>',
                 timeout: 3000
             });
 			ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
@@ -275,7 +275,7 @@ function aps() {
 				$(ap_m).removeAttr("class").text("- 阅读全文 -");
 				mdui.snackbar({
                     message: '对不起,您输入的密码错误。',
-                    position: 'right-top',
+                    position: '<?=$this->options->mdrSnackbar?>',
                     timeout: 3000
                 });
 				ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 10);
@@ -341,7 +341,7 @@ function aln() {
 			error: function() {
 				mdui.snackbar({
                     message: '请求失败，请检查网络并重试或者联系管理员。',
-                    position: 'right-top',
+                    position: '<?=$this->options->mdrSnackbar?>',
                     timeout: 3000
                 });
 				$(a).removeAttr("class").text("查看更多");
@@ -403,7 +403,7 @@ function aln() {
 }
 </script>
 <?php endif; if ($this->options->MusicSet && $this->options->MusicUrl): ?>
-<script>(function(){var a=document.getElementById("audio");var b=document.getElementById("music");var c=<?php Playlist() ?>;<?php if ($this->options->MusicVol): ?>var d=<?php $this->options->MusicVol(); ?>;if(d>=0&&d<=1){a.volume=d}<?php endif; ?>a.src=c.shift();a.addEventListener('play',g);a.addEventListener('pause',h);a.addEventListener('ended',f);a.addEventListener('error',f);a.addEventListener('canplay',j);function f(){if(!c.length){a.removeEventListener('play',g);a.removeEventListener('pause',h);a.removeEventListener('ended',f);a.removeEventListener('error',f);a.removeEventListener('canplay',j);b.style.display="none";mdui.snackbar({message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',position: 'right-top',timeout: 5000});}else{a.src=c.shift();a.play()}}function g(){b.setAttribute("class","play");a.addEventListener('timeupdate',k)}function h(){b.removeAttribute("class");a.removeEventListener('timeupdate',k)}function j(){c.push(a.src)}function k(){b.getElementsByTagName("i")[0].style.width=(a.currentTime/a.duration*100).toFixed(1)+"%"}b.onclick=function(){if(a.canPlayType('audio/mpeg')!=""||a.canPlayType('audio/ogg;codes="vorbis"')!=""||a.canPlayType('audio/mp4;codes="mp4a.40.5"')!=""){if(a.paused){if(a.error){f()}else{a.play()}}else{a.pause()}}else{mdui.snackbar({message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',position: 'right-top',timeout: 5000});}};b.removeAttribute("class")})();</script>
+<script>(function(){var a=document.getElementById("audio");var b=document.getElementById("music");var c=<?php Playlist() ?>;<?php if ($this->options->MusicVol): ?>var d=<?php $this->options->MusicVol(); ?>;if(d>=0&&d<=1){a.volume=d}<?php endif; ?>a.src=c.shift();a.addEventListener('play',g);a.addEventListener('pause',h);a.addEventListener('ended',f);a.addEventListener('error',f);a.addEventListener('canplay',j);function f(){if(!c.length){a.removeEventListener('play',g);a.removeEventListener('pause',h);a.removeEventListener('ended',f);a.removeEventListener('error',f);a.removeEventListener('canplay',j);b.style.display="none";mdui.snackbar({message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',position: '<?=$this->options->mdrSnackbar?>',timeout: 5000});}else{a.src=c.shift();a.play()}}function g(){b.setAttribute("class","play");a.addEventListener('timeupdate',k)}function h(){b.removeAttribute("class");a.removeEventListener('timeupdate',k)}function j(){c.push(a.src)}function k(){b.getElementsByTagName("i")[0].style.width=(a.currentTime/a.duration*100).toFixed(1)+"%"}b.onclick=function(){if(a.canPlayType('audio/mpeg')!=""||a.canPlayType('audio/ogg;codes="vorbis"')!=""||a.canPlayType('audio/mp4;codes="mp4a.40.5"')!=""){if(a.paused){if(a.error){f()}else{a.play()}}else{a.pause()}}else{mdui.snackbar({message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',position: '<?=$this->options->mdrSnackbar?>',timeout: 5000});}};b.removeAttribute("class")})();</script>
 <?php endif; if ($this->options->CustomContent): $this->options->CustomContent(); ?>
 
 <?php endif; ?>
@@ -464,12 +464,12 @@ function switchDarkMode(){
         onDarkMode();
         document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
         console.log('Dark mode on 1');
-        mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: 'right-top',timeout: 1000});
+        mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
     }else{
        offDarkMode();
         document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
         console.log('Dark mode off 1');
-        mdui.snackbar({message: '已关闭 Dark Mode ',position: 'right-top',timeout: 1000});
+        mdui.snackbar({message: '已关闭 Dark Mode ',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
     }
 }
 (function(){

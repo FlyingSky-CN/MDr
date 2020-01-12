@@ -354,7 +354,23 @@ EOF;
     
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
 	$form->addInput($mdrNotice);
-    
+	
+	$mdrSnackbar = new Typecho_Widget_Helper_Form_Element_Select(
+        'mdrSnackbar',
+        array(
+            'bottom' => _t('下方'),
+            'top' => _t('上方'),  
+            'left-bottom' => _t('左下角'),
+            'left-top' => _t('左上角'),
+            'right-bottom' => _t('右下角'), 
+            'right-top' => _t('右上角')
+        ),
+        'right-bottom',
+        _t('Snackbar 位置'),
+        _t('默认为右下角，即所谓的 “通知系统” 弹出的通知的位置')
+    );
+    $form->addInput($mdrSnackbar);
+
     $mdrCornertool = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrCornertool',
         array(
