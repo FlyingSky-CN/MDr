@@ -119,22 +119,27 @@ function mdrcd() {
 function ac() {
 	$body = $('html,body');
 	var g = '.comment-list',
-	h = '.comment-num',
-	i = '.comment-reply a',
-	j = '#textarea',
-	k = '',
-	l = '';
+		h = '.comment-num',
+		i = '.comment-reply a',
+		j = '#textarea',
+		k = '',
+		l = '';
 	c();
 	$('#comment-form').submit(function() {
+		var ar = $(this).serializeArray();
+		console.log(ar);
         mdui.snackbar({
             message: '评论正在发送中...',
             position: '<?=$this->options->mdrSnackbar?>',
             timeout: 5000
-        });
+		});
+		if (ar[1]['name'] == 'parent') {
+			l = 'comment-'+ar[1]['value'];
+		}
 		$.ajax({
 			url: $(this).attr('action'),
 			type: 'post',
-			data: $(this).serializeArray(),
+			data: ar,
 			error: function() {
                 mdui.snackbar({
                     message: '提交失败，请检查网络并重试或者联系管理员。',
@@ -161,7 +166,7 @@ function ac() {
 					if (l) {
 						d = $('#comment-' + k, d).hide();
 						if ($('#' + l).find(".comment-children").length <= 0) {
-							$('#' + l).append("<div class='comment-children'><ol class='comment-list'><\/ol><\/div>")
+							$('#' + l).append("<div class='comment-children' style='padding: 0px 8px;'><ol class='comment-list'><\/ol><\/div>")
 						}
 						if (k) $('#' + l + " .comment-children .comment-list").prepend(d);
 						l = ''
@@ -184,12 +189,12 @@ function ac() {
                     });
 					if (k) {
 						$body.animate({
-							scrollTop: $('#comment-' + k).offset().top - 50
+							scrollTop: $('#comment-' + k).offset().top - 72
 						},
 						300)
 					} else {
 						$body.animate({
-							scrollTop: $('#comments').offset().top - 50
+							scrollTop: $('#comments').offset().top - 72
 						},
 						300)
 					}
