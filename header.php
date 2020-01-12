@@ -121,7 +121,7 @@
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('style.css?v=12') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=13') ?>" />
     </head>
     <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">

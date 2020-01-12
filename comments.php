@@ -57,7 +57,7 @@ function threadedComments($comments, $options) {
     <?php if($this->user->hasLogin()): ?>
     <p>登录身份: <a href="<?php $this->options->profileUrl(); ?>" target="_blank"><?php $this->user->screenName(); ?></a>. <a href="<?php $this->options->logoutUrl(); ?>" title="Logout"<?php if ($this->options->PjaxOption): ?> no-pjax <?php endif; ?>>退出 &raquo;</a></p>
     <?php endif; ?>
-    <p <?php if(!$this->user->hasLogin()): ?>class="textarea"<?php endif; ?>>
+    <p <?php if(!$this->user->hasLogin()): ?>class="textarea"<?php else: ?>style="margin-bottom:5px"<?php endif; ?>>
     <textarea name="text" id="textarea" placeholder="加入讨论..." required ><?php $this->remember('text'); ?></textarea>
     </p>
     <?php if(!$this->user->hasLogin()): ?>
@@ -113,7 +113,10 @@ function threadedComments($comments, $options) {
                     if (null != textarea && 'text' == textarea.name) {
                         textarea.focus()
                     }
-                    response.style.padding='8px 8px 0px 8px';
+                    response.style.padding='8px';
+                    <?php if(!$this->user->hasLogin()): ?>
+                    response.style.paddingBottom='5px';
+                    <?php endif; ?>
                     return false
                 },
                 cancelReply: function() {
