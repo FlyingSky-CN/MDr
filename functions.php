@@ -165,7 +165,13 @@ EOF;
     );
 	$form->addInput($mdrAccentD);
 	
-	$mdrChrome = new Typecho_Widget_Helper_Form_Element_Text('mdrChrome', NULL, NULL, _t('Chrome 顶栏颜色'));
+	$mdrChrome = new Typecho_Widget_Helper_Form_Element_Text(
+		'mdrChrome', 
+		NULL, 
+		'#ffffff', 
+		_t('Chrome 顶栏颜色'),
+		_t('即未开启 Dark Mode 时的 <code>meta["theme-color"]</code> 的值，为十六进制颜色码，默认为 <code>#ffffff</code>')
+	);
 	$mdrChrome->input->setAttribute('class', 'mini');
 	$form->addInput($mdrChrome);
 
