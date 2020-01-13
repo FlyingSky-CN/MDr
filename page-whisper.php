@@ -69,13 +69,18 @@ echo $commentClass;
 </div>
 <?php endif; ?>
 <div class="mdui-card" style="margin-top:20px;">
+	<div class="mdui-card-media">
+        <?php echo postThumb($this); ?>
+    </div>
     <div class="mdui-card-primary">
         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-        <div class="mdui-card-primary-subtitle">Archives</div>
+        <div class="mdui-card-primary-subtitle">Whisper</div>
     </div>
+	<?php if ($this->content()) { ?>
     <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
         <?php $this->content(); ?>
-    </div>
+	</div>
+	<?php } ?>
 </div>
 <div id="comments" class="whisper<?php if($this->user->pass('editor', true)): ?> permission<?php endif; ?>">
 <?php $this->comments()->to($comments); ?>
