@@ -4,7 +4,7 @@
  * 
  * @package MDr
  * @author FlyingSky
- * @version 1.0.2
+ * @version 1.0.3
  * @link https://fsky7.com/
  */
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
