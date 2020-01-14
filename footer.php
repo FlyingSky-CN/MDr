@@ -112,7 +112,17 @@ function() {
 		ga('send', 'pageview', location.pathname + location.search)
 	} 
 	<?php endif; ?>
+	<?php if ($this->options->ViewImg): ?>mdrfa();<?php endif; ?>
 });
+<?php if ($this->options->ViewImg): ?>
+function mdrfa() {
+	$('#post .mdui-card-content img').each(function(){
+		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
+		$(this).remove();
+	});
+}
+mdrfa();
+<?php endif; ?>
 function mdrcd() {
     if ( document.body.clientWidth < 1024 ) {
         mdui.Drawer('#mdrDrawerL').close();
