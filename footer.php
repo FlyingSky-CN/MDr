@@ -51,6 +51,9 @@
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
 <?php endif; if ($this->options->PjaxOption): ?>
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js<?php endif; ?>"></script>
+<?php if ($this->options->ViewImg): ?>
+<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js<?php endif; ?>"></script>
+<?php endif; ?>
 <script>
 jQuery.fn.Shake = function(n, d) {
 	this.each(function() {
@@ -109,7 +112,17 @@ function() {
 		ga('send', 'pageview', location.pathname + location.search)
 	} 
 	<?php endif; ?>
+	<?php if ($this->options->ViewImg): ?>mdrfa();<?php endif; ?>
 });
+<?php if ($this->options->ViewImg): ?>
+function mdrfa() {
+	$('#post .mdui-card-content img').each(function(){
+		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
+		$(this).remove();
+	});
+}
+mdrfa();
+<?php endif; ?>
 function mdrcd() {
     if ( document.body.clientWidth < 1024 ) {
         mdui.Drawer('#mdrDrawerL').close();
