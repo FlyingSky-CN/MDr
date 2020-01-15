@@ -1239,3 +1239,20 @@ function WordCount($cid) {
     $text = preg_replace("/[^\x{4e00}-\x{9fa5}]/u","",$rs['text']);
     echo mb_strlen($text,'UTF-8').'字';
 }
+
+/* function 许可协议 */
+function license($license) {
+	$licenselist = array(
+        'BY' => '署名 4.0 国际 (CC BY 4.0)',
+        'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
+        'BY-ND' => '署名-禁止演绎 4.0 国际 (CC BY-ND 4.0)',
+        'BY-NC' => '署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)',
+        'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
+		'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
+	);
+	if (isset($license) && $license != 'NONE') {
+		echo '<div class="copyright">本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/'.strtolower($license).'/4.0/deed.zh" target="_blank" class="external">'.$licenselist[$license].'</a> 许可协议进行许可。</div>';
+	} else {
+		echo '<div class="copyright">本篇文章未指定许可协议。</div>';
+	}
+}
