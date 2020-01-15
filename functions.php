@@ -628,6 +628,18 @@ EOF;
 	);
 	$form->addInput($mdrPostTitle);
 
+	$mdrPostThumb = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrPostThumb', 
+		array(
+			true => _t('显示'),
+			false => _t('不显示')
+		),
+		true,
+		_t('文章内页缩略图显示'),
+		_t('默认显示')
+	);
+	$form->addInput($mdrPostThumb);
+
 	$subTitle = new Typecho_Widget_Helper_Form_Element_Text(
 		'subTitle',
 		NULL,
