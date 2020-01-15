@@ -1,28 +1,18 @@
 <?php
 if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-define('INITIAL_VERSION_NUMBER', '1.0.3');
+define('MDR_VERSION', '1.0.3 Dev');
 
 if (Helper::options()->GravatarUrl) define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 function themeConfig($form) {
     echo <<<EOF
-    
     <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
-    <style>
-        h2 {
-            margin-bottom:10px;
-        }
-        h2 small {
-            opacity:0.5;
-        }
-        #mdr-botnav.slideDown {bottom: -365px;}
-        #mdr-botnav.slideUp {bottom: 0;}
-    </style>
-    <p style="font-size:14px;">
+    <style>h2{margin-bottom:10px}h2 small{opacity:0.5}#mdr-botnav.slideDown{bottom:-365px}#mdr-botnav.slideUp{bottom:0}</style>
+    <p>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
-        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code>1.0.3</code></span>
-        <a href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
+        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
+        <a style="font-size:14px;" href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
     </p>
     <div style="position: fixed;right: 0;left: 0;min-height: 36px;background-color: #292d33;display: flex;padding: 0;margin: 0 auto;overflow: hidden;white-space: nowrap;z-index: 9999;padding: 0 10px;transition: all 1s ease-in-out;" id="mdr-botnav" class="row slideUp">
         <nav id="typecho-nav-list">
@@ -78,8 +68,8 @@ function themeConfig($form) {
             }).init();    
         }());
     </script>
-    
 EOF;
+	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>";
     
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
