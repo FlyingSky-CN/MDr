@@ -120,6 +120,7 @@ function mdrfa() {
 		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
 		$(this).remove();
 	});
+	$.fancybox.defaults.buttons = ["zoom", "download", "thumbs", "close"];
 }
 mdrfa();
 <?php endif; ?>

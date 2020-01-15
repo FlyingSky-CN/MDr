@@ -10,6 +10,11 @@
 </div>
 <?php endif; ?>
 <div id="post" class="mdui-card <?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top:20px;">
+    <?php if ($this->options->mdrPostThumb): ?>
+    <div class="mdui-card-media">
+        <?php echo postThumb($this); ?>
+    </div>
+    <?php endif; ?>
     <div class="mdui-card-primary">
         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
         <div class="mdui-card-primary-subtitle">
