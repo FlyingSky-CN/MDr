@@ -1043,6 +1043,7 @@ function FindContents($val = NULL, $order = 'order', $sort = 'a', $publish = NUL
 	return $db->fetchAll($select, array(Typecho_Widget::widget('Widget_Abstract_Contents'), 'filter'));
 }
 
+/* function 输出轻语 */
 function Whisper($sidebar = NULL) {
 	$db = Typecho_Db::get();
 	$options = Helper::options();
