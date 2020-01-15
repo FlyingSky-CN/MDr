@@ -1,76 +1,37 @@
-<?php
-if (!defined('__TYPECHO_ROOT_DIR__')) exit;
+<?php if(!defined('__TYPECHO_ROOT_DIR__'))exit;
+if(Helper::options()->GravatarUrl)define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
+/* MDr Theme Version */
 define('MDR_VERSION', '1.0.3 Dev');
 
-if (Helper::options()->GravatarUrl) define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
-
+/* MDr themeConfig */
 function themeConfig($form) {
+
     echo <<<EOF
     <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
-    <style>h2{margin-bottom:10px}h2 small{opacity:0.5}#mdr-botnav.slideDown{bottom:-365px}#mdr-botnav.slideUp{bottom:0}</style>
+    <style>h2{margin-bottom:10px}h2 small{opacity:0.5}#mdr-botnav{position:fixed;right:0;left:0;bottom:0;min-height:36px;background-color:#292d33;display:flex;padding:0;margin:0 auto;overflow:hidden;white-space:nowrap;z-index:9999;padding:0 10px;transition:all 1s ease-in-out;}#mdr-botnav.slideDown{transform: translate3d(0,100%,0)!important}#mdr-botnav.slideUp{ransform: translate3d(0,0,0)!important;}</style>
     <p>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
         <a style="font-size:14px;" href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
     </p>
-    <div style="position: fixed;right: 0;left: 0;min-height: 36px;background-color: #292d33;display: flex;padding: 0;margin: 0 auto;overflow: hidden;white-space: nowrap;z-index: 9999;padding: 0 10px;transition: all 1s ease-in-out;" id="mdr-botnav" class="row slideUp">
+    <div id="mdr-botnav" class="row">
         <nav id="typecho-nav-list">
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-color">主题色</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-cdn">CDN</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-nav">边栏</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-pjax">Ajax</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-dark">黑暗模式</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-music">背景音乐</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-func">附加功能</a>
-                </li>
-            </ul>
-            <ul class="root">
-                <li class="parent">
-                    <a href="#mdr-custom">自定义</a>
-                </li>
-            </ul>
+            <ul class="root"><li class="parent"><a href="#mdr-color">主题色</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-cdn">CDN</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-nav">边栏</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-pjax">Ajax</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-dark">黑暗模式</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-music">背景音乐</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-func">附加功能</a></li></ul>
+            <ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
         </nav>
     </div>
-    <script>
-        (function() {
-            new Headroom(document.querySelector("#mdr-botnav"), { 
-                classes: {
-                    pinned: "slideDown", // 向上滚动时设置的class
-                    unpinned: "slideUp" // 向下滚动时所设置的class
-                }
-            }).init();    
-        }());
-    </script>
+    <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
 	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>";
-    
+	
+	/* MDr Color 主题色设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
     
@@ -165,7 +126,12 @@ EOF;
 	$mdrChrome->input->setAttribute('class', 'mini');
 	$form->addInput($mdrChrome);
 
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>'));
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox(
+		'mdrNotice',
+		NULL,
+		NULL,
+		_t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>')
+	);
 	$form->addInput($mdrNotice);
     
     $mdrMDUICDN = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -181,20 +147,33 @@ EOF;
     );
     $form->addInput($mdrMDUICDN);
     
-    $cjCDN = new Typecho_Widget_Helper_Form_Element_Radio('cjCDN', 
-	array('bc' => _t('BootCDN'),
-	'cf' => _t('CDNJS'),
-	'jd' => _t('jsDelivr')),
-	'bc', _t('其他公共静态资源来源'), _t('默认BootCDN，请根据需求选择合适来源'));
+    $cjCDN = new Typecho_Widget_Helper_Form_Element_Radio(
+		'cjCDN', 
+		array(
+			'bc' => _t('BootCDN'),
+			'cf' => _t('CDNJS'),
+			'jd' => _t('jsDelivr')
+		),
+		'bc',
+		_t('其他公共静态资源来源'),
+		_t('默认BootCDN，请根据需求选择合适来源')
+	);
 	$form->addInput($cjCDN);
 
-	$GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio('GravatarUrl', 
-	array(false => _t('官方源'),
-	'https://cn.gravatar.com/avatar/' => _t('国内源'),
-	'https://cdn.v2ex.com/gravatar/' => _t('V2EX源')),
-	false, _t('Gravatar 头像源'), _t('默认官方源，请根据需求选择合适来源'));
+	$GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio(
+		'GravatarUrl', 
+		array(
+			false => _t('官方源'),
+			'https://cn.gravatar.com/avatar/' => _t('国内源'),
+			'https://cdn.v2ex.com/gravatar/' => _t('V2EX源')
+		),
+		false,
+		_t('Gravatar 头像源'),
+		_t('默认官方源，请根据需求选择合适来源')
+	);
 	$form->addInput($GravatarUrl);
 	
+	/* MDr Nav 边栏设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-nav">边栏设置 <small>Nav</small></h2>'));
 	$form->addInput($mdrNotice);
     
@@ -234,10 +213,16 @@ EOF;
     );
     $form->addInput($mdrNavColorBut);
     
-    $SidebarFixed = new Typecho_Widget_Helper_Form_Element_Radio('SidebarFixed', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	0, _t('动态显示侧边栏'), _t('默认关闭'));
+    $SidebarFixed = new Typecho_Widget_Helper_Form_Element_Radio(
+		'SidebarFixed', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('动态显示侧边栏'),
+		_t('默认关闭')
+	);
 	$form->addInput($SidebarFixed);
     
     $Navset = new Typecho_Widget_Helper_Form_Element_Checkbox(
@@ -259,38 +244,69 @@ EOF;
     );
 	$form->addInput($Navset->multiMode());
 	
-	$sidebarBlock = new Typecho_Widget_Helper_Form_Element_Checkbox('sidebarBlock', 
-	array('ShowWaySit' => _t('显示导航位（下方自定义）'),
-	'ShowEatFoodSit' => _t('显示广告位（下方自定义）'),
-	'ShowHotPosts' => _t('显示热门文章（根据浏览量排序）'),
-	'ShowRecentPosts' => _t('显示最新文章'),
-	'ShowRecentComments' => _t('显示最近回复'),
-	'IgnoreAuthor' => _t('不显示作者回复'),
-	'ShowCategory' => _t('显示分类'),
-	'ShowTag' => _t('显示标签'),
-	'ShowArchive' => _t('显示归档'),
-	'ShowStats' => _t('显示网站统计'),
-	'ShowOther' => _t('显示其它杂项')),
-	array('ShowRecentPosts', 'ShowRecentComments', 'ShowCategory', 'ShowTag', 'ShowArchive', 'ShowOther'), _t('侧边栏显示'));
+	$sidebarBlock = new Typecho_Widget_Helper_Form_Element_Checkbox(
+		'sidebarBlock', 
+		array(
+			'ShowWaySit' => _t('显示导航位（下方自定义）'),
+			'ShowEatFoodSit' => _t('显示广告位（下方自定义）'),
+			'ShowHotPosts' => _t('显示热门文章（根据浏览量排序）'),
+			'ShowRecentPosts' => _t('显示最新文章'),
+			'ShowRecentComments' => _t('显示最近回复'),
+			'IgnoreAuthor' => _t('不显示作者回复'),
+			'ShowCategory' => _t('显示分类'),
+			'ShowTag' => _t('显示标签'),
+			'ShowArchive' => _t('显示归档'),
+			'ShowStats' => _t('显示网站统计'),
+			'ShowOther' => _t('显示其它杂项')
+		),
+		array(
+			'ShowRecentPosts',
+			'ShowRecentComments',
+			'ShowCategory',
+			'ShowTag',
+			'ShowArchive',
+			'ShowOther'
+		),
+		_t('侧边栏显示')
+	);
 	$form->addInput($sidebarBlock->multiMode());
 	
+	/* MDr Pjax Ajax 设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-pjax">Ajax 设置 <small>Ajax</small></h2>'));
 	$form->addInput($mdrNotice);
 	
-	$PjaxOption = new Typecho_Widget_Helper_Form_Element_Radio('PjaxOption', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	0, _t('全站 Pjax'), _t('默认关闭，启用则会强制关闭“反垃圾保护”，强制“将较新的的评论显示在前面”'));
+	$PjaxOption = new Typecho_Widget_Helper_Form_Element_Radio(
+		'PjaxOption', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('全站 Pjax'),
+		_t('默认关闭，启用则会强制关闭“反垃圾保护”，强制“将较新的的评论显示在前面”')
+	);
 	$form->addInput($PjaxOption);
 
-	$AjaxLoad = new Typecho_Widget_Helper_Form_Element_Radio('AjaxLoad', 
-	array('auto' => _t('自动'),
-	'click' => _t('点击'),
-	0 => _t('关闭')),
-	0, _t('Ajax 翻页'), _t('默认关闭，启用则会使用Ajax加载文章翻页'));
+	$AjaxLoad = new Typecho_Widget_Helper_Form_Element_Radio(
+		'AjaxLoad', 
+		array(
+			'auto' => _t('自动'),
+			'click' => _t('点击'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('Ajax 翻页'),
+		_t('默认关闭，启用则会使用Ajax加载文章翻页')
+	);
 	$form->addInput($AjaxLoad);
 	
-	$AjaxLoadTimes = new Typecho_Widget_Helper_Form_Element_Text('AjaxLoadTimes', NULL, '0', _t('Ajax 自动翻页限制'), _t('Ajax加载文章最多自动翻页~次，0则无限制'));
+	$AjaxLoadTimes = new Typecho_Widget_Helper_Form_Element_Text(
+		'AjaxLoadTimes',
+		NULL,
+		'0',
+		_t('Ajax 自动翻页限制'),
+		_t('Ajax加载文章最多自动翻页~次，0则无限制')
+	);
 	$AjaxLoadTimes->input->setAttribute('class', 'mini');
 	$form->addInput($AjaxLoadTimes);
 	
@@ -305,43 +321,81 @@ EOF;
         _t('默认为顶部，然后作者表示强迫症犯了')
     );
     $form->addInput($mdrLoading);
-    
+	
+	/* MDr Dark 黑暗模式设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-dark">黑暗模式设置 <small>Dark Mode</small></h2>'), _t('Dev | 该功能还在开发阶段，如遇问题欢迎反馈。'));
 	$form->addInput($mdrNotice);
 	
-	$DarkMode = new Typecho_Widget_Helper_Form_Element_Radio('DarkMode', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	1, _t('黑暗模式总开关'), _t('默认开启'));
+	$DarkMode = new Typecho_Widget_Helper_Form_Element_Radio(
+		'DarkMode', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('黑暗模式总开关'),
+		_t('默认开启')
+	);
 	$form->addInput($DarkMode);
 	
-	$DarkModeFD = new Typecho_Widget_Helper_Form_Element_Radio('DarkModeFD', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	0, _t('黑暗模式跨域使用开关'), _t('默认关闭'));
+	$DarkModeFD = new Typecho_Widget_Helper_Form_Element_Radio(
+		'DarkModeFD', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('黑暗模式跨域使用开关'),
+		_t('默认关闭')
+	);
 	$form->addInput($DarkModeFD);
 	
-	$DarkModeDomain = new Typecho_Widget_Helper_Form_Element_Text('DarkModeDomain', NULL, NULL, _t('黑暗模式跨域使用总域名'));
+	$DarkModeDomain = new Typecho_Widget_Helper_Form_Element_Text(
+		'DarkModeDomain',
+		NULL,
+		NULL,
+		_t('黑暗模式跨域使用总域名')
+	);
 	$DarkModeDomain->input->setAttribute('class', 'mini');
 	$form->addInput($DarkModeDomain);
 	
+	/* MDr Music 背景音乐设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-music">背景音乐设置 <small>Music</small></h2>'));
 	$form->addInput($mdrNotice);
 	
-	$MusicSet = new Typecho_Widget_Helper_Form_Element_Radio('MusicSet', 
-	array('order' => _t('顺序播放'),
-	'shuffle' => _t('随机播放'),
-	0 => _t('关闭')),
-	0, _t('背景音乐'), _t('默认关闭，启用后请填写音乐地址,否则开启无效'));
+	$MusicSet = new Typecho_Widget_Helper_Form_Element_Radio(
+		'MusicSet', 
+		array(
+			'order' => _t('顺序播放'),
+			'shuffle' => _t('随机播放'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('背景音乐'),
+		_t('默认关闭，启用后请填写音乐地址,否则开启无效')
+	);
 	$form->addInput($MusicSet);
 
-	$MusicUrl = new Typecho_Widget_Helper_Form_Element_Textarea('MusicUrl', NULL, NULL, _t('背景音乐地址（建议使用mp3格式）'), _t('请输入完整的音频文件路径，例如：https://music.163.com/song/media/outer/url?id={MusicID}.mp3（好东西 QwQ），可设置多个音频，一行一个，留空则关闭背景音乐'));
+	$MusicUrl = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'MusicUrl',
+		NULL,
+		NULL,
+		_t('背景音乐地址（建议使用mp3格式）'),
+		_t('请输入完整的音频文件路径，例如：https://music.163.com/song/media/outer/url?id={MusicID}.mp3（好东西 QwQ），可设置多个音频，一行一个，留空则关闭背景音乐')
+	);
 	$form->addInput($MusicUrl);
 
-	$MusicVol = new Typecho_Widget_Helper_Form_Element_Text('MusicVol', NULL, NULL, _t('背景音乐播放音量（输入范围：0~1）'), _t('请输入一个0到1之间的小数（0为静音  0.5为50%音量  1为100%最大音量）输入错误内容或留空则使用默认音量100%'));
+	$MusicVol = new Typecho_Widget_Helper_Form_Element_Text(
+		'MusicVol',
+		NULL,
+		NULL,
+		_t('背景音乐播放音量（输入范围：0~1）'),
+		_t('请输入一个0到1之间的小数（0为静音  0.5为50%音量  1为100%最大音量）输入错误内容或留空则使用默认音量100%'))
+	;
 	$MusicVol->input->setAttribute('class', 'mini');
 	$form->addInput($MusicVol->addRule('isInteger', _t('请填入一个0~1内的数字')));
-    
+	
+	/* MDr Func 附加功能设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
 	$form->addInput($mdrNotice);
 	
@@ -412,92 +466,184 @@ EOF;
 	$mdrHitokotoc = new Typecho_Widget_Helper_Form_Element_Radio(
 		'mdrHitokotoc', 
 		array(
-		'' => _t('随机'),
-		'a' => _t('动画'),
-		'b' => _t('漫画'),
-		'c' => _t('游戏'), 
-		'd' => _t('小说'), 
-		'e' => _t('原创'), 
-		'f' => _t('来自网络'), 
-		'g' => _t('其他')
+			'' => _t('随机'),
+			'a' => _t('动画'),
+			'b' => _t('漫画'),
+			'c' => _t('游戏'), 
+			'd' => _t('小说'), 
+			'e' => _t('原创'), 
+			'f' => _t('来自网络'), 
+			'g' => _t('其他')
 		),
 		'',
         _t('一言 API 分类'),
         _t('默认随机显示')
-		);
+	);
 	$form->addInput($mdrHitokotoc);
 
-	$Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox('Breadcrumbs', 
-	array('Postshow' => _t('文章内显示'),
-	'Text' => _t('↪文章标题替换为“正文”'),
-	'Pageshow' => _t('页面内显示')),
-	array('Postshow', 'Text', 'Pageshow'), _t('面包屑导航显示'), _t('默认在文章与页面内显示，并将文章标题替换为“正文”'));
+	$Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox(
+		'Breadcrumbs', 
+		array(
+			'Postshow' => _t('文章内显示'),
+			'Text' => _t('↪文章标题替换为“正文”'),
+			'Pageshow' => _t('页面内显示')
+		),
+		array(
+			'Postshow',
+			'Text',
+			'Pageshow'
+		),
+		_t('面包屑导航显示'),
+		_t('默认在文章与页面内显示，并将文章标题替换为“正文”')
+	);
 	$form->addInput($Breadcrumbs->multiMode());
 	
-	$TimeNotice = new Typecho_Widget_Helper_Form_Element_Radio('TimeNotice', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	0, _t('久远文章提醒'), _t('默认关闭'));
+	$TimeNotice = new Typecho_Widget_Helper_Form_Element_Radio(
+		'TimeNotice', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('久远文章提醒'),
+		_t('默认关闭')
+	);
 	$form->addInput($TimeNotice);
 	
-	$TimeNoticeLock = new Typecho_Widget_Helper_Form_Element_Text('TimeNoticeLock', NULL, '30', _t('久远文章提醒阈值'), _t('单位：天，默认30天'));
+	$TimeNoticeLock = new Typecho_Widget_Helper_Form_Element_Text(
+		'TimeNoticeLock',
+		NULL,
+		'30',
+		_t('久远文章提醒阈值'),
+		_t('单位：天，默认30天')
+	);
 	$TimeNoticeLock->input->setAttribute('class', 'mini');
 	$form->addInput($TimeNoticeLock);
 	
-	$SiteTime = new Typecho_Widget_Helper_Form_Element_Text('SiteTime', NULL, NULL, _t('建站时间'), _t('格式：月/日/年 时:分:秒（示例：08/19/2018 10:00:00 为 2018年8月19日10点整），显示在网站底部，留空不显示'));
+	$SiteTime = new Typecho_Widget_Helper_Form_Element_Text(
+		'SiteTime',
+		NULL,
+		NULL,
+		_t('建站时间'),
+		_t('格式：月/日/年 时:分:秒（示例：08/19/2018 10:00:00 为 2018年8月19日10点整），显示在网站底部，留空不显示')
+	);
 	$SiteTime->input->setAttribute('class', 'mini');
 	$form->addInput($SiteTime);
 
-    $WordCount = new Typecho_Widget_Helper_Form_Element_Radio('WordCount', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	1, _t('文章字数统计'), _t('默认开启'));
+    $WordCount = new Typecho_Widget_Helper_Form_Element_Radio(
+		'WordCount', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('文章字数统计'),
+		_t('默认开启')
+	);
 	$form->addInput($WordCount);
 	
-	$ViewImg = new Typecho_Widget_Helper_Form_Element_Radio('ViewImg', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	1, _t('图片灯箱'), _t('<b>当前版本不可用</b>'));
+	$ViewImg = new Typecho_Widget_Helper_Form_Element_Radio(
+		'ViewImg', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('图片灯箱'),
+		_t('<b>当前版本不可用</b>')
+	);
 	$form->addInput($ViewImg);
 
-	$compressHtml = new Typecho_Widget_Helper_Form_Element_Radio('compressHtml', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	0, _t('HTML压缩'), _t('默认关闭，启用则会对HTML代码进行压缩，可能与部分插件存在兼容问题，请酌情选择开启或者关闭'));
+	$compressHtml = new Typecho_Widget_Helper_Form_Element_Radio(
+		'compressHtml', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		0,
+		_t('HTML压缩'),
+		_t('默认关闭，启用则会对HTML代码进行压缩，可能与部分插件存在兼容问题，请酌情选择开启或者关闭')
+	);
 	$form->addInput($compressHtml);
 
-	$scrollTop = new Typecho_Widget_Helper_Form_Element_Radio('scrollTop', 
-	array(1 => _t('启用'),
-	0 => _t('关闭')),
-	1, _t('返回顶部'), _t('默认开启，启用将在右下角显示“返回顶部”按钮'));
+	$scrollTop = new Typecho_Widget_Helper_Form_Element_Radio(
+		'scrollTop', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('返回顶部'),
+		_t('默认开启，启用将在右下角显示“返回顶部”按钮')
+	);
 	$form->addInput($scrollTop);
 	
+	/* MDr Custom 自定义设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
 	$form->addInput($mdrNotice);
 
-	$ShowLinks = new Typecho_Widget_Helper_Form_Element_Checkbox('ShowLinks', array('sidebar' => _t('侧边栏')), NULL, _t('首页显示链接'));
+	$ShowLinks = new Typecho_Widget_Helper_Form_Element_Checkbox(
+		'ShowLinks',
+		array(
+			'sidebar' => _t('侧边栏')
+		),
+		NULL,
+		_t('首页显示链接')
+	);
 	$form->addInput($ShowLinks->multiMode());
 
-	$ShowWhisper = new Typecho_Widget_Helper_Form_Element_Checkbox('ShowWhisper', array('index' => _t('首页'), 'sidebar' => _t('侧边栏')), NULL, _t('显示最新的“轻语”'));
+	$ShowWhisper = new Typecho_Widget_Helper_Form_Element_Checkbox(
+		'ShowWhisper',
+		array(
+			'index' => _t('首页'),
+			'sidebar' => _t('侧边栏')
+		),
+		NULL,
+		_t('显示最新的“轻语”')
+	);
 	$form->addInput($ShowWhisper->multiMode());
 	
-	$mdrPostInfo = new Typecho_Widget_Helper_Form_Element_Radio('mdrPostInfo', 
-	array('menu' => _t('作为弹出菜单'),
-	'subtitle' => _t('作为副标题')),
-	'menu', _t('文章信息显示方式'), _t('默认为弹出菜单，为文章列表中文章的信息显示方式'));
+	$mdrPostInfo = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrPostInfo', 
+		array(
+			'menu' => _t('作为弹出菜单'),
+			'subtitle' => _t('作为副标题')
+		),
+		'menu',
+		_t('文章信息显示方式'),
+		_t('默认为弹出菜单，为文章列表中文章的信息显示方式')
+	);
 	$form->addInput($mdrPostInfo);
 	
-	$mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio('mdrPostTitle', 
-	array('normal' => _t('在图片下方'),
-	'button' => _t('覆盖在图片底部(如果有)'),
-	'top' => _t('覆盖在图片顶部(如果有)')),
-	'normal', _t('文章标题显示方式'), _t('默认在图片下方'));
+	$mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrPostTitle', 
+		array(
+			'normal' => _t('在图片下方'),
+			'button' => _t('覆盖在图片底部(如果有)'),
+			'top' => _t('覆盖在图片顶部(如果有)')
+		),
+		'normal',
+		_t('文章标题显示方式'),
+		_t('默认在图片下方')
+	);
 	$form->addInput($mdrPostTitle);
 
-	$subTitle = new Typecho_Widget_Helper_Form_Element_Text('subTitle', NULL, NULL, _t('自定义站点副标题'), _t('浏览器副标题，仅在当前页面为首页时显示，显示格式为：<b>标题 - 副标题</b>，留空则不显示副标题'));
+	$subTitle = new Typecho_Widget_Helper_Form_Element_Text(
+		'subTitle',
+		NULL,
+		NULL,
+		_t('自定义站点副标题'),
+		_t('浏览器副标题，仅在当前页面为首页时显示，显示格式为：<b>标题 - 副标题</b>，留空则不显示副标题')
+	);
 	$form->addInput($subTitle);
 
-	$favicon = new Typecho_Widget_Helper_Form_Element_Text('favicon', NULL, NULL, _t('Favicon 地址'), _t('在这里填入一个图片 URL 地址, 以添加一个Favicon，留空则不单独设置Favicon'));
+	$favicon = new Typecho_Widget_Helper_Form_Element_Text(
+		'favicon',
+		NULL,
+		NULL,
+		_t('Favicon 地址'),
+		_t('在这里填入一个图片 URL 地址, 以添加一个Favicon，留空则不单独设置Favicon')
+	);
 	$form->addInput($favicon);
 	
 	$customTitle = new Typecho_Widget_Helper_Form_Element_Text(
@@ -527,31 +673,125 @@ EOF;
 	);
 	$form->addInput($MyLinks);
 	
-	$AttUrlReplace = new Typecho_Widget_Helper_Form_Element_Textarea('AttUrlReplace', NULL, NULL, _t('文章内的链接地址替换'), _t('按照格式输入你的CDN链接以替换原链接，格式 <b class="notice">原地址=替换地址</b><br>建议用在图片等静态资源的链接上，可设置多个规则，换行即可，一行一个'));
+	$AttUrlReplace = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'AttUrlReplace',
+		NULL,
+		NULL,
+		_t('文章内的链接地址替换'),
+		_t('按照格式输入你的CDN链接以替换原链接，格式 <b class="notice">原地址=替换地址</b><br>建议用在图片等静态资源的链接上，可设置多个规则，换行即可，一行一个')
+	);
 	$form->addInput($AttUrlReplace);
 
-    $WaySit = new Typecho_Widget_Helper_Form_Element_Textarea('WaySit', NULL, NULL, _t('导航位内容'), _t('位于侧边栏'));
+    $WaySit = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'WaySit',
+		NULL,
+		NULL,
+		_t('导航位内容'),
+		_t('位于侧边栏')
+	);
 	$form->addInput($WaySit);
     
-    $EatFoodSit = new Typecho_Widget_Helper_Form_Element_Textarea('EatFoodSit', NULL, NULL, _t('广告位内容'), _t('位于侧边栏'));
+    $EatFoodSit = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'EatFoodSit',
+		NULL,
+		NULL,
+		_t('广告位内容'),
+		_t('位于侧边栏')
+	);
 	$form->addInput($EatFoodSit);
 
-	$ICPbeian = new Typecho_Widget_Helper_Form_Element_Text('ICPbeian', NULL, NULL, _t('ICP备案号'), _t('在这里输入ICP备案号，留空则不显示'));
+	$ICPbeian = new Typecho_Widget_Helper_Form_Element_Text(
+		'ICPbeian',
+		NULL,
+		NULL,
+		_t('ICP备案号'),
+		_t('在这里输入ICP备案号，留空则不显示')
+	);
 	$form->addInput($ICPbeian);
 
-	$beianProvince = new Typecho_Widget_Helper_Form_Element_Text('beianProvince', NULL, NULL, _t('公网安备案所在省份'), _t('在这里输入公网安备案所在省份缩写，如北京=京，山东=鲁，留空则不显示'));
+	$beianProvince = new Typecho_Widget_Helper_Form_Element_Text(
+		'beianProvince',
+		NULL,
+		NULL,
+		_t('公网安备案所在省份'),
+		_t('在这里输入公网安备案所在省份缩写，如北京=京，山东=鲁，留空则不显示')
+	);
 	$form->addInput($beianProvince);
 
-	$beianNumber = new Typecho_Widget_Helper_Form_Element_Text('beianNumber', NULL, NULL, _t('公网安备案号'), _t('在这里输入公网安备案号，留空则不显示'));
+	$beianNumber = new Typecho_Widget_Helper_Form_Element_Text(
+		'beianNumber',
+		NULL,
+		NULL,
+		_t('公网安备案号'),
+		_t('在这里输入公网安备案号，留空则不显示')
+	);
 	$form->addInput($beianNumber);
 
-	$ButtomText = new Typecho_Widget_Helper_Form_Element_Textarea('ButtomText', NULL, NULL, _t('底部自定义内容'), _t('位于底部版权下方建站时间上方'));
+	$ButtomText = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'ButtomText',
+		NULL,
+		NULL,
+		_t('底部自定义内容'),
+		_t('位于底部版权下方建站时间上方')
+	);
 	$form->addInput($ButtomText);
 
-	$CustomContent = new Typecho_Widget_Helper_Form_Element_Textarea('CustomContent', NULL, NULL, _t('底部自定义内容'), _t('位于底部，footer之后body之前，适合放置一些JS内容，如网站统计代码等（若开启全站Pjax，目前支持Google和百度统计的回调，其余统计代码可能会不准确）'));
+	$CustomContent = new Typecho_Widget_Helper_Form_Element_Textarea(
+		'CustomContent',
+		NULL,
+		NULL,
+		_t('底部自定义内容'),
+		_t('位于底部，footer之后body之前，适合放置一些JS内容，如网站统计代码等（若开启全站Pjax，目前支持Google和百度统计的回调，其余统计代码可能会不准确）')
+	);
 	$form->addInput($CustomContent);
+
 }
 
+/* MDr themeFields */
+function themeFields($layout) {
+
+	$thumb = new Typecho_Widget_Helper_Form_Element_Text(
+		'thumb',
+		NULL,
+		NULL,
+		_t('自定义缩略图'),
+		_t('在这里填入一个图片 URL 地址, 以添加本文的缩略图，若填入纯数字，例如 <b>3</b> ，则使用文章第三张图片作为缩略图（对应位置无图则不显示缩略图），留空则默认不显示缩略图')
+	);
+	$thumb->input->setAttribute('class', 'w-100');
+	$layout->addItem($thumb);
+
+	$catalog = new Typecho_Widget_Helper_Form_Element_Radio(
+		'catalog', 
+		array(
+			true => _t('启用'),
+			false => _t('关闭')
+		),
+		false,
+		_t('文章目录'),
+		_t('默认关闭，启用则会在文章内显示“文章目录”（若文章内无任何标题，则不显示目录）')
+	);
+	$layout->addItem($catalog);
+	
+    $licenses = new Typecho_Widget_Helper_Form_Element_Radio(
+		'linceses', 
+    	array(
+			'BY' => _t('CC BY'),
+    		'BY-SA' => _t('CC BY-SA'),
+    		'BY-ND' => _t('CC BY-ND'),
+    		'BY-NC' => _t('CC BY-NC'),
+    		'BY-NC-SA' => _t('CC BY-NC-SA'),
+    		'BY-NC-ND' => _t('CC BY-NC-ND'),
+			'NONE' => _t('没有')
+		),
+		'NONE',
+		_t('许可协议'),
+		_t('默认没有协议，请前往 <a href="https://creativecommons.org/licenses/" target="_blank">CreativeCommons</a> 查看更多关于协议的内容，仅支持 4.0 ( 国际 ) 协议')
+	);
+	$layout->addItem($licenses);
+	
+}
+
+/* MDr themeInit */
 function themeInit($archive) {
 	$options = Helper::options();
 	$options->commentsAntiSpam = false;
@@ -579,6 +819,7 @@ function hrefOpen($obj) {
 	return preg_replace('/<a\b([^>]+?)\bhref="((?!'.addcslashes(Helper::options()->index, '/._-+=#?&').').*?)"([^>]*?)>/i', '<a\1href="\2"\3 target="_blank">', $obj);
 }
 
+/* function URL替换 */
 function UrlReplace($obj) {
 	$list = explode("\r\n", Helper::options()->AttUrlReplace);
 	foreach ($list as $tmp) {
@@ -588,6 +829,7 @@ function UrlReplace($obj) {
 	return $obj;
 }
 
+/* function 文章缩略图 */
 function postThumb($obj) {
 	$thumb = $obj->fields->thumb;
 	if (!$thumb) {
@@ -607,6 +849,7 @@ function postThumb($obj) {
 	return '<img src="'.$thumb.'"  style="width: 100%"/>';
 }
 
+/* function 文章阅读数 */
 function Postviews($archive) {
 	$db = Typecho_Db::get();
 	$cid = $archive->cid;
@@ -945,14 +1188,16 @@ function compressHtml($html_source) {
 	return $compress;
 }
 
-//加载时间
+/* function 加载时间 */
 function timer_start() {
 	global $timestart;
 	$mtime = explode( ' ', microtime() );
 	$timestart = $mtime[1] + $mtime[0];
 	return true;
 }
+
 timer_start();
+
 function timer_stop( $display = 0, $precision = 3 ) {
 	global $timestart, $timeend;
 	$mtime = explode( ' ', microtime() );
@@ -965,7 +1210,7 @@ function timer_stop( $display = 0, $precision = 3 ) {
 	return $loadtime;
 }
 
-//总访问量
+/* function 总访问量 */
 function theAllViews() {
 	$db = Typecho_Db::get();
 	$prefix = $db->getPrefix();
@@ -973,31 +1218,7 @@ function theAllViews() {
 	return number_format($row[0]['SUM(VIEWS)']);
 }
 
-function themeFields($layout) {
-	$thumb = new Typecho_Widget_Helper_Form_Element_Text('thumb', NULL, NULL, _t('自定义缩略图'), _t('在这里填入一个图片 URL 地址, 以添加本文的缩略图，若填入纯数字，例如 <b>3</b> ，则使用文章第三张图片作为缩略图（对应位置无图则不显示缩略图），留空则默认不显示缩略图'));
-	$thumb->input->setAttribute('class', 'w-100');
-	$layout->addItem($thumb);
-
-	$catalog = new Typecho_Widget_Helper_Form_Element_Radio('catalog', 
-	array(true => _t('启用'),
-	false => _t('关闭')),
-	false, _t('文章目录'), _t('默认关闭，启用则会在文章内显示“文章目录”（若文章内无任何标题，则不显示目录）'));
-	$layout->addItem($catalog);
-	
-	if($_SERVER['SCRIPT_NAME']=="/admin/write-post.php" || $_SERVER['SCRIPT_NAME']=="/admin/write-page.php"){
-    	$licenses = new Typecho_Widget_Helper_Form_Element_Radio('linceses', 
-    	array('BY' => _t('CC BY'),
-    	'BY-SA' => _t('CC BY-SA'),
-    	'BY-ND' => _t('CC BY-ND'),
-    	'BY-NC' => _t('CC BY-NC'),
-    	'BY-NC-SA' => _t('CC BY-NC-SA'),
-    	'BY-NC-ND' => _t('CC BY-NC-ND'),
-    	'NONE' => _t('没有')),
-    	'NONE', _t('许可协议'), _t('默认没有协议，请前往 <a href="https://creativecommons.org/licenses/" target="_blank">CreativeCommons</a> 查看更多关于协议的内容，仅支持 4.0 ( 国际 ) 协议'));
-    	$layout->addItem($licenses);
-	}
-}
-
+/* function 导航位内容 */
 function MyLinks($links) {
     $link = explode("\n",$links);
     $num = count($link);
@@ -1010,6 +1231,7 @@ function MyLinks($links) {
     }
 }
 
+/* function 文章字数统计 */
 function WordCount($cid) {
     $db=Typecho_Db::get();
     $rs=$db->fetchRow($db->select ('table.contents.text')->from('table.contents')->where('table.contents.cid=?',$cid)->order('table.contents.cid',Typecho_Db::SORT_ASC)->limit(1));
