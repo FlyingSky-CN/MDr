@@ -30,7 +30,7 @@ function themeConfig($form) {
     <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
 	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>";
-	
+	echo '<a href="../usr/themes/MDr/update.php" target="_blank"><button class="btn" style="outline: 0">检查并更新主题</button></a>';
 	/* MDr Color 主题色设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
