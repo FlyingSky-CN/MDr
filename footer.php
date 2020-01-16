@@ -460,23 +460,48 @@ console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;bac
     }
 ?>
 <script>
+	function hasClass(elem, cls) {
+		cls = cls || '';
+		if (cls.replace(/\s/g, '').length == 0) return false;
+		return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+	}
+	function addClass(ele, cls) {
+		if (!hasClass(ele, cls)) {
+			ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+		}
+	}
+	function removeClass(elem, cls) {
+		if (hasClass(elem, cls)) {
+			var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
+			while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+				newClass = newClass.replace(' ' + cls + ' ', ' ');
+			}
+			elem.className = newClass.replace(/^\s+|\s+$/g, '');
+		}
+	}
+</script>
+<script>
     function onDarkMode() {
+		var body = document.getElementsByTagName('body')[0],
+			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode off');
 		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-        $('body').addClass('mdui-theme-layout-dark');
-        $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-        $('.mdui-appbar').css('background-color','#212121');
+		addClass(body,'mdui-theme-layout-dark');
+		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+		appbar.style.backgroundColor = '#212121';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','#212121');
     }
     function offDarkMode() {
+		var body = document.getElementsByTagName('body')[0],
+			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode on');
-        $('body').removeClass('mdui-theme-layout-dark');
 		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-        $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-        $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        $('.mdui-appbar').css('background-color','#ffffff');
+        removeClass(body,'mdui-theme-layout-dark');
+        addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+        removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+        appbar.style.backgroundColor = '#ffffff';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
     }
