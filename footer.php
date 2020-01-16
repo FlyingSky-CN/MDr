@@ -521,6 +521,15 @@ document.addEventListener('visibilitychange', function () {
     }
 });
 </script>
+<script>
+	const mode = getComputedStyle(document.documentElement).getPropertyValue('content');
+	if(mode == '"dark"'){
+		onDarkMode();
+	}
+	if(mode == '"light"'){
+		offDarkMode();
+	}
+</script>
 <?php endif; ?>
 </body>
 </html><?php if ($this->options->compressHtml): $html_source = ob_get_contents(); ob_clean(); print compressHtml($html_source); ob_end_flush(); endif; ?>
