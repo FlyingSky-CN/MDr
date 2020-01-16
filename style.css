@@ -735,3 +735,16 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .avatar {
     border-radius:50%
 }
+html {
+    content: ""; 
+}
+@media (prefers-color-scheme: light) {
+    html {
+        content: "light";
+    }
+}
+@media (prefers-color-scheme: dark) {
+    html {
+        content: "dark";
+    }
+}

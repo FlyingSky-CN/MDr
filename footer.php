@@ -460,66 +460,114 @@ console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;bac
     }
 ?>
 <script>
+	function hasClass(elem, cls) {
+		cls = cls || '';
+		if (cls.replace(/\s/g, '').length == 0) return false;
+		return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
+	}
+	function addClass(ele, cls) {
+		if (!hasClass(ele, cls)) {
+			ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
+		}
+	}
+	function removeClass(elem, cls) {
+		if (hasClass(elem, cls)) {
+			var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
+			while (newClass.indexOf(' ' + cls + ' ') >= 0) {
+				newClass = newClass.replace(' ' + cls + ' ', ' ');
+			}
+			elem.className = newClass.replace(/^\s+|\s+$/g, '');
+		}
+	}
+</script>
+<script>
     function onDarkMode() {
-        $('body').addClass('mdui-theme-layout-dark');
-        $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-        $('.mdui-appbar').css('background-color','#212121');
+		var body = document.getElementsByTagName('body')[0],
+			appbar = document.getElementsByClassName('mdui-appbar')[0];
+		console.log('Dark mode off');
+		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
+		addClass(body,'mdui-theme-layout-dark');
+		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+		appbar.style.backgroundColor = '#212121';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','#212121');
     }
     function offDarkMode() {
-        $('body').removeClass('mdui-theme-layout-dark');
-        $('body').addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-        $('body').removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        $('.mdui-appbar').css('background-color','#ffffff');
+		var body = document.getElementsByTagName('body')[0],
+			appbar = document.getElementsByClassName('mdui-appbar')[0];
+		console.log('Dark mode on');
+		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
+        removeClass(body,'mdui-theme-layout-dark');
+        addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+        removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+        appbar.style.backgroundColor = '#ffffff';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
     }
 </script>
 <script>
-function switchDarkMode(){
-    var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-    if (night == '0'){
-        onDarkMode();
-        document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-        console.log('Dark mode on 1');
-        mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
-    }else{
-       offDarkMode();
-        document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-        console.log('Dark mode off 1');
-        mdui.snackbar({message: '已关闭 Dark Mode ',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
-    }
-}
-(function(){
-    if(document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") === ''){
-        if(new Date().getHours() > 22 || new Date().getHours() < 6){
-            onDarkMode();
-            document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-            console.log('Dark mode on 2');
-        }else{
-            offDarkMode();
-            document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-            console.log('Dark mode off 2');
-        }
-    }else{
-        var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-        if(dark == '0'){
-            offDarkMode();
-        }else if(dark == '1'){
-            onDarkMode();
-        }
-    }
-})();
-document.addEventListener('visibilitychange', function () {
-    var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-    if(dark == '0'){
-        offDarkMode();
-    }else if(dark == '1'){
-        onDarkMode();
-    }
-});
+	/* Dark Mode 的控制（系统黑暗模式优先于 Cookie 中的黑暗模式） */
+	function switchDarkMode(){
+		/* 手动触发 */
+		var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
+		if (night == '0'){
+			onDarkMode();
+			mdui.snackbar({message: '已开启 Dark Mode ，早 6 点之前保持开启。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+		}else{
+			offDarkMode();
+			mdui.snackbar({message: '已关闭 Dark Mode ',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+		}
+	}
+	(function(){
+		/* 加载完触发，判断时间段（当系统开启黑暗模式时不执行） */
+		if (getComputedStyle(document.documentElement).getPropertyValue('content') != '"dark"') {
+			if(document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") === ''){
+				if(new Date().getHours() > 22 || new Date().getHours() < 6){
+					onDarkMode();
+				}else{
+					offDarkMode();
+				}
+			}else{
+				var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
+				if(dark == '0'){
+					offDarkMode();
+				}else if(dark == '1'){
+					onDarkMode();
+				}
+			}
+		}
+	})();
+	document.addEventListener('visibilitychange', function () {
+		/* 切换标签页时触发 */
+		var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
+		if(dark == '0'){
+			offDarkMode();
+		}else if(dark == '1'){
+			onDarkMode();
+		}
+		if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
+			onDarkMode();
+		};
+	});
+	if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
+		/* 加载完触发，判断系统黑暗模式是否开启 */
+		onDarkMode();
+		mdui.snackbar({message: '已开启 Dark Mode ，跟随系统。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+	};
+	window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change",(e) => {
+		/* 系统黑暗模式切换时触发 */
+		if (e.matches) {
+			onDarkMode();
+			mdui.snackbar({message: '已开启 Dark Mode ，跟随系统。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+		} else {
+			var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
+			if (night == '1') {
+				offDarkMode();
+				mdui.snackbar({message: '已关闭 Dark Mode ',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+			}
+		}
+	});
 </script>
 <?php endif; ?>
 </body>
