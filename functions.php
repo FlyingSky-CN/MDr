@@ -13,8 +13,11 @@ function themeConfig($form) {
     <p>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
-        <a style="font-size:14px;" href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
-    </p>
+		<a style="font-size:14px;" href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
+	</p>
+	<p><button class="btn" style="outline: 0" id="mdr-update">检查并更新主题</button></p>
+	<textarea id="mdr-update-pre" class="w-100 mono" style="display:none" readonly></textarea>
+	<style>#mdr-update-pre{height:512px;}</style>
     <div id="mdr-botnav" class="row">
         <nav id="typecho-nav-list">
             <ul class="root"><li class="parent"><a href="#mdr-color">主题色</a></li></ul>
@@ -29,8 +32,7 @@ function themeConfig($form) {
     </div>
     <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
-	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>";
-	
+	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>".'<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){document.getElementById("mdr-update").innerHTML = "正在检查并更新";document.getElementById("mdr-update").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update").innerHTML = "完成";}else{document.getElementById("mdr-update").innerHTML = "正在执行";}};xmlhttp.open("GET","';cjUrl('update.php');echo '",true);xmlhttp.send();}}</script>';
 	/* MDr Color 主题色设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
 	$form->addInput($mdrNotice);
