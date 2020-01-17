@@ -3,6 +3,39 @@
  * MDr 主题更新程序
  */
 
+/* CLI 自动生成 Hash */
+
+if (isset($argv[1])) {
+    if ($argv[1] == 'hash') {
+        $files = array(
+            '404.php',
+            'archive.php',
+            'comments.php',
+            'footer.php',
+            'functions.php',
+            'header.php',
+            'index.php',
+            'LICENSE',
+            'page.php',
+            'page-archives.php',
+            'page-links.php',
+            'page-whisper.php',
+            'post.php',
+            'README.md',
+            'screenshot.png',
+            'sidebar.php',
+            'style.css'
+        );
+        $hash = '';
+        foreach ($files as $file) {
+            $hash .= hash('sha256', file_get_contents($file)).' '.$file."\n";
+        }
+        file_put_contents("hash.txt",$hash);
+    }
+}
+
+/* Header */
+
 header("Content-Type: text/plain; charset=UTF-8");
 
 /* 载入 Typecho */
@@ -42,9 +75,14 @@ if (!$user->pass('administrator',true)) {
 
 /* 更新程序 */
 
-define('__MDR_RAW_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/1.0.3/');
+define('__MDR_RAW_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/master/');
 
 echo "MDr主题更新程序";
+
+if(!is_writable(__DIR__)){
+    echo "\n\n主题文件夹没有写入的权限，无法执行更新程序。";
+    exit;
+}
 
 function curl($url){
     $curl = curl_init();
@@ -81,11 +119,15 @@ foreach ($hash as $remote) {
     $trimname = trim($filename);
     if (!file_exists(__DIR__.'/'.$trimname) || !hash_equals(hash('sha256', file_get_contents(__DIR__.'/'.$trimname)), $remote_sha256)) {
         echo "检测到 ".$trimname." 有新版本";
-        $url = __MDR_RAW_URL__ . $trimname;
-        if (file_put_contents(__DIR__.'/'.$trimname,curl($url))) {
-            echo "，已更新\n";
+        if(!is_writable(__DIR__.'/'.$trimname)){
+            echo "，该文件没有写入的权限，无法更新。\n";
         } else {
-            die("\n下载失败，错误位置: $url\n");
+            $url = __MDR_RAW_URL__ . $trimname;
+            if (file_put_contents(__DIR__.'/'.$trimname,curl($url))) {
+                echo "，已更新\n";
+            } else {
+                die("\n下载失败，错误位置: $url\n");
+            }
         }
     } else {
         echo "Hash 相同，无需更新  ".$trimname."\n";
