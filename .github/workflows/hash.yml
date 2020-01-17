@@ -1,9 +1,6 @@
 name: Auto Hash
 
 on:
-  push:
-    branches:
-    - master
   pull_request:
     branches:
     - master
