@@ -28,9 +28,10 @@ if (isset($argv[1])) {
         );
         $hash = '';
         foreach ($files as $file) {
-            $hash .= hash('sha256', file_get_contents($file)).' '.$file."\n";
+            $hash .= hash('sha256', file_get_contents($file)).'  '.$file."\n";
         }
         file_put_contents("hash.txt",$hash);
+        exit();
     }
 }
 
