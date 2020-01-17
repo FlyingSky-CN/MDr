@@ -108,7 +108,7 @@ if (!$hash) {
     exit();
 }
 
-echo $hash . "\n\n";
+echo $hash . "\n";
 
 $hash = explode("\n", $hash);
 array_pop($hash);
