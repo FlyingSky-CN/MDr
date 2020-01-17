@@ -61,7 +61,7 @@ function curl($url){
 
 $hash = curl(__MDR_RAW_URL__ . 'hash.txt');
 
-echo "\n\n获取文件Hash...\n\n";
+echo "\n\n获取文件 Hash 表...\n\n";
 
 if (!$hash) {
     /* Hash 获取失败 */
@@ -88,7 +88,7 @@ foreach ($hash as $remote) {
             die("\n下载失败，错误位置: $url\n");
         }
     } else {
-        echo "Hash相同，无需更新  ".$trimname."\n";
+        echo "Hash 相同，无需更新  ".$trimname."\n";
     }
 }
 
