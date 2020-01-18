@@ -33,8 +33,10 @@ function themeConfig($form) {
     <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
 	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>".'<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){document.getElementById("mdr-update").innerHTML = "正在检查并更新";document.getElementById("mdr-update").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update").innerHTML = "完成";}else{document.getElementById("mdr-update").innerHTML = "正在执行";}};xmlhttp.open("GET","';cjUrl('update.php');echo '",true);xmlhttp.send();}}</script>';
+
 	/* MDr Color 主题色设置 */
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
     
     $mdrPrimary = new Typecho_Widget_Helper_Form_Element_Select(
@@ -128,12 +130,9 @@ EOF;
 	$mdrChrome->input->setAttribute('class', 'mini');
 	$form->addInput($mdrChrome);
 
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox(
-		'mdrNotice',
-		NULL,
-		NULL,
-		_t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>')
-	);
+	/* MDr CDN 设置 */
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice',NULL,NULL,_t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
     
     $mdrMDUICDN = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -176,7 +175,8 @@ EOF;
 	$form->addInput($GravatarUrl);
 	
 	/* MDr Nav 边栏设置 */
-	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-nav">边栏设置 <small>Nav</small></h2>'));
+	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-nav">边栏设置 <small>Nav</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
     
     $mdrNavDefOpen = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -274,7 +274,8 @@ EOF;
 	$form->addInput($sidebarBlock->multiMode());
 	
 	/* MDr Pjax Ajax 设置 */
-	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-pjax">Ajax 设置 <small>Ajax</small></h2>'));
+	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-pjax">Ajax 设置 <small>Ajax</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
 	
 	$PjaxOption = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -325,7 +326,8 @@ EOF;
     $form->addInput($mdrLoading);
 	
 	/* MDr Dark 黑暗模式设置 */
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-dark">黑暗模式设置 <small>Dark Mode</small></h2>'), _t('Dev | 该功能还在开发阶段，如遇问题欢迎反馈。'));
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-dark">黑暗模式设置 <small>Dark Mode</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
 	
 	$DarkMode = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -362,7 +364,8 @@ EOF;
 	$form->addInput($DarkModeDomain);
 	
 	/* MDr Music 背景音乐设置 */
-	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-music">背景音乐设置 <small>Music</small></h2>'));
+	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-music">背景音乐设置 <small>Music</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
 	
 	$MusicSet = new Typecho_Widget_Helper_Form_Element_Radio(
@@ -398,7 +401,8 @@ EOF;
 	$form->addInput($MusicVol->addRule('isInteger', _t('请填入一个0~1内的数字')));
 	
 	/* MDr Func 附加功能设置 */
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
 	
 	$mdrSnackbar = new Typecho_Widget_Helper_Form_Element_Select(
@@ -581,7 +585,8 @@ EOF;
 	$form->addInput($scrollTop);
 	
 	/* MDr Custom 自定义设置 */
-	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Checkbox('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
+	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
 	$form->addInput($mdrNotice);
 
 	$ShowLinks = new Typecho_Widget_Helper_Form_Element_Checkbox(
