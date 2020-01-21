@@ -2,7 +2,7 @@
 if(Helper::options()->GravatarUrl)define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 /* MDr Theme Version */
-define('MDR_VERSION', '1.0.3 Dev');
+define('MDR_VERSION', '1.0.3');
 
 /* MDr themeConfig */
 function themeConfig($form) {
@@ -13,9 +13,11 @@ function themeConfig($form) {
     <p>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
-		<a style="font-size:14px;" href="https://blog.fsky7.com/archives/60/">关于&帮助&反馈</a>
 	</p>
-	<p><button class="btn" style="outline: 0" id="mdr-update">检查并更新主题</button></p>
+	<p>
+		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">关于&帮助&反馈</button></a>
+		<button class="btn" style="outline: 0" id="mdr-update">检查并更新主题</button>
+	</p>
 	<textarea id="mdr-update-pre" class="w-100 mono" style="display:none" readonly></textarea>
 	<style>#mdr-update-pre{height:512px;}</style>
     <div id="mdr-botnav" class="row">
@@ -556,7 +558,7 @@ EOF;
 		),
 		1,
 		_t('图片灯箱'),
-		_t('<b>当前版本不可用</b>')
+		_t('默认开启，采用的是 <a target="_blank" href="http://fancyapps.com/fancybox/3/">Fancybox</a>')
 	);
 	$form->addInput($ViewImg);
 

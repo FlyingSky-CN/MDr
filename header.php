@@ -93,7 +93,7 @@
             .mdui-theme-layout-dark .whisper .comment-child {
                 background: none;
             }
-            .mdui-theme-layout-dark .whisper .comment-body, .mdui-theme-layout-dark .whisper .comment-list li.comment-parent, .mdui-theme-layout-dark .post {
+            .mdui-theme-layout-dark .whisper .comment-body, .mdui-theme-layout-dark .whisper .comment-list li.comment-parent {
                 border: 1px solid #424242;
             }
             /* 滚动条 */

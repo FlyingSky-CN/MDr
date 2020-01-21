@@ -15,7 +15,7 @@
 </div>
 <?php if ($this->have()): ?>
 <?php while($this->next()): ?>
-<div class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
+<div class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
     <?php if ($this->options->PjaxOption && !$this->hidden and postThumb($this)): ?>
     <div class="mdui-card-media">
         <a href="<?php $this->permalink() ?>">
