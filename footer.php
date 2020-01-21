@@ -370,7 +370,7 @@ function aln() {
 				return false
 			},
 			success: function(d) {
-				var c = $(d).find("#main .mdui-card"),
+				var c = $(d).find("#main .mdui-card.post"),
 				e = $(d).find(a).attr("href");
 				if (c) {
 					$('.ajaxload').before(c)
