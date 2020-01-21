@@ -2,7 +2,7 @@
 if(Helper::options()->GravatarUrl)define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 /* MDr Theme Version */
-define('MDR_VERSION', '1.0.3 Dev');
+define('MDR_VERSION', '1.0.3');
 
 /* MDr themeConfig */
 function themeConfig($form) {
