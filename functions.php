@@ -1277,3 +1277,16 @@ function license($license) {
 		echo '<div class="copyright">本篇文章未指定许可协议。</div>';
 	}
 }
+
+/* function 是否为状态 */
+function is_status($post) {
+	$tags = $post->tags;
+	$is = false;
+	foreach ($tags as $tag) {
+		if ($tag['name'] == '状态' || $tag['name'] == 'status' || $tag['name'] == 'Status') {
+			$is = true;
+			break;
+		}
+	}
+	return $is;
+}

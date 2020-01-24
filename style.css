@@ -748,3 +748,47 @@ html {
         content: "dark";
     }
 }
+
+/* MDr >= 1.0.4 新增 */
+
+.post.status {
+    background-color: #e8e8e8;
+}
+.mdui-theme-layout-dark .post.status {
+    background-color: #424242;
+}
+.mdui-theme-layout-dark .post.status .inner {
+    color: hsla(0,0%,100%,.8)!important;
+}
+.post.status .tag, .post.status .time {
+    position: absolute;
+    top: 0;
+    font-size: 15px;
+}
+.mdui-theme-layout-dark .post.status .tag {
+    background-color: #525252;
+}
+.mdui-theme-layout-dark .post.status .time {
+    color: #5a5a5a;
+}
+.post.status .tag {
+    left: 15px;
+    padding: 10px;
+    border-radius: 0 0 2px 2px;
+    background-color: #dadada;
+    color: grey;
+}
+.post.status .time {
+    left: 0;
+    box-sizing: border-box;
+    padding: 15px;
+    width: 100%;
+    color: #bcbcbc;
+}
+.post.status .inner {
+    box-sizing: border-box;
+    width: 100%;
+    color: #505050;
+    font-size: 20px;
+    padding: 70px 16px 24px;
+}
