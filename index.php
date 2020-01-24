@@ -29,15 +29,13 @@ $this->need('header.php');?>
     <?php while($this->next()): ?>
     <?php if (is_status($this) && !$this->hidden): ?>
     <div class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
-        <div class="mdui-card-media">
-            <div class="tag"><i class="mdui-icon material-icons">message</i> 状态</div>
-            <div class="time mdui-text-right"><?php $this->date(); ?></div>
-            <article class="inner"> 
-                <span class="mdui-typo">
-                    <?php $this->content(); ?>
-                </span>
-            </article>
-        </div>
+        <div class="tag"><i class="mdui-icon material-icons">message</i></div>
+        <div class="time mdui-text-right"><?php $this->date(); ?></div>
+        <article class="inner"> 
+            <span class="mdui-typo">
+                <?php $this->content(); ?>
+            </span>
+        </article>
     </div>
     <?php else: ?>
     <div class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">

@@ -735,9 +735,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .avatar {
     border-radius:50%
 }
-html {
-    content: ""; 
-}
 @media (prefers-color-scheme: light) {
     html {
         content: "light";
@@ -748,9 +745,6 @@ html {
         content: "dark";
     }
 }
-
-/* MDr >= 1.0.4 新增 */
-
 .post.status {
     background-color: #e8e8e8;
 }
@@ -779,16 +773,12 @@ html {
     color: grey;
 }
 .post.status .time {
-    left: 0;
-    box-sizing: border-box;
+    right: 0;
     padding: 15px;
-    width: 100%;
     color: #bcbcbc;
 }
 .post.status .inner {
-    box-sizing: border-box;
     width: 100%;
-    color: #505050;
-    font-size: 20px;
+    font-size: 18px;
     padding: 70px 16px 24px;
 }
