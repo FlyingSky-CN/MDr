@@ -4,7 +4,7 @@
  * 
  * @package MDr
  * @author FlyingSky
- * @version 1.0.3
+ * @version 1.0.4 Dev
  * @link https://fsky7.com/
  */
 $this->need('header.php');?>
@@ -27,6 +27,17 @@ $this->need('header.php');?>
     </article>
     <?php endif; ?>
     <?php while($this->next()): ?>
+    <?php if (is_status($this) && !$this->hidden): ?>
+    <div class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
+        <div class="tag"><i class="mdui-icon material-icons">message</i></div>
+        <div class="time mdui-text-right"><?php $this->date(); ?></div>
+        <article class="inner"> 
+            <span class="mdui-typo">
+                <?php $this->content(); ?>
+            </span>
+        </article>
+    </div>
+    <?php else: ?>
     <div class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
         <?php if ($this->options->PjaxOption && !$this->hidden and postThumb($this)): ?>
         <div class="mdui-card-media">
@@ -119,6 +130,7 @@ $this->need('header.php');?>
             <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple"<?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%"<?php } ?>>阅读全文</a>
         </div>
     </div>
+    <?php endif; ?>
     <?php endwhile; ?>
     <?php $this->pageNav('上一页', $this->options->AjaxLoad ? '查看更多' : '下一页', 0, '..', $this->options->AjaxLoad ? array('wrapClass' => 'page-navigator ajaxload') : ''); ?>
 </div>
