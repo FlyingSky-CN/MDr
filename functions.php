@@ -585,6 +585,18 @@ EOF;
 		_t('默认开启，启用将在右下角显示“返回顶部”按钮')
 	);
 	$form->addInput($scrollTop);
+
+	$mdrToComment = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrToComment',
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('直奔评论区'),
+		_t('默认开启，启用后将在文章右下角显示“直奔评论区”按钮')
+	);
+	$form->addInput($mdrToComment);
 	
 	/* MDr Custom 自定义设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
@@ -1289,4 +1301,18 @@ function is_status($post) {
 		}
 	}
 	return $is;
+}
+
+/* function 输出文章标签 */
+function mdrTags($post) {
+    if ($post->tags) {
+        $result = '';
+        foreach ($post->tags as $tag) {
+            $result .= '<div class="mdui-chip"><a href="' . $tag['permalink'] . '"><span class="mdui-chip-title">'
+            . $tag['name'] . '</span></a></div> ';
+        }
+        echo $result;
+    } else {
+        echo '<div class="mdui-chip"><span class="mdui-chip-title">None</span></div>';
+    }
 }
