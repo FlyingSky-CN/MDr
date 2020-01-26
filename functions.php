@@ -562,6 +562,18 @@ EOF;
 	);
 	$form->addInput($ViewImg);
 
+	$mdrQrCode = new Typecho_Widget_Helper_Form_Element_Radio(
+		'mdrQrCode', 
+		array(
+			1 => _t('启用'),
+			0 => _t('关闭')
+		),
+		1,
+		_t('当前页面二维码'),
+		_t('默认开启，开启后将显示当前页面二维码按钮')
+	);
+	$form->addInput($mdrQrCode);
+
 	$compressHtml = new Typecho_Widget_Helper_Form_Element_Radio(
 		'compressHtml', 
 		array(
