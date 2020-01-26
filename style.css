@@ -61,17 +61,6 @@ button, input[type=submit] {
 button, input[type=submit], .menu-parent a, .rewards a {
     cursor:pointer
 }
-.browsehappy {
-    padding:8px 0;
-    background:#fbe3e4;
-    color:#8a1f11;
-    text-align:center
-}
-.browsehappy a {
-    color:#8a1f11;
-    text-decoration:underline;
-    font-weight:bold
-}
 .clearfix {
     zoom:1
 }
@@ -88,26 +77,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     margin-right:auto;
     padding-left:10px;
     padding-right:10px
-}
-.head-fixed .browsehappy {
-    position:fixed;
-    bottom:0;
-    width:100%
-}
-.head-fixed #header {
-    position:fixed;
-    top:0;
-    width:100%;
-    background:rgba(255, 255, 255, .95);
-    z-index:999
-}
-.head-fixed #body {
-    padding-top:71px
-}
-#header {
-    line-height:40px;
-    padding:15px 0;
-    border-bottom:1px solid #eee
 }
 .site-name, .comment-form p, .whisper .comment-meta time {
     float:left
@@ -287,9 +256,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     top:-10px;
     height:0;
     border:0
-}
-.head-fixed .cl-offset {
-    top:-51px
 }
 .whisper .post-content {
     min-height:40px;
@@ -735,6 +701,9 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .avatar {
     border-radius:50%
 }
+html {
+    content: "";
+}
 @media (prefers-color-scheme: light) {
     html {
         content: "light";
@@ -774,11 +743,10 @@ button, input[type=submit], .menu-parent a, .rewards a {
 }
 .post.status .time {
     right: 0;
-    padding: 15px;
+    padding: 12px;
     color: #bcbcbc;
 }
 .post.status .inner {
-    width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     padding: 70px 16px 24px;
 }

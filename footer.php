@@ -395,11 +395,11 @@ function aln() {
 </script>
 <?php endif; ?>
 <?php $this->footer(); ?>
-<?php if ($this->options->scrollTop || $this->options->HeadFixed || $this->options->SidebarFixed): ?>
+<?php if ($this->options->scrollTop || $this->options->SidebarFixed): ?>
 <script>
     window.onscroll = function() {
     var a = document.documentElement.scrollTop || document.body.scrollTop; 
-    <?php if ($this -> options -> scrollTop): ?>
+    <?php if ($this->options->scrollTop): ?>
     var b = document.getElementById("top");
     if (a >= 200) {
         b.classList.remove("mdui-fab-hide")
@@ -415,8 +415,8 @@ function aln() {
             cancelAnimationFrame(totop)
         }
     };
-    <?php endif; if ($this -> options -> SidebarFixed): ?>
-	if ($(window).width() > 1007){
+    <?php endif; if ($this->options->SidebarFixed): ?>
+	if ($(window).width() >= 1024){
 		var e = document.getElementById("main"),
 			f = document.getElementById("mdrDrawerR");
 			f.style.marginTop = "-" + a + "px"
