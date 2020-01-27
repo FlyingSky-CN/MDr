@@ -20,34 +20,33 @@
                 <?php endif; ?>
             </div>
         </div>
-        
-<div class="mdui-fab-fixed" style="z-index: 9999;" id="cornertool">
-<?php if ($this->options->scrollTop): ?>
-<div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" style="display:block;margin-top:8px;" id="top">
-	<i class="mdui-icon material-icons"></i>
-</div>
-<?php endif; ?>
-<?php if ($this->options->DarkMode): ?>
-<div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" onclick="switchDarkMode()" style="display:block;margin-top:8px;">
-	<i class="mdui-icon material-icons">brightness_4</i>
-</div>
-<?php endif; ?>
-<?php if ($this->options->MusicSet && $this->options->MusicUrl): ?>
-<div class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" style="display:block;margin-top:8px;">
-<div class="hidden" id="music">
-<span><i></i></span>
-<div class="mdui-icon material-icons">music_note</div>
-<audio id="audio" preload="none"></audio>
-</div>
-</div>
-<?php endif; ?>
-</div>
 
+<div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
+  	<button class="mdui-fab mdui-ripple mdui-color-theme-accent">
+    	<i class="mdui-icon material-icons">apps</i>
+    	<i class="mdui-icon mdui-fab-opened material-icons">close</i>
+  	</button>
+  	<div class="mdui-fab-dial" id="cornertool">
+	  	<?php if ($this->options->scrollTop): ?>
+		<button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" id="top"><i class="mdui-icon material-icons"></i></button>
+		<?php endif; ?>
+		<?php if ($this->options->DarkMode): ?>
+		<button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" onclick="switchDarkMode()"><i class="mdui-icon material-icons">brightness_4</i></button>
+		<?php endif; ?>
+		<?php if ($this->options->mdrQrCode): ?>
+		<button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
+		<?php endif; ?>
+		<?php if ($this->options->MusicSet && $this->options->MusicUrl): ?>
+		<button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white"><div class="hidden" id="music"><span><i></i></span><div class="mdui-icon material-icons">music_note</div><audio id="audio" preload="none"></audio></div></button>
+		<?php endif; ?>
+  	</div>
+</div>
+<div id="pageQrCode" class="mdui-menu" style="padding:10px;width:170px;height:170px;background:#fff;right: 16px;bottom: 16px" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
 
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
 <!-- MDUI END -->
-<?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg): ?>
+<?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode): ?>
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
 <?php endif; if ($this->options->PjaxOption): ?>
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js<?php endif; ?>"></script>
@@ -101,6 +100,7 @@ function() {
 }).on('pjax:end',
 function() {
     mdrcd();
+	<?php if ($this->options->mdrQrCode): ?>getQrCode();<?php endif; ?>
 	<?php if ($this->options->AjaxLoad) : ?>al(); <?php endif; ?>cl();
 	ac();
 	ap(); 
@@ -395,11 +395,11 @@ function aln() {
 </script>
 <?php endif; ?>
 <?php $this->footer(); ?>
-<?php if ($this->options->scrollTop || $this->options->HeadFixed || $this->options->SidebarFixed): ?>
+<?php if ($this->options->scrollTop || $this->options->SidebarFixed): ?>
 <script>
     window.onscroll = function() {
     var a = document.documentElement.scrollTop || document.body.scrollTop; 
-    <?php if ($this -> options -> scrollTop): ?>
+    <?php if ($this->options->scrollTop): ?>
     var b = document.getElementById("top");
     if (a >= 200) {
         b.classList.remove("mdui-fab-hide")
@@ -415,8 +415,8 @@ function aln() {
             cancelAnimationFrame(totop)
         }
     };
-    <?php endif; if ($this -> options -> SidebarFixed): ?>
-	if ($(window).width() > 1007){
+    <?php endif; if ($this->options->SidebarFixed): ?>
+	if ($(window).width() >= 1024){
 		var e = document.getElementById("main"),
 			f = document.getElementById("mdrDrawerR");
 			f.style.marginTop = "-" + a + "px"
@@ -437,11 +437,10 @@ function cl(){
         c=document.getElementById("cornertool"),
         d;
     if(a&&!b){
-        d=document.createElement("div");
+        d=document.createElement("button");
         d.setAttribute("id","catalog");
         d.setAttribute("onclick","Catalogswith()");
         d.setAttribute("class","mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
-        d.setAttribute("style","display:block;margin-top:8px;");
         d.innerHTML='<i class="mdui-icon material-icons">&#xe5d2;</i>';
         c.appendChild(d);
     }if(!a&&b){
@@ -451,6 +450,23 @@ function cl(){
 cl();
 console.log("\n %c MDr By FlyingSky %c https://fsky7.com/ %c \n","color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;","color:#fff;background:#fff;padding:5px 0;border: 1px solid #6cf;","");
 </script>
+<?php if ($this->options->mdrQrCode): ?>
+<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery.qrcode@1.0/jquery.qrcode.min.js<?php endif; ?>"></script>
+<script>
+function getQrCode() {
+	$('#pageQrCode').html('');
+	$('#pageQrCode').qrcode({width:150,height:150,text:window.location.href});
+}
+getQrCode();
+function switchQrCode() {
+	if ($('#pageQrCode').hasClass('mdui-menu-open')) {
+		$('#pageQrCode').removeClass('mdui-menu-open');
+	} else {
+		$('#pageQrCode').addClass('mdui-menu-open');
+	}
+}
+</script>
+<?php endif; ?>
 <?php if ($this->options->DarkMode): ?>
 <?php 
     if ($this->options->DarkModeFD && $this->options->DarkModeDomain) {
