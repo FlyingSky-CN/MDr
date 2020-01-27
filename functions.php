@@ -966,7 +966,7 @@ function getCatalog() {
 		for ($i=0; $i<=$to_depth; $i++) {
 			$index .= '</li>'."\n".'</ul>'."\n";
 		}
-	$index = '<div id="catalog-col" class="mdui-card">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("catalog");document.getElementById("catalog").classList.toggle("catalog")}</script>'."\n".'</div>'."\n";
+	$index = '<div id="catalog-col" class="mdui-menu" onclick="Catalogswith()" style="right:16px;bottom:16px">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("mdui-menu-open")}</script>'."\n".'</div>'."\n";
 	}
 	return $index;
 }

@@ -107,11 +107,11 @@ button, input[type=submit], .menu-parent a, .rewards a {
     position:relative;
     float:right
 }
-.menu-parent:hover>ul, #catalog-col.catalog, .rewards a:hover img {
+.menu-parent:hover>ul, .rewards a:hover img {
     visibility:visible;
     opacity:1
 }
-.menu-parent ul, #catalog-col, .rewards img {
+.menu-parent ul, .rewards img {
     visibility:hidden;
     opacity:0
 }
@@ -130,6 +130,9 @@ button, input[type=submit], .menu-parent a, .rewards a {
  #catalog-col::-webkit-scrollbar-thumb {
     border-radius:3px;
     background-color:#ddd
+}
+#catalog-col ul {
+    padding-left: 1em;
 }
 .page-navigator a:hover {
     border-bottom:1px solid #444
@@ -238,8 +241,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     z-index:5000
 }
 #catalog-col {
-    right:50%;
-    margin-right:-535px;
     min-width:150px;
     max-width:50%;
     max-height:50%;
@@ -629,24 +630,9 @@ button, input[type=submit], .menu-parent a, .rewards a {
         border-left:7px solid rgba(221, 221, 221, .95)
     }
 }
-@media(max-width:1170px) {
-    #catalog-col {
-        right:65px;
-        margin:0
-    }
-    #catalog-col.catalog {
-        right:80px;
-        margin:0
-    }
-}
 @media(max-width:1023px) {
     #mdrDrawerR {
         padding-top: 56px;
-    }
-}
-@media(max-width:990px) {
-    #catalog-col.catalog {
-        right:70px
     }
 }
 @media(max-width:768px) {
