@@ -134,9 +134,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
 #catalog-col ul {
     padding-left: 1em;
 }
-.page-navigator a:hover {
-    border-bottom:1px solid #444
-}
 .menu-parent ul {
     position:absolute;
     left:50%;
@@ -342,50 +339,36 @@ button, input[type=submit], .menu-parent a, .rewards a {
 }
 .page-navigator {
     list-style:none;
-    margin:25px 0;
-    padding:0;
-    text-align:center
+    margin:20px 0;
+    padding:0px
 }
 .page-navigator li {
     display:inline-block;
-    margin:0 5px;
-    height:24px;
-    line-height:24px
+    margin-right:5px;
+    height:36px;
+    border-radius:2px;
+    line-height:36px;
+    color:#000;
+    font-size:14px;
+    will-change:box-shadow;
+    background:#e8e8e8;
+    text-align:center
 }
-.page-navigator a {
-    padding:0 2px
+.mdui-theme-layout-dark .page-navigator li {
+    background:#444;
+    color:#fff
 }
-.page-navigator .current a {
-    color:#444;
-    border-bottom:1px solid #444
+.page-navigator li:hover {
+    opacity:.87
 }
-.ajaxload li, .whisper .respond {
+.page-navigator a, .page-navigator span {
+    padding:11px 16px
+}
+.page-navigator.ajaxload .next {
+    width:100%
+}
+.whisper .respond {
     display:none
-}
-.ajaxload .next {
-    display:block;
-    color:#666
-}
-.ajaxload a {
-    padding:5px 20px;
-    border:1px solid #666;
-    border-radius:2px
-}
-.ajaxload a:hover {
-    border-color:#333
-}
-.ajaxload .loading, .ajaxload .loading:hover, .post-content .more .loading {
-    padding:5px;
-    color:#333;
-    border:0
-}
-.loading:after {
-    content:"";
-    display:block;
-    position:absolute;
-    top:auto;
-    bottom:0;
-    height:1px
 }
 #comments {
     margin-bottom:30px
@@ -673,16 +656,11 @@ button, input[type=submit], .menu-parent a, .rewards a {
         width:100%
     }
 }
-.ajaxload a, .comment-body, .respond #textarea, .textbutton, .thumb img, .mdui-typo img, .avatar, .notie, .l_logo i {
+.comment-body, .respond #textarea, .textbutton, .thumb img, .mdui-typo img, .avatar, .notie, .l_logo i {
     box-shadow:0 2px 2px 0 rgba(0, 0, 0, .14), 0 3px 1px -2px rgba(0, 0, 0, .2), 0 1px 5px 0 rgba(0, 0, 0, .12)
 }
 .textbutton, .l_logo i {
     border-radius:3px
-}
-.ajaxload a, .ajaxload .loading:hover, .ajaxload .loading {
-    padding:5px 20px;
-    border:1px solid #666;
-    border-radius:5px
 }
 .avatar {
     border-radius:50%
