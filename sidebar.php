@@ -1,5 +1,4 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-<?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
 <div class="widget">
     <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
         <div class="mdui-textfield mdui-textfield-floating-label">
@@ -8,6 +7,7 @@
         </div>
     </form>
 </div>
+<?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
 <div class="widget">
 <h3 class="widget-title"><?php echo FindContents('page-whisper.php') ? FindContents('page-whisper.php', 'commentsNum', 'd')[0]['title'] : '轻语' ?></h3>
 <ul class="widget-list whisper">
