@@ -597,18 +597,6 @@ EOF;
 		_t('默认开启，启用将在右下角显示“返回顶部”按钮')
 	);
 	$form->addInput($scrollTop);
-
-	$mdrToComment = new Typecho_Widget_Helper_Form_Element_Radio(
-		'mdrToComment',
-		array(
-			1 => _t('启用'),
-			0 => _t('关闭')
-		),
-		1,
-		_t('直奔评论区'),
-		_t('默认开启，启用后将在文章右下角显示“直奔评论区”按钮')
-	);
-	$form->addInput($mdrToComment);
 	
 	/* MDr Custom 自定义设置 */
 	$mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
@@ -966,7 +954,7 @@ function getCatalog() {
 		for ($i=0; $i<=$to_depth; $i++) {
 			$index .= '</li>'."\n".'</ul>'."\n";
 		}
-	$index = '<div id="catalog-col" class="mdui-card">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("catalog");document.getElementById("catalog").classList.toggle("catalog")}</script>'."\n".'</div>'."\n";
+	$index = '<div id="catalog-col" class="mdui-menu" onclick="Catalogswith()" style="right:16px;bottom:16px">'."\n".'<b>文章目录</b>'."\n".$index.'<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("mdui-menu-open")}</script>'."\n".'</div>'."\n";
 	}
 	return $index;
 }

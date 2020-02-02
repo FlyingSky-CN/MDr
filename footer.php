@@ -41,7 +41,7 @@
 		<?php endif; ?>
   	</div>
 </div>
-<div id="pageQrCode" class="mdui-menu" style="padding:10px;width:170px;height:170px;background:#fff;right: 16px;bottom: 16px" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
+<div id="pageQrCode" class="mdui-menu" style="padding:10px 0px 0px 10px;width:170px;height:170px;background:#fff;right: 16px;bottom: 16px" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
 
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>

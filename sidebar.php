@@ -1,5 +1,4 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-<?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
 <div class="widget">
     <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
         <div class="mdui-textfield mdui-textfield-floating-label">
@@ -8,6 +7,7 @@
         </div>
     </form>
 </div>
+<?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
 <div class="widget">
 <h3 class="widget-title"><?php echo FindContents('page-whisper.php') ? FindContents('page-whisper.php', 'commentsNum', 'd')[0]['title'] : '轻语' ?></h3>
 <ul class="widget-list whisper">
@@ -63,17 +63,17 @@
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowTag', $this->options->sidebarBlock)): ?>
 <div class="widget">
-<h3 class="widget-title">标签</h3>
-<ul class="widget-tile">
-<?php $this->widget('Widget_Metas_Tag_Cloud', 'ignoreZeroCount=1&limit=30')->to($tags); ?>
-<?php if($tags->have()): ?>
-<?php while($tags->next()): ?>
-<li><a href="<?php $tags->permalink(); ?>"><?php $tags->name(); ?></a></li>
-<?php endwhile; ?>
-<?php else: ?>
-<li>暂无标签</li>
-<?php endif; ?>
-</ul>
+    <h3 class="widget-title">标签</h3>
+    <ul class="widget-tile">
+        <?php $this->widget('Widget_Metas_Tag_Cloud', 'ignoreZeroCount=1&limit=20')->to($tags); ?>
+        <?php if($tags->have()): ?>
+        <?php while($tags->next()): ?>
+        <div class="mdui-chip"><a href="<?php $tags->permalink(); ?>"><span class="mdui-chip-title"><?php $tags->name(); ?></span></a></div>
+        <?php endwhile; ?>
+        <?php else: ?>
+        <div class="mdui-chip"><span class="mdui-chip-title">None</span></div>
+        <?php endif; ?>
+    </ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowArchive', $this->options->sidebarBlock)): ?>
