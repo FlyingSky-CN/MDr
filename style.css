@@ -333,36 +333,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .post-near li {
     margin:10px 0
 }
-.page-navigator {
-    list-style:none;
-    margin:20px 0;
-    padding:0px
-}
-.page-navigator li {
-    display:inline-block;
-    margin-right:5px;
-    height:36px;
-    border-radius:2px;
-    line-height:36px;
-    color:#000;
-    font-size:14px;
-    will-change:box-shadow;
-    background:#e8e8e8;
-    text-align:center
-}
-.mdui-theme-layout-dark .page-navigator li {
-    background:#444;
-    color:#fff
-}
-.page-navigator li:hover {
-    opacity:.87
-}
-.page-navigator a, .page-navigator span {
-    padding:11px 16px
-}
-.page-navigator.ajaxload .next {
-    width:100%
-}
 .whisper .respond {
     display:none
 }
