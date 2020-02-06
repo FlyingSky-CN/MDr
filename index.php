@@ -39,7 +39,7 @@ $this->need('header.php');?>
     </div>
     <?php else: ?>
     <div class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
-        <?php if ($this->options->PjaxOption && !$this->hidden and postThumb($this)): ?>
+        <?php if (!$this->hidden && postThumb($this)): ?>
         <div class="mdui-card-media">
             <a href="<?php $this->permalink() ?>">
             <?php echo postThumb($this); ?>

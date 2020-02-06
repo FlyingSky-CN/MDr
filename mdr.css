@@ -1,0 +1,118 @@
+/**
+* Attention：这是整理代码 (#19) 时的临时文件，主文件 style.css
+*/
+
+/** Scrollbar **/
+body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    -webkit-box-shadow: inset 2px 0 2px 0 rgba(0,0,0,.25);
+    box-shadow: inset 2px 0 2px 0 rgba(0,0,0,.25)
+}
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .2)
+}
+body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.3)!important
+}
+
+/** Helper **/
+.mdui-theme-layout-dark img {
+    filter: brightness(75%)
+}
+body.pray * {
+    -webkit-filter: grayscale(100%); 
+    -moz-filter: grayscale(100%); 
+    -ms-filter: grayscale(100%); 
+    -o-filter: grayscale(100%); 
+    filter: grayscale(100%); 
+    filter: gray; 
+}
+
+/** Widget **/
+/* SidebarFix */
+@media(min-width: 1024px){
+    .mdui-drawer#mdrDrawerR.fixed {
+        position: absolute!important;
+        overflow-y: hidden;
+        right: 0
+    }
+}
+/* QrCode */
+#pageQrCode {
+    background: #fff!important;
+    padding: 10px 0px 0px 10px;
+    width: 170px;
+    height: 170px;
+    right: 16px;
+    bottom: 16px
+}
+/* Post[Status] */
+.post.status {
+    background-color: #e8e8e8
+}
+.mdui-theme-layout-dark .post.status {
+    background-color: #424242
+}
+.mdui-theme-layout-dark .post.status .inner {
+    color: hsla(0,0%,100%,.8)!important
+}
+.post.status .tag, .post.status .time {
+    position: absolute;
+    top: 0;
+    font-size: 15px
+}
+.mdui-theme-layout-dark .post.status .tag {
+    background-color: #525252
+}
+.mdui-theme-layout-dark .post.status .time {
+    color: #5a5a5a
+}
+.post.status .tag {
+    left: 15px;
+    padding: 10px;
+    border-radius: 0 0 2px 2px;
+    background-color: #dadada;
+    color: grey
+}
+.post.status .time {
+    right: 0;
+    padding: 12px;
+    color: #bcbcbc
+}
+.post.status .inner {
+    font-size: 16px;
+    padding: 70px 16px 24px
+}
+/* PageNavigator */
+.page-navigator {
+    list-style:none;
+    margin:20px 0;
+    padding:0px
+}
+.page-navigator li {
+    display:inline-block;
+    margin-right:5px;
+    height:36px;
+    border-radius:2px;
+    line-height:36px;
+    color:#000;
+    font-size:14px;
+    will-change:box-shadow;
+    background:#e8e8e8;
+    text-align:center
+}
+.mdui-theme-layout-dark .page-navigator li {
+    background:#444;
+    color:#fff
+}
+.page-navigator li:hover {
+    opacity:.87
+}
+.page-navigator a, .page-navigator span {
+    padding:11px 16px
+}
+.page-navigator.ajaxload .next {
+    width:100%
+}
