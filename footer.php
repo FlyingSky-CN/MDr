@@ -503,8 +503,8 @@ function switchQrCode() {
 		console.log('Dark mode off');
 		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
 		addClass(body,'mdui-theme-layout-dark');
-		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
 		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
 		appbar.style.backgroundColor = '#212121';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','#212121');
@@ -515,8 +515,8 @@ function switchQrCode() {
 		console.log('Dark mode on');
 		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
         removeClass(body,'mdui-theme-layout-dark');
+		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-        removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
         appbar.style.backgroundColor = '#ffffff';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
