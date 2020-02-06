@@ -21,27 +21,21 @@
         'author'    =>  _t('作者 %s 发布的文章')
         ), '', ' - '); ?><?php $this->options->title(); if ($this->is('index') && $this->options->subTitle): ?> - <?php $this->options->subTitle(); endif; ?></title>
         <?php $this->header('generator=&template=&pingback=&xmlrpc=&wlw=&commentReply=&rss1=&rss2=&antiSpam=&atom='); ?>
+        <!-- mdr | Style -->
         <!-- MDUI STR -->
         <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
         <!-- MDUI END -->
         <?php if (!$this->options->mdrCornertool) { ?>
+        <!-- mdr | Cornertool -->
         <style>
             *::-webkit-scrollbar {
                 width:0px!important;
                 height:0px!important
             }
-            *::-webkit-scrollbar-thumb {
-                background:#444!important
-            }
-            *::-webkit-scrollbar-track {
-                background:#f3f3f3!important
-            }
-            *::-webkit-scrollbar-corner {
-                background:#f3f3f3!important
-            }
         </style>
         <?php } ?>
-        <?php if ($this->options->mdrPray) { ?>
+        <?php if ($this->options->mdrPray): ?>
+        <!-- mdr | Pray -->
         <style>
             body {
                 -webkit-filter: grayscale(100%); 
@@ -52,21 +46,19 @@
                 filter: gray; 
             }
         </style>
-        <?php } ?>
+        <?php endif; ?>
         <?php if ($this->options->DarkMode): ?>
         <style>
-            /* Dark mode */
             .mdui-theme-layout-dark a {
                 color: #fff;
             }
+            /* Dark mode */
+            /*
             .mdui-theme-layout-dark .post-meta li {
                 border-left: 1px solid #444;
             }
             .mdui-theme-layout-dark #secondary a, .mdui-theme-layout-dark .post-content .more a, .mdui-theme-layout-dark .post-meta, .mdui-theme-layout-dark .widget-tile li {
                 color: #aaa;
-            }
-            .mdui-theme-layout-dark img {
-                filter: brightness(75%);
             }
             .mdui-theme-layout-dark .ajaxload a, .mdui-theme-layout-dark .ajaxload .loading:hover, .mdui-theme-layout-dark .ajaxload .loading, .mdui-theme-layout-dark .mdui-row a {
                 color: #aaa;
@@ -95,32 +87,10 @@
             }
             .mdui-theme-layout-dark .whisper .comment-body, .mdui-theme-layout-dark .whisper .comment-list li.comment-parent {
                 border: 1px solid #424242;
-            }
-            /* 滚动条 */
-            .mdui-theme-layout-dark *::-webkit-scrollbar-thumb {
-                background: #aaa;
-            }
-            .mdui-theme-layout-dark *::-webkit-scrollbar-track {
-                background: #424242;
-            }
-            .mdui-theme-layout-dark *::-webkit-scrollbar-corner {
-                background: #424242;
-            }
-            .mdui-theme-layout-dark::-webkit-scrollbar-thumb {
-                background: #aaa;
-            }
-            .mdui-theme-layout-dark::-webkit-scrollbar-track {
-                background: #424242;
-            }
-            .mdui-theme-layout-dark::-webkit-scrollbar-corner {
-                background: #424242;
-            }
-            /* Notice */
-            .mdui-theme-layout-dark .notie {
-                background: rgba(0,0,0,.7)!important;
-            }
+            }*/
         </style>
         <?php endif; ?>
+        <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=0') ?>" />
         <link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />
         <?php if ($this->options->ViewImg): ?>
         <link rel="stylesheet" href="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css<?php endif; ?>"/>
@@ -220,8 +190,7 @@
                 <?php endif; ?>
             </ul>
         </div>
-        <div class="mdui-drawer mdui-drawer-right" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
-        <?php if ($this -> options -> SidebarFixed): ?><style>@media(min-width:1023px){#mdrDrawerR{overflow-y:hidden;}}</style><?php endif; ?>
+        <div class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
             <?php $this->need('sidebar.php'); ?>
         </div>
         <div class="mdui-container">

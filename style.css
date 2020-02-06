@@ -203,10 +203,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
         left:50%
     }
 }
-#main>*:not(.breadcrumbs) {
-    animation:upin .3s;
-    -webkit-animation:upin .3s
-}
 @keyframes upin {
     0% {
         opacity:0;
@@ -677,40 +673,4 @@ html {
     html {
         content: "dark";
     }
-}
-.post.status {
-    background-color: #e8e8e8;
-}
-.mdui-theme-layout-dark .post.status {
-    background-color: #424242;
-}
-.mdui-theme-layout-dark .post.status .inner {
-    color: hsla(0,0%,100%,.8)!important;
-}
-.post.status .tag, .post.status .time {
-    position: absolute;
-    top: 0;
-    font-size: 15px;
-}
-.mdui-theme-layout-dark .post.status .tag {
-    background-color: #525252;
-}
-.mdui-theme-layout-dark .post.status .time {
-    color: #5a5a5a;
-}
-.post.status .tag {
-    left: 15px;
-    padding: 10px;
-    border-radius: 0 0 2px 2px;
-    background-color: #dadada;
-    color: grey;
-}
-.post.status .time {
-    right: 0;
-    padding: 12px;
-    color: #bcbcbc;
-}
-.post.status .inner {
-    font-size: 16px;
-    padding: 70px 16px 24px;
 }

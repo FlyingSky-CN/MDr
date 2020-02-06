@@ -1,0 +1,77 @@
+/**
+* Attention：这是整理代码 (#19) 时的临时文件，主文件 style.css
+*/
+
+/** Scrollbar **/
+body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    -webkit-box-shadow: inset 2px 0 2px 0 rgba(0,0,0,.25);
+    box-shadow: inset 2px 0 2px 0 rgba(0,0,0,.25)
+}
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .2)
+}
+body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,.3)!important
+}
+
+/** Helper **/
+
+.mdui-theme-layout-dark img {
+    filter: brightness(75%)
+}
+
+/** Widget **/
+@media(min-width: 1024px){
+    .mdui-drawer#mdrDrawerR.fixed {
+        position: absolute!important;
+        overflow-y: hidden;
+        right: 0
+    }
+}
+#pageQrCode {
+    background: #fff!important;
+    padding: 10px 0px 0px 10px;
+    width: 170px;
+    height: 170px;
+    right: 16px;
+    bottom: 16px
+}
+.post.status {
+    background-color: #e8e8e8
+}
+.mdui-theme-layout-dark .post.status {
+    background-color: #424242
+}
+.mdui-theme-layout-dark .post.status .inner {
+    color: hsla(0,0%,100%,.8)!important
+}
+.post.status .tag, .post.status .time {
+    position: absolute;
+    top: 0;
+    font-size: 15px
+}
+.mdui-theme-layout-dark .post.status .tag {
+    background-color: #525252
+}
+.mdui-theme-layout-dark .post.status .time {
+    color: #5a5a5a
+}
+.post.status .tag {
+    left: 15px;
+    padding: 10px;
+    border-radius: 0 0 2px 2px;
+    background-color: #dadada;
+    color: grey
+}
+.post.status .time {
+    right: 0;
+    padding: 12px;
+    color: #bcbcbc
+}
+.post.status .inner {
+    font-size: 16px;
+    padding: 70px 16px 24px
+}
