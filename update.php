@@ -76,7 +76,7 @@ if (!$user->pass('administrator',true)) {
 
 /* 更新程序 */
 
-define('__MDR_RAW_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/master/');
+define('__MDR_RAW_URL__', 'https://cdn.jsdelivr.net/gh/FlyingSky-CN/MDr/');
 
 echo "MDr主题更新程序";
 
