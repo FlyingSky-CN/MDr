@@ -40,7 +40,6 @@
                 color: #fff;
             }
             /* Dark mode */
-            /*
             .mdui-theme-layout-dark .post-meta li {
                 border-left: 1px solid #444;
             }
