@@ -1141,7 +1141,7 @@ function Links($short = false) {
 		foreach ($list as $val) {
 			list($name, $url, $description, $logo) = explode(',', $val);
             if ($short) {
-                $link .= '<a'.($url ? ' href="'.$url.'"' : '').($icon==1&&$url ? ' class="l_logo"' : '').' title="'.$description.'" target="_blank"><span>'.($url ? $name : '<del>'.$name.'</del>').'</span></a>'."\n";
+                $link .= '<div class="mdui-chip"><a'.($url ? ' href="'.$url.'"' : '').' title="'.$description.'" target="_blank">'.($logo ? '<img class="mdui-chip-icon" src="'.$logo.'"/>' : '').'<span class="mdui-chip-title">'.($url ? $name : '<del>'.$name.'</del>').'</span></a></div>'."\n";
             } else {
                 $link .= '
                 <div class="mdui-col" style="padding-top: 16px;">
