@@ -1082,7 +1082,7 @@ function Whisper($sidebar = NULL) {
 	$options = Helper::options();
 	$page = FindContents('page-whisper.php', 'commentsNum', 'd');
 	$p = $sidebar ? 'li' : 'p';
-	if (isset($page)) {
+	if (isset($page[0])) {
 		$page = $page[0];
 		$title = $sidebar ? '' : '<h2 class="post-title"><a href="'.$page['permalink'].'">'.$page['title'].'<span class="more">···</span></a></h2>'."\n";
 		$comment = $db->fetchAll($db->select()->from('table.comments')

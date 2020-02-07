@@ -116,6 +116,7 @@ $(document).pjax('a[target!=_blank]', {
 	$('#s').val("");
 })
 .on('pjax:end', function() {
+	mdui.mutation();
     if ( document.body.clientWidth < 1024 ) {
         mdui.Drawer('#mdrDrawerL').close();
         mdui.Drawer('#mdrDrawerR').close();
@@ -167,8 +168,10 @@ function ac() {
             position: '<?=$this->options->mdrSnackbar?>',
             timeout: 5000
 		});
-		if (ar[1]['name'] == 'parent') {
-			l = 'comment-'+ar[1]['value'];
+		if (ar[1]) {
+			if (ar[1]['name'] == 'parent') {
+				l = 'comment-'+ar[1]['value'];
+			}
 		}
 		$.ajax({
 			url: $(this).attr('action'),
