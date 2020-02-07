@@ -9,14 +9,18 @@ table {
     border-radius: 2px;
     border-spacing: 0;
     border-collapse: separate;
-    border: 1px solid rgba(0,0,0,.12);
-    border-bottom: none;
-    border-right: none
+    border: 1px solid rgba(0,0,0,.12)
 }
 table td, table th {
     padding:6px 13px;
     border-bottom: 1px solid rgba(0,0,0,.12);
     border-right: 1px solid rgba(0,0,0,.12)
+}
+table tr th:last-child, table tr td:last-child {
+    border-right: none
+}
+table tr:last-child td {
+    border-bottom: none
 }
 .mdui-theme-layout-dark table, .mdui-theme-layout-dark table td, .mdui-theme-layout-dark table th {
     border-color: rgba(255,255,255,.12);
@@ -69,8 +73,7 @@ button, input[type=submit] {
 button, input[type=submit], .menu-parent a {
     cursor:pointer
 }
-
-/** Scrollbar **/
+/* Scrollbar */
 body::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -97,6 +100,9 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
 .avatar {
     border-radius: 50%
 }
+#post img, #post video, .comment-content img, .comment-content video, .whisper img, .whisper video {
+    max-width: 100%
+}
 /* Pray */
 html.pray {
     -webkit-filter: grayscale(100%); 
@@ -122,6 +128,34 @@ html {
 }
 
 /** Widget **/
+/* Sidebar */
+.widget {
+    margin-bottom: 30px;
+    padding-left: 16px;
+    padding-right: 16px;
+    white-space: normal!important
+}
+.widget-list li {
+    margin: 5px 0;
+    line-height: 1.6
+}
+.widget-list, .widget-tile {
+    list-style: none;
+    padding: 0
+}
+.widget-list li ul {
+    margin-left: 15px
+}
+.widget-tile {
+    margin-left: -5px;
+    margin-right: -5px
+}
+.widget-tile li {
+    display: inline-block;
+    margin: 5px;
+    line-height: 1.6;
+    color:#666
+}
 /* SidebarFix */
 @media(min-width: 1024px){
     .mdui-drawer#mdrDrawerR.fixed {

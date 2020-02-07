@@ -25,52 +25,13 @@
         <!-- MDUI STR -->
         <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
         <!-- MDUI END -->
-        <?php if (!$this->options->mdrCornertool) { ?>
+        <?php if (!$this->options->mdrCornertool): ?>
         <!-- mdr | Cornertool -->
         <style>
             *::-webkit-scrollbar {
                 width:0px!important;
                 height:0px!important
             }
-        </style>
-        <?php } ?>
-        <?php if ($this->options->DarkMode): ?>
-        <style>
-            /* Dark mode */
-            .mdui-theme-layout-dark .post-meta li {
-                border-left: 1px solid #444;
-            }
-            .mdui-theme-layout-dark #secondary a, .mdui-theme-layout-dark .post-content .more a, .mdui-theme-layout-dark .post-meta, .mdui-theme-layout-dark .widget-tile li {
-                color: #aaa;
-            }
-            .mdui-theme-layout-dark .ajaxload a, .mdui-theme-layout-dark .ajaxload .loading:hover, .mdui-theme-layout-dark .ajaxload .loading, .mdui-theme-layout-dark .mdui-row a {
-                color: #aaa;
-            }
-            .mdui-theme-layout-dark .ajaxload a:hover {
-                border-color: #bbb;
-            }
-            .mdui-theme-layout-dark blockquote {
-                background: none;
-                color: #fff;
-            }
-            .mdui-theme-layout-dark .textbutton {
-                box-shadow: none;
-            }
-            .mdui-theme-layout-dark .textbutton input, .mdui-theme-layout-dark .respond #textarea {
-                background: #424242;
-                box-shadow: none;
-                border: none;
-                color: #fff;
-            }
-            .mdui-theme-layout-dark .comment-list li, .mdui-theme-layout-dark .whisper .comment-list li, .mdui-theme-layout-dark .comment-list .respond {
-                border-color: #424242;
-            }
-            .mdui-theme-layout-dark .whisper .comment-child {
-                background: none;
-            }
-            .mdui-theme-layout-dark .whisper .comment-body, .mdui-theme-layout-dark .whisper .comment-list li.comment-parent {
-                border: 1px solid #424242;
-            }*/
         </style>
         <?php endif; ?>
         <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=2') ?>" />
