@@ -25,7 +25,7 @@
         <!-- MDUI STR -->
         <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
         <!-- MDUI END -->
-        <?php if (!$this->options->mdrCornertool) { ?>
+        <?php if (!$this->options->mdrCornertool): ?>
         <!-- mdr | Cornertool -->
         <style>
             *::-webkit-scrollbar {
@@ -33,53 +33,14 @@
                 height:0px!important
             }
         </style>
-        <?php } ?>
-        <?php if ($this->options->DarkMode): ?>
-        <style>
-            /* Dark mode */
-            .mdui-theme-layout-dark .post-meta li {
-                border-left: 1px solid #444;
-            }
-            .mdui-theme-layout-dark #secondary a, .mdui-theme-layout-dark .post-content .more a, .mdui-theme-layout-dark .post-meta, .mdui-theme-layout-dark .widget-tile li {
-                color: #aaa;
-            }
-            .mdui-theme-layout-dark .ajaxload a, .mdui-theme-layout-dark .ajaxload .loading:hover, .mdui-theme-layout-dark .ajaxload .loading, .mdui-theme-layout-dark .mdui-row a {
-                color: #aaa;
-            }
-            .mdui-theme-layout-dark .ajaxload a:hover {
-                border-color: #bbb;
-            }
-            .mdui-theme-layout-dark blockquote {
-                background: none;
-                color: #fff;
-            }
-            .mdui-theme-layout-dark .textbutton {
-                box-shadow: none;
-            }
-            .mdui-theme-layout-dark .textbutton input, .mdui-theme-layout-dark .respond #textarea {
-                background: #424242;
-                box-shadow: none;
-                border: none;
-                color: #fff;
-            }
-            .mdui-theme-layout-dark .comment-list li, .mdui-theme-layout-dark .whisper .comment-list li, .mdui-theme-layout-dark .comment-list .respond {
-                border-color: #424242;
-            }
-            .mdui-theme-layout-dark .whisper .comment-child {
-                background: none;
-            }
-            .mdui-theme-layout-dark .whisper .comment-body, .mdui-theme-layout-dark .whisper .comment-list li.comment-parent {
-                border: 1px solid #424242;
-            }*/
-        </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=2') ?>" />
-        <link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=3') ?>" />
+        <!--<link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />-->
         <?php if ($this->options->ViewImg): ?>
         <link rel="stylesheet" href="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css<?php endif; ?>"/>
         <?php endif; ?>
     </head>
-    <body class="<?php if($_COOKIE['dark']=='1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?php if($_COOKIE['dark']=='1'){$this->options->mdrAccentD();}else{$this->options->mdrAccent();}?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
+    <body class="<?php if(@$_COOKIE['dark'] == '1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?=((@$_COOKIE['dark']=='1') ? $this->options->mdrAccentD() : $this->options->mdrAccent() )?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
