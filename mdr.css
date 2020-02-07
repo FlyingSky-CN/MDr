@@ -2,6 +2,74 @@
 * Attention：这是整理代码 (#19) 时的临时文件，主文件 style.css
 */
 
+/** Element **/
+/* Table */
+table {
+    width: 100%;
+    border-radius: 2px;
+    border-spacing: 0;
+    border-collapse: separate;
+    border: 1px solid rgba(0,0,0,.12);
+    border-bottom: none;
+    border-right: none
+}
+table td, table th {
+    padding:6px 13px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12)
+}
+.mdui-theme-layout-dark table, .mdui-theme-layout-dark table td, .mdui-theme-layout-dark table th {
+    border-color: rgba(255,255,255,.12);
+}
+/* Unclean */
+a {
+    color: #444;
+    border: 0;
+    text-decoration: none
+}
+.mdui-theme-layout-dark a {
+    color: #fff;
+}
+ul {
+    padding-left: 30px
+}
+ul li p, #footer p, .whisper .comment-author {
+    margin: 0
+}
+input, textarea, button {
+    font-family:inherit;
+    font-size:100%;
+    line-height:1.2;
+    margin:0;
+    outline:0;
+    appearance:none;
+    -webkit-appearance:none
+}
+input, textarea {
+    padding:5px;
+    border:none;
+    width:100%;
+    height:30px;
+    border-radius:2px;
+    box-shadow:none;
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box
+}
+textarea {
+    height:150px;
+    resize:vertical;
+    overflow:auto
+}
+button, input[type=submit] {
+    padding:0 6px;
+    background:#ddd;
+    border:0
+}
+button, input[type=submit], .menu-parent a {
+    cursor:pointer
+}
+
 /** Scrollbar **/
 body::-webkit-scrollbar {
     width: 8px;
@@ -21,13 +89,36 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
 .mdui-theme-layout-dark img {
     filter: brightness(75%)
 }
-body.pray * {
+.error-page {
+    margin-top: 128px;
+    margin-bottom: 512px;
+    text-align: center
+}
+.avatar {
+    border-radius: 50%
+}
+/* Pray */
+html.pray {
     -webkit-filter: grayscale(100%); 
     -moz-filter: grayscale(100%); 
     -ms-filter: grayscale(100%); 
     -o-filter: grayscale(100%); 
     filter: grayscale(100%); 
     filter: gray; 
+}
+/* Dark Mode */
+html {
+    content: ""
+}
+@media (prefers-color-scheme: light) {
+    html {
+        content: "light"
+    }
+}
+@media (prefers-color-scheme: dark) {
+    html {
+        content: "dark"
+    }
 }
 
 /** Widget **/
