@@ -1,4 +1,17 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
+$showLimited = false;
+if (FindContents('page-whisper.php')[0]["permalink"] == $this->permalink):
+    if (!$this->user->hasLogin()):
+        $showLimited = true;
+    else:
+        if(!$this->user->pass('editor', true)):
+            $showLimited = true;
+        endif;
+    endif;
+endif;
+if ($showLimited):
+    echo '<style>.respond{display:none}</style>';
+endif;
 function threadedComments($comments, $options) {
 	$commentClass = '';
 	if ($comments->authorId) {
@@ -31,17 +44,17 @@ function threadedComments($comments, $options) {
             <?php } ?>
             <span class="mdui-btn mdui-ripple mdui-btn-dense"><?php $comments->reply(); ?></span>
         </div>
-        <?php if ($comments->children) { ?>
+        <?php if ($comments->children): ?>
         <div class="mdui-card-content" style="padding: 0px 8px;">
             <?php $comments->threadedComments($options); ?>
         </div>
-        <?php } ?>
+        <?php endif; ?>
     </div>
 <?php } ?>
 <!-- mdr | Comments -->
-<div id="comments">
+<div id="comments"<?php if ($showLimited): ?> class="limited"<?php endif; ?>>
 <?php $this->comments()->to($comments); ?>
-<?php if($this->allow('comment')): ?>
+<?php if ($this->allow('comment')): ?>
 <!-- mdr | allowComment -->
 <div class="mdui-card respond" id="<?php $this->respondId(); ?>">
     <div class="mdui-card-primary">
@@ -134,6 +147,7 @@ function threadedComments($comments, $options) {
         this.dom('cancel-comment-reply-link').style.display = '';
         response.style.borderTopLeftRadius = '0';
         response.style.borderTopRightRadius = '0';
+        response.style.display = 'block';
         if (null != textarea && 'text' == textarea.name) {
             textarea.focus()
         }
@@ -155,6 +169,7 @@ function threadedComments($comments, $options) {
         this.dom('cancel-comment-reply-link').style.display = 'none';
         response.style.borderTopLeftRadius = '2px';
         response.style.borderTopRightRadius = '2px';
+        response.style.display = '';
         holder.parentNode.insertBefore(response, holder);
         return false
     }
