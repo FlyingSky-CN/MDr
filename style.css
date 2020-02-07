@@ -12,22 +12,6 @@ ul li p, #footer p, .whisper .comment-author {
 h1.post-title {
     font-size:1.5em
 }
-table {
-    width:100%;
-    border-collapse:collapse;
-    border-spacing:0
-}
-table th {
-    background:#f3f3f3
-}
-table td, table th {
-    border:1px solid #dfe2e5;
-    padding:6px 13px
-}
-table tr {
-    background-color:#fff;
-    border-top:1px solid #c6cbd1
-}
 input, textarea, button {
     font-family:inherit;
     font-size:100%;
@@ -58,7 +42,7 @@ button, input[type=submit] {
     background:#ddd;
     border:0
 }
-button, input[type=submit], .menu-parent a, .rewards a {
+button, input[type=submit], .menu-parent a {
     cursor:pointer
 }
 .clearfix {
@@ -71,26 +55,8 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .clearfix:after {
     clear:both
 }
-.container {
-    max-width:1060px;
-    margin-left:auto;
-    margin-right:auto;
-    padding-left:10px;
-    padding-right:10px
-}
-.site-name, .comment-form p, .whisper .comment-meta time {
+.comment-form p, .whisper .comment-meta time {
     float:left
-}
-.site-name {
-    padding-left:6px
-}
-.site-name h1 {
-    display:table-cell;
-    height:40px;
-    font-size:1.7em;
-    margin:0;
-    vertical-align:middle;
-    font-weight:normal
 }
 #logo, .post-title a {
     color:#333
@@ -99,7 +65,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
     display:block;
     max-height:30px
 }
-.menu-parent ul, #catalog-col, .rewards img, #music span {
+.menu-parent ul, #catalog-col, #music span {
     transition:.2s;
     -webkit-transition:.2s
 }
@@ -107,15 +73,15 @@ button, input[type=submit], .menu-parent a, .rewards a {
     position:relative;
     float:right
 }
-.menu-parent:hover>ul, .rewards a:hover img {
+.menu-parent:hover>ul {
     visibility:visible;
     opacity:1
 }
-.menu-parent ul, .rewards img {
+.menu-parent ul {
     visibility:hidden;
     opacity:0
 }
-.rewards, .menu-parent, .l_logo, .loading {
+.menu-parent, .l_logo, .loading {
     position:relative
 }
 .comment-list, .comment-list ol {
@@ -166,62 +132,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
 }
 .menu-parent .menu-parent .menu-child {
     background:rgba(221, 221, 221, .95)
-}
-#bar, .loading:after {
-    position:fixed;
-    top:0;
-    height:3px;
-    background:#333;
-    animation:loading 1s infinite;
-    -webkit-animation:loading 1s infinite
-}
-@keyframes loading {
-    0% {
-        right:50%;
-        left:50%
-    }
-    30% {
-        right:0;
-        left:0
-    }
-    100% {
-        right:50%;
-        left:50%
-    }
-}
-@-webkit-keyframes loading {
-    0% {
-        right:50%;
-        left:50%
-    }
-    30% {
-        right:0;
-        left:0
-    }
-    100% {
-        right:50%;
-        left:50%
-    }
-}
-@keyframes upin {
-    0% {
-        opacity:0;
-        transform:translateY(30px)
-    }
-    100% {
-        opacity:1;
-        transform:translateY(0)
-    }
-}
-@-webkit-keyframes upin {
-    0% {
-        opacity:0;
-        transform:translateY(30px)
-    }
-    100% {
-        opacity:1;
-        transform:translateY(0)
-    }
 }
 .copyright {
     color:#999;
@@ -305,33 +215,12 @@ button, input[type=submit], .menu-parent a, .rewards a {
 .post-content .thumb, .post-content .more {
     text-align:center
 }
-.rewards, .post .tags {
+.post .tags {
     clear:both
 }
-.rewards a, .tags a {
+.tags a {
     color:#3354aa;
     border:0
-}
-.rewards img {
-    position:absolute;
-    top:0;
-    left:50%;
-    margin:-15% 0 0 -15%;
-    padding:5px;
-    max-width:30%;
-    background:#eee
-}
-.post-near {
-    list-style:none;
-    margin-top:15px;
-    margin-bottom:15px;
-    margin-left:8px;
-    margin-right:8px;
-    padding:0;
-    color:#999
-}
-.post-near li {
-    margin:10px 0
 }
 .whisper .respond {
     display:none
@@ -339,7 +228,7 @@ button, input[type=submit], .menu-parent a, .rewards a {
 #comments {
     margin-bottom:30px
 }
-#comments, .breadcrumbs, .tags, .rewards {
+#comments, .breadcrumbs, .tags {
     margin-bottom:0
 }
 .breadcrumbs {
@@ -510,22 +399,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     display:inline-block;
     margin:0 3px 2px
 }
-@keyframes play {
-    0% {
-        transform:rotate(0deg)
-    }
-    100% {
-        transform:rotate(360deg)
-    }
-}
-@-webkit-keyframes play {
-    0% {
-        -webkit-transform:rotate(0deg)
-    }
-    100% {
-        -webkit-transform:rotate(360deg)
-    }
-}
 #music span {
     position:absolute;
     display:block;
@@ -552,11 +425,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
     margin:2px 0 0 -11px;
     transform:rotate(30deg);
     -webkit-transform:rotate(30deg)
-}
-.error-page {
-    margin-top:128px;
-    margin-bottom:512px;
-    text-align:center
 }
 #archives li {
     margin:5px 0
@@ -587,9 +455,6 @@ button, input[type=submit], .menu-parent a, .rewards a {
 @media(max-width:768px) {
     #main {
         width:100%
-    }
-    #secondary {
-        display:none
     }
     .post-title, .post-meta, .protected .post-content {
         text-align:center

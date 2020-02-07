@@ -2,6 +2,26 @@
 * Attention：这是整理代码 (#19) 时的临时文件，主文件 style.css
 */
 
+/** Element **/
+/* Table */
+table {
+    width: 100%;
+    border-radius: 2px;
+    border-spacing: 0;
+    border-collapse: separate;
+    border: 1px solid rgba(0,0,0,.12);
+    border-bottom: none;
+    border-right: none
+}
+table td, table th {
+    padding:6px 13px;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12)
+}
+.mdui-theme-layout-dark table, .mdui-theme-layout-dark table td, .mdui-theme-layout-dark table th {
+    border-color: rgba(255,255,255,.12);
+}
+
 /** Scrollbar **/
 body::-webkit-scrollbar {
     width: 8px;
@@ -21,6 +41,12 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
 .mdui-theme-layout-dark img {
     filter: brightness(75%)
 }
+.error-page {
+    margin-top:128px;
+    margin-bottom:512px;
+    text-align:center
+}
+/* Pray */
 body.pray .mdui-card, body.pray .mdui-typo, body.pray .mdui-btn, body.pray .mdui-fab, body.pray .mdui-icon, body.pray img {
     -webkit-filter: grayscale(100%); 
     -moz-filter: grayscale(100%); 
