@@ -21,7 +21,7 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
 .mdui-theme-layout-dark img {
     filter: brightness(75%)
 }
-body.pray * {
+body.pray .mdui-card, body.pray .mdui-typo, body.pray .mdui-btn, body.pray .mdui-fab, body.pray .mdui-icon, body.pray img {
     -webkit-filter: grayscale(100%); 
     -moz-filter: grayscale(100%); 
     -ms-filter: grayscale(100%); 
