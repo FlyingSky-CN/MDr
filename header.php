@@ -34,8 +34,7 @@
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=3') ?>" />
-        <!--<link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />-->
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />
         <?php if ($this->options->ViewImg): ?>
         <link rel="stylesheet" href="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css<?php endif; ?>"/>
         <?php endif; ?>
