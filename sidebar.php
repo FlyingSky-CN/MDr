@@ -115,13 +115,13 @@
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowStats', $this->options->sidebarBlock)): ?>
 <div class="widget">
-<h3 class="widget-title">网站统计</h3>
-<ul class="widget-tile" id="stat">
-<?php Typecho_Widget::widget('Widget_Stat')->to($stat); ?>
-<li>文章总数： <?php $stat->publishedPostsNum() ?> 篇 </li>
-<li>评论总数： <?php $stat->publishedCommentsNum() ?> 条 </li>
-<li>总访问量： <?php echo theAllViews() ?> ( PV ) </li>
-</ul>
+    <h3 class="widget-title">网站统计</h3>
+    <ul class="widget-list">
+        <?php Typecho_Widget::widget('Widget_Stat')->to($stat); ?>
+        <li>文章总数： <?php $stat->publishedPostsNum() ?> 篇 </li>
+        <li>评论总数： <?php $stat->publishedCommentsNum() ?> 条 </li>
+        <li>总访问量： <?php echo theAllViews() ?> ( PV ) </li>
+    </ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowOther', $this->options->sidebarBlock)): ?>

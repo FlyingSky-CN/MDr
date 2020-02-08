@@ -11,7 +11,7 @@ $this->need('header.php');?>
 <div id="main">
     <?php if ($this->_currentPage==1&&!empty($this->options->ShowWhisper)&&in_array('index',$this->options->ShowWhisper)): ?>
     <?php $whisper=Whisper(); ?>
-    <article class="mdui-card status post" style="margin-top:20px;">
+    <article class="mdui-card mdui-shadow-0 status post" style="margin-top:20px;">
         <div class="tag"><?=isset($whisper[2]) ? $whisper[2] : '轻语' ?></div>
         <div class="time mdui-text-right">Whisper</div>
         <div class="inner"> 
