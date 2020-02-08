@@ -1,5 +1,5 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-	<div class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
+	<footer class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
 		<!-- mdr | Copyright & Powered by -->
 		&copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> & <a href="https://blog.fsky7.com/archives/60/">MDr</a>.<br>
 		<?php if (!empty($this->options->ButtomText)): ?>
@@ -42,8 +42,8 @@
 		<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=<?php $this->options->beianNumber(); ?>" target="_blank"><?php $this->options->beianProvince(); ?>公网安备<?php $this->options->beianNumber(); ?>号</a> 
 		<img src="<?=mdrGWABlogo()?>" style="box-shadow:none" alt="公网安备案图标">
 		<?php endif; ?>
-	</div>
-</div>
+	</footer>
+</main>
 <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
   	<button class="mdui-fab mdui-ripple mdui-color-theme-accent">
     	<i class="mdui-icon material-icons">apps</i>
@@ -69,6 +69,18 @@
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
 <!-- MDUI END -->
+<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+<script>
+var $$ = mdui.JQ;
+function mdrDebug() {
+	$$.each($$('a[href]'), function(i,item) {
+		if (item.href.indexOf("?debug=true") == -1) {
+			item.href = item.href + '?debug=true'
+		}
+	})
+}
+</script>
+<?php endif; ?>
 <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode): ?>
 <!-- mdr | jQuery -->
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
@@ -139,6 +151,9 @@ $(document).pjax('a[target!=_blank]', {
 	/**TODO gtag.js 的回调 #28 */
 	<?php endif; if ($this->options->ViewImg): ?>
 	mdrfa();
+	<?php endif; ?>
+	<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+	mdrDebug();
 	<?php endif; ?>
 });
 <?php if ($this->options->ViewImg): ?>
@@ -606,6 +621,9 @@ function switchQrCode() {
 		}
 	});
 </script>
+<?php endif; ?>
+<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+<script> mdrDebug() </script>
 <?php endif; ?>
 </body>
 </html>

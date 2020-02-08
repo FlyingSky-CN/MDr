@@ -1,4 +1,22 @@
-<?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
+<?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; 
+if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']):
+    if ($_GET['debug'] == 'start'):
+        $_SESSION['mdrConfig'] = $_POST;
+        header('Location: '.$this->options->originalSiteUrl.'/?debug=true');
+        exit();
+    endif;
+    if ($_GET['debug'] == 'true'):
+        if (!is_array(@$_SESSION['mdrConfig'])):
+            header('Location: '.$this->options->originalSiteUrl.'/');
+            exit();
+        else:
+            foreach ($_SESSION['mdrConfig'] as $name => $key):
+                $this->options->$name = $key;
+            endforeach;
+        endif;
+    endif;
+endif;
+?>
 <!DOCTYPE html>
 <html <?php if ($this->options->mdrPray): ?>class="pray"<?php endif; ?>>
     <head>
@@ -34,8 +52,7 @@
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('mdr.css?v=3') ?>" />
-        <!--<link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />-->
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=20') ?>" />
         <?php if ($this->options->ViewImg): ?>
         <link rel="stylesheet" href="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css<?php endif; ?>"/>
         <?php endif; ?>
@@ -44,7 +61,7 @@
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
-        <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
+        <header class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
@@ -57,8 +74,8 @@
                     <i class="mdui-icon material-icons">more_vert</i>
                 </a>
             </div>
-        </div>
-        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL" style="z-index: 4000;">
+        </header>
+        <aside class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
@@ -133,8 +150,8 @@
                 </li>
                 <?php endif; ?>
             </ul>
-        </div>
-        <div class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
+        </aside>
+        <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
             <?php $this->need('sidebar.php'); ?>
-        </div>
-        <div class="mdui-container">
+        </aside>
+        <main class="mdui-container">

@@ -10,23 +10,32 @@
 $this->need('header.php');?>
 <div id="main">
     <?php if ($this->_currentPage==1&&!empty($this->options->ShowWhisper)&&in_array('index',$this->options->ShowWhisper)): ?>
-    <article class="post whisper">
-        <?php Whisper(); ?>
-        <?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
-        <p class="notice">
-            <b>仅管理员可见: </b><br>
+    <?php $whisper=Whisper(); ?>
+    <article class="mdui-card mdui-shadow-0 status post">
+        <div class="tag"><?=isset($whisper[2]) ? $whisper[2] : '轻语' ?></div>
+        <div class="time mdui-text-right">Whisper</div>
+        <div class="inner"> 
+            <span class="mdui-typo">
+                <?=$whisper[0]?>
+            </span>
+        </div>
+    </article>
+    <?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
+    <div class="mdui-card mdui-shadow-0 mdui-color-red-a700 post">
+        <div class="mdui-card-content">
+            <b>仅管理员可见</b><br>
             <?php if (FindContents('page-whisper.php')): ?>
             发现多个"轻语"模板页面，已自动选取内容最多的页面作为展示，请删除多余模板页面。
             <?php else: ?>
             未找到"轻语"模板页面，请检查是否创建模板页面。
             <?php endif; ?>
-        </p>
-        <?php endif; ?>
-    </article>
+        </div>
+    </div>
+    <?php endif; ?>
     <?php endif; ?>
     <?php while($this->next()): ?>
     <?php if (is_status($this) && !$this->hidden): ?>
-    <div class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
+    <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>">
         <div class="tag"><i class="mdui-icon material-icons">message</i></div>
         <div class="time mdui-text-right"><?php $this->date(); ?></div>
         <article class="inner"> 
@@ -34,9 +43,9 @@ $this->need('header.php');?>
                 <?php $this->content(); ?>
             </span>
         </article>
-    </div>
+    </article>
     <?php else: ?>
-    <div class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top: 20px;">
+    <article class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>">
         <?php if (!$this->hidden && postThumb($this)): ?>
         <div class="mdui-card-media">
             <a href="<?php $this->permalink() ?>">
@@ -127,7 +136,7 @@ $this->need('header.php');?>
             <?php } ?>
             <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple"<?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%"<?php } ?>>阅读全文</a>
         </div>
-    </div>
+    </article>
     <?php endif; ?>
     <?php endwhile; ?>
     <?php $this->pageNav('上一页', $this->options->AjaxLoad ? '查看更多' : '下一页', 0, '..', $this->options->AjaxLoad ? array('wrapClass' => 'page-navigator ajaxload') : ''); ?>

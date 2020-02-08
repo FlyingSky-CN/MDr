@@ -189,6 +189,13 @@ html {
     right: 16px;
     bottom: 16px
 }
+/* Post */
+.post {
+    margin-top: 20px
+}
+.tags {
+    margin: 15px 0
+}
 /* Post[Status] */
 .post.status {
     background-color: #e8e8e8
