@@ -1,5 +1,5 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-	<div class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
+	<footer class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
 		<!-- mdr | Copyright & Powered by -->
 		&copy; <?php echo date('Y'); ?> <a href="<?php $this->options->siteUrl(); ?>"><?php if ($this->options->mdrCopytext): $this->options->mdrCopytext(); else: $this->options->title(); endif; ?></a>. Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> & <a href="https://blog.fsky7.com/archives/60/">MDr</a>.<br>
 		<?php if (!empty($this->options->ButtomText)): ?>
@@ -42,8 +42,8 @@
 		<a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=<?php $this->options->beianNumber(); ?>" target="_blank"><?php $this->options->beianProvince(); ?>公网安备<?php $this->options->beianNumber(); ?>号</a> 
 		<img src="<?=mdrGWABlogo()?>" style="box-shadow:none" alt="公网安备案图标">
 		<?php endif; ?>
-	</div>
-</div>
+	</footer>
+</main>
 <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
   	<button class="mdui-fab mdui-ripple mdui-color-theme-accent">
     	<i class="mdui-icon material-icons">apps</i>

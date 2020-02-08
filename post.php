@@ -50,7 +50,7 @@ window.onload=function (){
 <?php license($this->fields->linceses); ?>
 </div>
 </div>
-<div style="margin-top:15px"><?php mdrTags($this); ?></div>
+<div class="tags"><?php mdrTags($this); ?></div>
 <?php $this->need('comments.php'); ?>
 <div class="mdui-row" style="margin-top: 32px;margin-bottom: 16px;">
 <div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6" style="text-align: left;">

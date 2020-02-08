@@ -43,7 +43,7 @@
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
-        <div class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
+        <header class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
@@ -56,8 +56,8 @@
                     <i class="mdui-icon material-icons">more_vert</i>
                 </a>
             </div>
-        </div>
-        <div class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL" style="z-index: 4000;">
+        </header>
+        <aside class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen): ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL" style="z-index: 4000;">
             <div class="mdui-appbar mdui-hidden-md-up">
                 <div class="mdui-toolbar">
                     <a class="mdui-btn mdui-btn-icon">
@@ -132,8 +132,8 @@
                 </li>
                 <?php endif; ?>
             </ul>
-        </div>
-        <div class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
+        </aside>
+        <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
             <?php $this->need('sidebar.php'); ?>
-        </div>
-        <div class="mdui-container">
+        </aside>
+        <main class="mdui-container">
