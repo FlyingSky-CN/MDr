@@ -536,7 +536,7 @@ function switchQrCode() {
     function onDarkMode() {
 		var body = document.getElementsByTagName('body')[0],
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
-		console.log('Dark mode off');
+		console.log('Dark mode on');
 		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
 		addClass(body,'mdui-theme-layout-dark');
 		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
@@ -548,7 +548,7 @@ function switchQrCode() {
     function offDarkMode() {
 		var body = document.getElementsByTagName('body')[0],
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
-		console.log('Dark mode on');
+		console.log('Dark mode off');
 		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
         removeClass(body,'mdui-theme-layout-dark');
 		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
@@ -595,17 +595,21 @@ function switchQrCode() {
 		var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
 		if(dark == '0'){
 			offDarkMode();
+			if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
+				onDarkMode();
+				mdui.snackbar({message: '已开启 Dark Mode ，跟随系统。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+			};
 		}else if(dark == '1'){
 			onDarkMode();
 		}
-		if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
-			onDarkMode();
-		};
 	});
 	if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
+		var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
 		/* 加载完触发，判断系统黑暗模式是否开启 */
-		onDarkMode();
-		mdui.snackbar({message: '已开启 Dark Mode ，跟随系统。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+		if (dark == '0') {
+			onDarkMode();
+			mdui.snackbar({message: '已开启 Dark Mode ，跟随系统。',position: '<?=$this->options->mdrSnackbar?>',timeout: 1000});
+		}
 	};
 	window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change",(e) => {
 		/* 系统黑暗模式切换时触发 */

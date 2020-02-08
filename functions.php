@@ -17,6 +17,7 @@ function themeConfig($form) {
 	<p>
 		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">关于&帮助&反馈</button></a>
 		<button class="btn" style="outline: 0" id="mdr-update">检查并更新主题</button>
+		<button class="btn" style="outline: 0" onclick="mdrBackup(false)">备份当前设置</button>
 	</p>
 	<textarea id="mdr-update-pre" class="w-100 mono" style="display:none" readonly></textarea>
 	<style>#mdr-update-pre{height:512px;}</style>
@@ -29,7 +30,8 @@ function themeConfig($form) {
             <ul class="root"><li class="parent"><a href="#mdr-dark">黑暗模式</a></li></ul>
             <ul class="root"><li class="parent"><a href="#mdr-music">背景音乐</a></li></ul>
             <ul class="root"><li class="parent"><a href="#mdr-func">附加功能</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
+			<ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
+			<ul class="root"><li class="parent"><a href="#mdr-end">完成</a></li></ul>
         </nav>
 	</div>
 	<script>
@@ -45,6 +47,26 @@ function themeConfig($form) {
 				window.open("../?debug=true","_blank")
 			}
 		})
+	}
+	function saveAs(filename, text) {
+		var element = document.createElement('a');
+		element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+		element.setAttribute('download', filename);
+		element.style.display = 'none';
+		document.body.appendChild(element);
+		element.click();
+		document.body.removeChild(element);
+	}
+	function mdrBackup(read=false) {
+		if (read) {
+			
+		} else {
+			let d = new Date(),
+				c = $('form').first().find('input[id][value]'),
+				a = 'MDr-config-backup-'+d.getTime()+'.json',
+				b = JSON.stringify(c);
+			saveAs(a, b)
+		}
 	}
 	</script>
     <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
@@ -792,6 +814,11 @@ EOF;
 		_t('位于底部，footer之后body之前，适合放置一些JS内容，如网站统计代码等（若开启全站Pjax，目前支持Google和百度统计的回调，其余统计代码可能会不准确）')
 	);
 	$form->addInput($CustomContent);
+
+	/* MDr 后台设置结束 */
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<div id="mdr-end"></div>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
+	$form->addInput($mdrNotice);
 
 }
 
