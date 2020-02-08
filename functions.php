@@ -1077,14 +1077,12 @@ function FindContents($val = NULL, $order = 'order', $sort = 'a', $publish = NUL
 }
 
 /* function 输出轻语 */
-function Whisper($sidebar = NULL) {
+function Whisper() {
 	$db = Typecho_Db::get();
 	$options = Helper::options();
 	$page = FindContents('page-whisper.php', 'commentsNum', 'd');
-	$p = $sidebar ? 'li' : 'p';
 	if (isset($page[0])) {
 		$page = $page[0];
-		$title = $sidebar ? '' : '<h2 class="post-title"><a href="'.$page['permalink'].'">'.$page['title'].'<span class="more">···</span></a></h2>'."\n";
 		$comment = $db->fetchAll($db->select()->from('table.comments')
 			->where('cid = ? AND status = ? AND parent = ?', $page['cid'], 'approved', '0')
 			->order('coid', Typecho_Db::SORT_DESC)
@@ -1094,26 +1092,36 @@ function Whisper($sidebar = NULL) {
 			if ($options->AttUrlReplace) {
 				$content = UrlReplace($content);
 			}
-			echo $title.strip_tags($content, '<p><br><strong><a><img><pre><code>'.$options->commentsHTMLTagAllowed)."\n".($sidebar ? '<li class="more"><a href="'.$page['permalink'].'">查看更多...</a></li>'."\n" : '');
+			return array(
+				strip_tags($content, '<p><br><strong><a><img><pre><code>'.$options->commentsHTMLTagAllowed),
+				$page['permalink'],
+				$page['title']
+			);
 		} else {
-			echo $title.'<'.$p.'>暂无内容</'.$p.'>'."\n";
+			return array(
+				'<p>暂无内容</p>',
+				$page['permalink'],
+				$page['title']
+			);
 		}
 	} else {
-		echo ($sidebar ? '' : '<h2 class="post-title"><a>轻语</a></h2>'."\n").'<'.$p.'>暂无内容</'.$p.'>'."\n";
+		return array(
+			'<p>暂无内容</p>'
+		);
 	}
 }
 
 function Links_list() {
 	$db = Typecho_Db::get();
 	$list = Helper::options()->Links ? Helper::options()->Links : '';
-	$page_links = FindContents('page-links.php', 'order', 'a')[0];
-	if (isset($page_links)) {
+	$page_links = FindContents('page-links.php', 'order', 'a');
+	if (isset($page_links[0])) {
 		$exist = $db->fetchRow($db->select()->from('table.fields')
-			->where('cid = ? AND name = ?', $page_links['cid'], 'links'));
+			->where('cid = ? AND name = ?', $page_links[0]['cid'], 'links'));
 		if (empty($exist)) {
 			$db->query($db->insert('table.fields')
 				->rows(array(
-					'cid'           =>  $page_links['cid'],
+					'cid'           =>  $page_links[0]['cid'],
 					'name'          =>  'links',
 					'type'          =>  'str',
 					'str_value'     =>  $list,
@@ -1125,7 +1133,7 @@ function Links_list() {
 		if (empty($exist['str_value'])) {
 			$db->query($db->update('table.fields')
 				->rows(array('str_value' => $list))
-				->where('cid = ? AND name = ?', $page_links['cid'], 'links'));
+				->where('cid = ? AND name = ?', $page_links[0]['cid'], 'links'));
 			return $list;
 		}
 		$list = $exist['str_value'];

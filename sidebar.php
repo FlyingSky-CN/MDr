@@ -8,14 +8,27 @@
     </form>
 </div>
 <?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)): ?>
+<?php $whisper=Whisper(); ?>
 <div class="widget">
-<h3 class="widget-title"><?php echo FindContents('page-whisper.php') ? FindContents('page-whisper.php', 'commentsNum', 'd')[0]['title'] : '轻语' ?></h3>
-<ul class="widget-list whisper">
-<?php Whisper(1); ?>
-<?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
-<li class="notice"><b>仅管理员可见: </b><br><?php echo FindContents('page-whisper.php') ? '发现多个"轻语"模板页面，已自动选取内容最多的页面作为展示，请删除多余模板页面。' : '未找到"轻语"模板页面，请检查是否创建模板页面。' ?></li>
-<?php endif; ?>
-</ul>
+    <h3 class="widget-title"><?=isset($whisper[2]) ? $whisper[2] : '轻语' ?></h3>
+    <ul class="widget-list whisper">
+        <?=$whisper[0]?>
+        <?php if (FindContents('page-whisper.php')): ?>
+        <li class="more"><a href="<?=$whisper[1]?>">查看更多...</a></li>
+        <?php endif; ?>
+        <?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
+        <div class="mdui-card mdui-shadow-0 mdui-color-red-a700" style="margin-top: 20px">
+            <div class="mdui-card-content">
+                <b>仅管理员可见</b><br>
+                <?php if (FindContents('page-whisper.php')): ?>
+                发现多个"轻语"模板页面，已自动选取内容最多的页面作为展示，请删除多余模板页面。
+                <?php else: ?>
+                未找到"轻语"模板页面，请检查是否创建模板页面。
+                <?php endif; ?>
+            </div>
+        </div>
+        <?php endif; ?>
+    </ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowWaySit', $this->options->sidebarBlock)): ?>
@@ -87,13 +100,17 @@
 <?php endif; ?>
 <?php if (!empty($this->options->ShowLinks) && in_array('sidebar', $this->options->ShowLinks)): ?>
 <div class="widget">
-<h3 class="widget-title">链接</h3>
-<ul class="widget-tile">
-<?php Links(true); ?>
-<?php if (FindContents('page-links.php', 'order', 'a', 1)): ?>
-<li class="more"><a href="<?php echo FindContents('page-links.php', 'order', 'a', 1)[0]['permalink']; ?>">查看更多...</a></li>
-<?php endif; ?>
-</ul>
+    <h3 class="widget-title">链接</h3>
+    <ul class="widget-tile">
+        <?php Links(true); ?>
+        <?php if (FindContents('page-links.php', 'order', 'a', 1)): ?>
+        <div class="mdui-chip">
+            <a href="<?php echo FindContents('page-links.php', 'order', 'a', 1)[0]['permalink']; ?>">
+                <span class="mdui-chip-title">查看更多</span>
+            </a>
+        </div>
+        <?php endif; ?>
+    </ul>
 </div>
 <?php endif; ?>
 <?php if (!empty($this->options->sidebarBlock) && in_array('ShowStats', $this->options->sidebarBlock)): ?>

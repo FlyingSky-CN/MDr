@@ -10,19 +10,28 @@
 $this->need('header.php');?>
 <div id="main">
     <?php if ($this->_currentPage==1&&!empty($this->options->ShowWhisper)&&in_array('index',$this->options->ShowWhisper)): ?>
-    <article class="post whisper">
-        <?php Whisper(); ?>
-        <?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
-        <p class="notice">
-            <b>仅管理员可见: </b><br>
+    <?php $whisper=Whisper(); ?>
+    <article class="mdui-card status post" style="margin-top:20px;">
+        <div class="tag"><?=isset($whisper[2]) ? $whisper[2] : '轻语' ?></div>
+        <div class="time mdui-text-right">Whisper</div>
+        <div class="inner"> 
+            <span class="mdui-typo">
+                <?=$whisper[0]?>
+            </span>
+        </div>
+    </article>
+    <?php if ($this->user->pass('editor', true) && (!FindContents('page-whisper.php') || isset(FindContents('page-whisper.php')[1]))): ?>
+    <div class="mdui-card mdui-shadow-0 mdui-color-red-a700" style="margin-top: 20px">
+        <div class="mdui-card-content">
+            <b>仅管理员可见</b><br>
             <?php if (FindContents('page-whisper.php')): ?>
             发现多个"轻语"模板页面，已自动选取内容最多的页面作为展示，请删除多余模板页面。
             <?php else: ?>
             未找到"轻语"模板页面，请检查是否创建模板页面。
             <?php endif; ?>
-        </p>
-        <?php endif; ?>
-    </article>
+        </div>
+    </div>
+    <?php endif; ?>
     <?php endif; ?>
     <?php while($this->next()): ?>
     <?php if (is_status($this) && !$this->hidden): ?>
