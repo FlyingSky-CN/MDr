@@ -69,6 +69,18 @@
 <!-- MDUI STR -->
 <script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
 <!-- MDUI END -->
+<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+<script>
+var $$ = mdui.JQ;
+function mdrDebug() {
+	$$.each($$('a[href]'), function(i,item) {
+		if (item.href.indexOf("?debug=true") == -1) {
+			item.href = item.href + '?debug=true'
+		}
+	})
+}
+</script>
+<?php endif; ?>
 <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode): ?>
 <!-- mdr | jQuery -->
 <script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
@@ -139,6 +151,9 @@ $(document).pjax('a[target!=_blank]', {
 	/**TODO gtag.js 的回调 #28 */
 	<?php endif; if ($this->options->ViewImg): ?>
 	mdrfa();
+	<?php endif; ?>
+	<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+	mdrDebug();
 	<?php endif; ?>
 });
 <?php if ($this->options->ViewImg): ?>
@@ -606,6 +621,9 @@ function switchQrCode() {
 		}
 	});
 </script>
+<?php endif; ?>
+<?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
+<script> mdrDebug() </script>
 <?php endif; ?>
 </body>
 </html>

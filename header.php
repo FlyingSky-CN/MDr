@@ -1,4 +1,22 @@
-<?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
+<?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; 
+if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']):
+    if ($_GET['debug'] == 'start'):
+        $_SESSION['mdrConfig'] = $_POST;
+        header('Location: '.$this->options->originalSiteUrl.'/?debug=true');
+        exit();
+    endif;
+    if ($_GET['debug'] == 'true'):
+        if (!is_array(@$_SESSION['mdrConfig'])):
+            header('Location: '.$this->options->originalSiteUrl.'/');
+            exit();
+        else:
+            foreach ($_SESSION['mdrConfig'] as $name => $key):
+                $this->options->$name = $key;
+            endforeach;
+        endif;
+    endif;
+endif;
+?>
 <!DOCTYPE html>
 <html <?php if ($this->options->mdrPray): ?>class="pray"<?php endif; ?>>
     <head>

@@ -31,7 +31,22 @@ function themeConfig($form) {
             <ul class="root"><li class="parent"><a href="#mdr-func">附加功能</a></li></ul>
             <ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
         </nav>
-    </div>
+	</div>
+	<script>
+	window.onload = function(){
+		$('form').first().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
+	};
+	function mdrInstantView() {
+		$.ajax({
+			url:'../?debug=start',
+			type:"POST",
+			data:$('form').first().serialize(),
+			success:function(){
+				window.open("../?debug=true","_blank")
+			}
+		})
+	}
+	</script>
     <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
 	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>".'<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){document.getElementById("mdr-update").innerHTML = "正在检查并更新";document.getElementById("mdr-update").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update").innerHTML = "完成";}else{document.getElementById("mdr-update").innerHTML = "正在执行";}};xmlhttp.open("GET","';cjUrl('update.php');echo '",true);xmlhttp.send();}}</script>';
