@@ -7,6 +7,75 @@ define('MDR_VERSION', '1.0.4 Dev');
 /* MDr themeConfig */
 function themeConfig($form) {
 
+	/**
+	 * mdr Options Backup
+	 * 主题设置备份
+	 * 
+	 * @link https://qqdie.com/archives/typecho-templates-backup-and-restore.html
+	 */
+	if (isset($_GET['themeBackup']) && isset($_POST['type'])):
+		
+		$db = Typecho_Db::get();
+		$nameQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', 'theme'));
+		$name = $nameQuery ? $nameQuery['value'] : false;
+		$themeQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:$name"));
+		$theme = $themeQuery ? $themeQuery['value'] : false;
+		$backupQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:themeBackup-$name"));
+		$backup = $backupQuery ? $backupQuery['value'] : false;
+
+		if ($_POST["type"] == "备份主题设置") {
+
+			if ($theme) {
+				if ($backup) {
+					$update = $db->update('table.options')->rows(array('value' => $theme))->where('name = ?', "theme:themeBackup-$name");
+					$db->query($update);
+					Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份已更新'),'success');
+				} else {
+					$insert = $db->insert('table.options')->rows(array('name' => "theme:themeBackup-$name",'user' => '0','value' => $theme));
+					$db->query($insert);
+					Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份已完成'),'success');
+				}
+			} else {
+				/**
+				 *  mdr Options Backup | Error 01
+				 *  无法找到主题设置数据
+				 */
+				Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 01'),'error');
+			}
+
+		} else if ($_POST["type"] == "还原主题设置") {
+
+			if ($backup) {
+				$update = $db->update('table.options')->rows(array('value' => $backup))->where('name = ?', "theme:$name");
+				$db->query($update);
+				Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置已恢复，若浏览器没有自动刷新，请手动刷新页面'),'success');
+				echo '<script language="JavaScript">window.setTimeout("location=\'\'", 2000);</script>';
+			}else{
+				Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'),'notice');
+			}
+
+		} else if ($_POST["type"] == "删除备份设置") {
+
+			if ($backup) {
+				$delete = $db->delete('table.options')->where ('name = ?', "theme:themeBackup-$name");
+				$db->query($delete);
+				Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份已删除'),'success');
+			}else{
+				Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'),'notice');
+			}
+
+		} else {
+
+			/**
+			 *  mdr Options Backup | Error 00 
+			 *  未知操作
+			 */
+			Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 00'),'error');
+
+		}
+	
+	endif;
+
     echo <<<EOF
     <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
     <style>h2{margin-bottom:10px}h2 small{opacity:0.5}#mdr-botnav{position:fixed;right:0;left:0;bottom:0;min-height:36px;background-color:#292d33;display:flex;padding:0;margin:0 auto;overflow:hidden;white-space:nowrap;z-index:9999;padding:0 10px;transition:all 1s ease-in-out;}#mdr-botnav.slideDown{transform: translate3d(0,100%,0)!important}#mdr-botnav.slideUp{ransform: translate3d(0,0,0)!important;}</style>
@@ -18,6 +87,11 @@ function themeConfig($form) {
 		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">关于&帮助&反馈</button></a>
 		<button class="btn" style="outline: 0" id="mdr-update">检查并更新主题</button>
 	</p>
+	<form class="protected" action="?themeBackup" method="post" id="mdr-backup">
+		<input type="submit" name="type" class="btn btn-s" value="备份主题设置" />
+		<input type="submit" name="type" class="btn btn-s" value="还原主题设置" />
+		<input type="submit" name="type" class="btn btn-s" value="删除备份设置" />
+	</form>
 	<textarea id="mdr-update-pre" class="w-100 mono" style="display:none" readonly></textarea>
 	<style>#mdr-update-pre{height:512px;}</style>
     <div id="mdr-botnav" class="row">
@@ -29,12 +103,13 @@ function themeConfig($form) {
             <ul class="root"><li class="parent"><a href="#mdr-dark">黑暗模式</a></li></ul>
             <ul class="root"><li class="parent"><a href="#mdr-music">背景音乐</a></li></ul>
             <ul class="root"><li class="parent"><a href="#mdr-func">附加功能</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
+			<ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
+			<ul class="root"><li class="parent"><a href="#mdr-end">完成</a></li></ul>
         </nav>
 	</div>
 	<script>
 	window.onload = function(){
-		$('form').first().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
+		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
 	};
 	function mdrInstantView() {
 		$.ajax({
@@ -792,6 +867,11 @@ EOF;
 		_t('位于底部，footer之后body之前，适合放置一些JS内容，如网站统计代码等（若开启全站Pjax，目前支持Google和百度统计的回调，其余统计代码可能会不准确）')
 	);
 	$form->addInput($CustomContent);
+
+	/* MDr 后台设置结束 */
+    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<div id="mdr-end"></div>'));
+	$mdrNotice->input->setAttribute('style', 'display:none');
+	$form->addInput($mdrNotice);
 
 }
 
