@@ -76,7 +76,9 @@ if (!$user->pass('administrator',true)) {
 
 /* 更新程序 */
 
-define('__MDR_RAW_URL__', 'https://cdn.jsdelivr.net/gh/FlyingSky-CN/MDr/');
+define('__MDR_RAW_DEV_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/master/');
+define('__MDR_RAW_REL_URL__', 'https://cdn.jsdelivr.net/gh/FlyingSky-CN/MDr/');
+define('__MDR_RAW_URL__', @$_GET['dev'] ? __MDR_RAW_DEV_URL__ : __MDR_RAW_REL_URL__);
 
 echo "MDr主题更新程序";
 
@@ -99,6 +101,8 @@ function curl($url){
 }
 
 $hash = curl(__MDR_RAW_URL__ . 'hash.txt');
+
+echo "\n\n目标服务器 ".__MDR_RAW_URL__;
 
 echo "\n\n获取文件 Hash 表...\n\n";
 
