@@ -121,7 +121,7 @@ function themeConfig($form) {
 		$.ajax({
 			url:'../?debug=start',
 			type:"POST",
-			data:$('form').first().serialize(),
+			data:$('form').last().serialize(),
 			success:function(){
 				window.open("../?debug=true","_blank")
 			}
