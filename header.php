@@ -52,16 +52,16 @@ endif;
             }
         </style>
         <?php endif; ?>
-        <link rel="stylesheet" href="<?php cjUrl('style.css?v=21') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('style.css?v=22') ?>" />
         <?php if ($this->options->ViewImg): ?>
         <link rel="stylesheet" href="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css<?php endif; ?>"/>
         <?php endif; ?>
     </head>
-    <body class="<?php if(@$_COOKIE['dark'] == '1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?=((@$_COOKIE['dark']=='1') ? $this->options->mdrAccentD() : $this->options->mdrAccent() )?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
+    <body class="<?php if($this->options->DarkMode and @$_COOKIE['dark'] == '1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?=(($this->options->DarkMode and @$_COOKIE['dark']=='1') ? $this->options->mdrAccentD() : $this->options->mdrAccent() )?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
-        <header class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
+        <header class="mdui-appbar mdui-appbar-fixed" style="background: #<?php if($this->options->DarkMode and $_COOKIE['dark']=='1') { echo '212121'; } else { echo 'fff'; } ?>;z-index:5000;">
             <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground): ?>mdui-color-theme<?php endif; ?>">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
