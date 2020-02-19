@@ -512,51 +512,51 @@ function switchQrCode() {
 ?>
 <script>
 	/**Attention: Dark Mode 不使用 jQuery 库 */
-	function hasClass(elem, cls) {
-		cls = cls || '';
-		if (cls.replace(/\s/g, '').length == 0) return false;
-		return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
-	}
-	function addClass(ele, cls) {
-		if (!hasClass(ele, cls)) {
-			ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
-		}
-	}
-	function removeClass(elem, cls) {
-		if (hasClass(elem, cls)) {
-			var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
-			while (newClass.indexOf(' ' + cls + ' ') >= 0) {
-				newClass = newClass.replace(' ' + cls + ' ', ' ');
-			}
-			elem.className = newClass.replace(/^\s+|\s+$/g, '');
-		}
-	}
-</script>
-<script>
     function onDarkMode() {
-		var body = document.getElementsByTagName('body')[0],
+		var body = mdui.JQ('body'),
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode on');
 		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-		addClass(body,'mdui-theme-layout-dark');
-		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+		body.addClass('mdui-theme-layout-dark');
+		body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+		body.addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
 		appbar.style.backgroundColor = '#212121';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','#212121');
     }
     function offDarkMode() {
-		var body = document.getElementsByTagName('body')[0],
+		var body = mdui.JQ('body'),
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode off');
 		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-        removeClass(body,'mdui-theme-layout-dark');
-		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+        body.removeClass('mdui-theme-layout-dark');
+		body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+        body.addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         appbar.style.backgroundColor = '#ffffff';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
     }
+</script>
+<script>
+	/* Dark Mode 对于 @print 的适配 */
+	window.addEventListener("beforeprint", function() {
+		var body = mdui.JQ('body'),
+			appbar = mdui.JQ('.mdui-appbar');
+		appbar.hide();
+		if (body.hasClass('mdui-theme-layout-dark')) {
+			body.addClass('mdui-theme-layout-dark-print');
+			body.removeClass('mdui-theme-layout-dark')
+		}
+	});
+	window.addEventListener("afterprint", function() {
+		var body = mdui.JQ('body'),
+			appbar = mdui.JQ('.mdui-appbar');
+		appbar.show();
+		if (body.hasClass('mdui-theme-layout-dark-print')) {
+			body.addClass('mdui-theme-layout-dark');
+			body.removeClass('mdui-theme-layout-dark-print')
+		}
+	});
 </script>
 <script>
 	/* Dark Mode 的控制（系统黑暗模式优先于 Cookie 中的黑暗模式） */
