@@ -41,7 +41,7 @@ endif;
         <?php $this->header('generator=&template=&pingback=&xmlrpc=&wlw=&commentReply=&rss1=&rss2=&antiSpam=&atom='); ?>
         <!-- mdr | Style -->
         <!-- MDUI STR -->
-        <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
+        <link rel="stylesheet" href="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>mdui/css/mdui.min.css<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css<?php endif; ?>"></script>
         <!-- MDUI END -->
         <?php if (!$this->options->mdrCornertool): ?>
         <!-- mdr | Cornertool -->
