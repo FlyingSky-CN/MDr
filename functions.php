@@ -238,7 +238,8 @@ EOF;
         array(
             'bootcss' => _t('BootCDN'),
             'cdnjs' => _t('CDNJS'),
-            'cssnet' => _t('CSSnet')
+			'cssnet' => _t('CSSnet'),
+			'custom' => _t('自建')
         ),
         'cssnet',
         _t('MDUI 静态资源来源'),
@@ -251,13 +252,23 @@ EOF;
 		array(
 			'bc' => _t('BootCDN'),
 			'cf' => _t('CDNJS'),
-			'jd' => _t('jsDelivr')
+			'jd' => _t('jsDelivr'),
+			'custom' => _t('自建')
 		),
 		'bc',
 		_t('其他公共静态资源来源'),
 		_t('默认BootCDN，请根据需求选择合适来源')
 	);
 	$form->addInput($cjCDN);
+
+	$mdrCDNlink = new Typecho_Widget_Helper_Form_Element_Text(
+		'mdrCDNlink', 
+		null,
+		null,
+		_t('自建静态资源地址'),
+		_t('只在上面两个选项其中之一选择自建时需要。')
+	);
+	$form->addInput($mdrCDNlink);
 
 	$GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio(
 		'GravatarUrl', 
