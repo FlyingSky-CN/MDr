@@ -67,7 +67,7 @@
 <?php endif; ?>
 <!-- mdr | Script -->
 <!-- MDUI STR -->
-<script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>mdui/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.fancybox.min.css')?>"></script>
 <!-- MDUI END -->
 <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
 <script>
@@ -83,13 +83,13 @@ function mdrDebug() {
 <?php endif; ?>
 <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode): ?>
 <!-- mdr | jQuery -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.min.js')?>"></script>
 <?php endif; if ($this->options->ViewImg): ?>
 <!-- mdr | FancyBox -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>jquery.fancybox.min.js<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.fancybox.min.js')?>"></script>
 <?php endif; if ($this->options->PjaxOption): ?>
 <!-- mdr | Pjax STR -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>jquery.pjax.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.pjax.min.js')?>"></script>
 <script>
 jQuery.fn.Shake = function(n, d) {
 	this.each(function() {
@@ -486,7 +486,7 @@ console.log("\n %c MDr <?=MDR_VERSION?> %c FlyingSky-CN/MDr %c \n","color:#fff;b
 </script>
 <?php if ($this->options->mdrQrCode): ?>
 <!-- mdr | mdrQrCode -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js<?php elseif ($this->options->cjCDN == 'custom'): ?><?=$this->options->mdrCDNlink?>jquery.qrcode.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery.qrcode@1.0/jquery.qrcode.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.qrcode.min.js')?>"></script>
 <script>
 function getQrCode() {
 	$('#pageQrCode').html('');
