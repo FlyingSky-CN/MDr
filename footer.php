@@ -67,7 +67,7 @@
 <?php endif; ?>
 <!-- mdr | Script -->
 <!-- MDUI STR -->
-<script src="<?=staticUrl('jquery.fancybox.min.css')?>"></script>
+<script src="<?=staticUrl('mdui.min.js')?>"></script>
 <!-- MDUI END -->
 <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
 <script>
