@@ -2,7 +2,8 @@
 if( !defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl ) define ('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 /* MDr Theme Version */
-define('MDR_VERSION', '1.0.4 Dev');
+$parseInfo = Typecho_Plugin::parseInfo(__DIR__.'/index.php');
+define('MDR_VERSION', $parseInfo['version']);
 
 /* MDr themeConfig */
 function themeConfig($form) {
@@ -17,6 +18,7 @@ function themeConfig($form) {
 	 * 统计安装量
 	 * 
 	 * @author FlyingSky-CN
+	 * @link   https://mdr.docs.fsky7.com/privacy/
 	 */
 	$mdr_first_run = isset($themeQuery['value']) ? false : true;
 	if ($mdr_first_run && function_exists('file_get_contents')) {
@@ -103,7 +105,8 @@ function themeConfig($form) {
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
 	</p>
 	<p>
-		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">关于&帮助&反馈</button></a>
+		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">前往发布页</button></a>
+		<a href="https://mdr.docs.fsky7.com/"><button class="btn primary">查看文档</button></a>
 		<button class="btn" style="outline: 0" id="mdr-update-in" onclick="$(this).hide();$('#mdr-update-more').show()">检查并更新主题</button>
 		<span id="mdr-update-more" style="display:none">
 			<button class="btn success" style="outline: 0" id="mdr-update">更新正式版</button>
