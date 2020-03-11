@@ -148,19 +148,21 @@ html {
         box-shadow: none!important
     }
     #post p a::after, #post li a::after {
-        content: "(" attr(href) ")"
+        content: " (" attr(href) ") "
     }
-    /*强制白底黑字*/
+    #main .mdui-card:first-child {
+        margin-top: 0px!important
+    }
     html > body {
         background-color: white!important
     }
-    main p, main li {
+    .mdui-theme-layout-dark main p, .mdui-theme-layout-dark main li {
         color: rgba(0,0,0,.95)!important
     }
     img {
         filter: brightness(100%)!important
     }
-    #post {
+    body {
         font: 13pt Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif!important
     }
 }

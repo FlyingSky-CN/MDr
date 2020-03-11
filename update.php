@@ -76,6 +76,11 @@ if (!$user->pass('administrator',true)) {
 
 /* 更新程序 */
 
+
+/** 
+ * PHP获取路径或目录实现 
+ */
+
 define('__MDR_RAW_DEV_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/master/');
 define('__MDR_RAW_REL_URL__', 'https://cdn.jsdelivr.net/gh/FlyingSky-CN/MDr/');
 define('__MDR_RAW_URL__', @$_GET['dev'] ? __MDR_RAW_DEV_URL__ : __MDR_RAW_REL_URL__);
@@ -119,6 +124,8 @@ array_pop($hash);
 
 echo "检查本地文件...\n\n";
 
+$upnew = false;
+
 foreach ($hash as $remote) {
     list($remote_sha256, $filename) = explode('  ', $remote);
     $trimname = trim($filename);
@@ -130,12 +137,30 @@ foreach ($hash as $remote) {
             $url = __MDR_RAW_URL__ . $trimname;
             if (file_put_contents(__DIR__.'/'.$trimname,curl($url))) {
                 echo "，已更新\n";
+                $upnew = true;
             } else {
                 die("\n下载失败，错误位置: $url\n");
             }
         }
     } else {
         echo "Hash 相同，无需更新  ".$trimname."\n";
+    }
+}
+
+/* 统计更新 */
+if ($upnew) {
+    
+    $parseInfo = Typecho_Plugin::parseInfo(__DIR__.'/index.php');
+
+    if (function_exists('file_get_contents')) {
+        $contexts = stream_context_create([
+            'http' => [
+                'method'=>"GET",
+                'header'=>"User-Agent: ForInstallMatch\r\n",
+                'timeout' => 5
+            ]
+        ]);
+        file_get_contents('https://api.fsky7.com/InstallMatch/newUpdate?class='.urlencode('MDr '.$parseInfo['version']).'&hostname='.$_SERVER['HTTP_HOST'], false, $contexts);
     }
 }
 

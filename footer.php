@@ -67,7 +67,7 @@
 <?php endif; ?>
 <!-- mdr | Script -->
 <!-- MDUI STR -->
-<script src="//<?php if ($this->options->mdrMDUICDN == 'bootcss'): ?>cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js<?php elseif ($this->options->mdrMDUICDN == 'cdnjs'): ?>cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php else: ?>cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('mdui.min.js')?>"></script>
 <!-- MDUI END -->
 <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
 <script>
@@ -83,13 +83,23 @@ function mdrDebug() {
 <?php endif; ?>
 <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode): ?>
 <!-- mdr | jQuery -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery/3.4.1/jquery.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.min.js')?>"></script>
 <?php endif; if ($this->options->ViewImg): ?>
 <!-- mdr | FancyBox -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js<?php else: ?>cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.fancybox.min.js')?>"></script>
+<script>
+function mdrfa() {
+	$('#post .mdui-card-content img').each(function() {
+		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
+		$(this).remove()
+	});
+	$.fancybox.defaults.buttons = ["zoom", "download", "thumbs", "close"]
+}
+mdrfa();
+</script>
 <?php endif; if ($this->options->PjaxOption): ?>
 <!-- mdr | Pjax STR -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.pjax.min.js')?>"></script>
 <script>
 jQuery.fn.Shake = function(n, d) {
 	this.each(function() {
@@ -156,16 +166,6 @@ $(document).pjax('a[target!=_blank]', {
 	mdrDebug();
 	<?php endif; ?>
 });
-<?php if ($this->options->ViewImg): ?>
-function mdrfa() {
-	$('#post .mdui-card-content img').each(function() {
-		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
-		$(this).remove()
-	});
-	$.fancybox.defaults.buttons = ["zoom", "download", "thumbs", "close"]
-}
-mdrfa();
-<?php endif; ?>
 function ac() {
 	$body = $('html,body');
 	var g = '.comment-list',
@@ -486,7 +486,7 @@ console.log("\n %c MDr <?=MDR_VERSION?> %c FlyingSky-CN/MDr %c \n","color:#fff;b
 </script>
 <?php if ($this->options->mdrQrCode): ?>
 <!-- mdr | mdrQrCode -->
-<script src="//<?php if ($this->options->cjCDN == 'bc'): ?>cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js<?php elseif ($this->options->cjCDN == 'cf'): ?>cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js<?php else: ?>cdn.jsdelivr.net/npm/jquery.qrcode@1.0/jquery.qrcode.min.js<?php endif; ?>"></script>
+<script src="<?=staticUrl('jquery.qrcode.min.js')?>"></script>
 <script>
 function getQrCode() {
 	$('#pageQrCode').html('');
@@ -512,51 +512,51 @@ function switchQrCode() {
 ?>
 <script>
 	/**Attention: Dark Mode 不使用 jQuery 库 */
-	function hasClass(elem, cls) {
-		cls = cls || '';
-		if (cls.replace(/\s/g, '').length == 0) return false;
-		return new RegExp(' ' + cls + ' ').test(' ' + elem.className + ' ');
-	}
-	function addClass(ele, cls) {
-		if (!hasClass(ele, cls)) {
-			ele.className = ele.className == '' ? cls : ele.className + ' ' + cls;
-		}
-	}
-	function removeClass(elem, cls) {
-		if (hasClass(elem, cls)) {
-			var newClass = ' ' + elem.className.replace(/[\t\r\n]/g, '') + ' ';
-			while (newClass.indexOf(' ' + cls + ' ') >= 0) {
-				newClass = newClass.replace(' ' + cls + ' ', ' ');
-			}
-			elem.className = newClass.replace(/^\s+|\s+$/g, '');
-		}
-	}
-</script>
-<script>
     function onDarkMode() {
-		var body = document.getElementsByTagName('body')[0],
+		var body = mdui.JQ('body'),
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode on');
 		document.cookie = "dark=1;path=/;<?=$DarkModeFD?>";
-		addClass(body,'mdui-theme-layout-dark');
-		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-		addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+		body.addClass('mdui-theme-layout-dark');
+		body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+		body.addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
 		appbar.style.backgroundColor = '#212121';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','#212121');
     }
     function offDarkMode() {
-		var body = document.getElementsByTagName('body')[0],
+		var body = mdui.JQ('body'),
 			appbar = document.getElementsByClassName('mdui-appbar')[0];
 		console.log('Dark mode off');
 		document.cookie = "dark=0;path=/;<?=$DarkModeFD?>";
-        removeClass(body,'mdui-theme-layout-dark');
-		removeClass(body,'mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-        addClass(body,'mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
+        body.removeClass('mdui-theme-layout-dark');
+		body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
+        body.addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
         appbar.style.backgroundColor = '#ffffff';
 		var meta = document.getElementsByTagName('meta');
 		meta["theme-color"].setAttribute('content','<?php if($this->options->mdrChrome){echo $this->options->mdrChrome();} else {echo "#FFFFFF";} ?>');
     }
+</script>
+<script>
+	/* Dark Mode 对于 @print 的适配 */
+	window.addEventListener("beforeprint", function() {
+		var body = mdui.JQ('body'),
+			appbar = mdui.JQ('.mdui-appbar');
+		appbar.hide();
+		if (body.hasClass('mdui-theme-layout-dark')) {
+			body.addClass('mdui-theme-layout-dark-print');
+			body.removeClass('mdui-theme-layout-dark')
+		}
+	});
+	window.addEventListener("afterprint", function() {
+		var body = mdui.JQ('body'),
+			appbar = mdui.JQ('.mdui-appbar');
+		appbar.show();
+		if (body.hasClass('mdui-theme-layout-dark-print')) {
+			body.addClass('mdui-theme-layout-dark');
+			body.removeClass('mdui-theme-layout-dark-print')
+		}
+	});
 </script>
 <script>
 	/* Dark Mode 的控制（系统黑暗模式优先于 Cookie 中的黑暗模式） */
