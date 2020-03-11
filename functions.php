@@ -1,5 +1,5 @@
 <?php if(!defined('__TYPECHO_ROOT_DIR__'))exit;
-if(Helper::options()->GravatarUrl)define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
+if( !defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl ) define ('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 
 /* MDr Theme Version */
 define('MDR_VERSION', '1.0.4 Dev');

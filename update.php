@@ -139,6 +139,20 @@ foreach ($hash as $remote) {
     }
 }
 
+define('MDR_OUTREQUIER', true);
+require_once 'function.php';
+
+if (function_exists('file_get_contents')) {
+    $contexts = stream_context_create([
+        'http' => [
+            'method'=>"GET",
+            'header'=>"User-Agent: ForInstallMatch\r\n",
+            'timeout' => 5
+        ]
+    ]);
+    file_get_contents('https://api.fsky7.com/InstallMatch/newInstall?class='.urlencode('MDr '.MDR_VERSION).'&hostname='.$_SERVER['HTTP_HOST'], false, $contexts);
+}
+
 echo "\n任务完成";
 
 exit();?>
