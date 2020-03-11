@@ -87,6 +87,16 @@ function mdrDebug() {
 <?php endif; if ($this->options->ViewImg): ?>
 <!-- mdr | FancyBox -->
 <script src="<?=staticUrl('jquery.fancybox.min.js')?>"></script>
+<script>
+function mdrfa() {
+	$('#post .mdui-card-content img').each(function() {
+		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
+		$(this).remove()
+	});
+	$.fancybox.defaults.buttons = ["zoom", "download", "thumbs", "close"]
+}
+mdrfa();
+</script>
 <?php endif; if ($this->options->PjaxOption): ?>
 <!-- mdr | Pjax STR -->
 <script src="<?=staticUrl('jquery.pjax.min.js')?>"></script>
@@ -156,16 +166,6 @@ $(document).pjax('a[target!=_blank]', {
 	mdrDebug();
 	<?php endif; ?>
 });
-<?php if ($this->options->ViewImg): ?>
-function mdrfa() {
-	$('#post .mdui-card-content img').each(function() {
-		$(this).before('<div data-fancybox="gallery" href="'+$(this).attr('src')+'"><img src="'+$(this).attr('src')+'" alt="'+$(this).attr('alt')+'" title="'+$(this).attr('title')+'"></div>');
-		$(this).remove()
-	});
-	$.fancybox.defaults.buttons = ["zoom", "download", "thumbs", "close"]
-}
-mdrfa();
-<?php endif; ?>
 function ac() {
 	$body = $('html,body');
 	var g = '.comment-list',
