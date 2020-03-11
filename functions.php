@@ -7,6 +7,29 @@ define('MDR_VERSION', '1.0.4 Dev');
 /* MDr themeConfig */
 function themeConfig($form) {
 
+	$db = Typecho_Db::get();
+	$nameQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', 'theme'));
+	$name = isset($nameQuery['value']) ? $nameQuery['value'] : false;
+	$themeQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:$name"));
+
+	/**
+	 * mdr Install Match
+	 * 统计安装量
+	 * 
+	 * @author FlyingSky-CN
+	 */
+	$mdr_first_run = isset($themeQuery['value']) ? false : true;
+	if ($mdr_first_run && function_exists('file_get_contents')) {
+        $contexts = stream_context_create([
+			'http' => [
+				'method'=>"GET",
+				'header'=>"User-Agent: ForInstallMatch\r\n",
+				'timeout' => 5
+			]
+		]);
+        file_get_contents('https://api.fsky7.com/InstallMatch/newInstall?class='.urlencode('MDr '.MDR_VERSION).'&hostname='.$_SERVER['HTTP_HOST'], false, $contexts);
+	}
+	
 	/**
 	 * mdr Options Backup
 	 * 主题设置备份
@@ -15,10 +38,6 @@ function themeConfig($form) {
 	 */
 	if (isset($_GET['themeBackup']) && isset($_POST['type'])):
 		
-		$db = Typecho_Db::get();
-		$nameQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', 'theme'));
-		$name = $nameQuery ? $nameQuery['value'] : false;
-		$themeQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:$name"));
 		$theme = $themeQuery ? $themeQuery['value'] : false;
 		$backupQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:themeBackup-$name"));
 		$backup = $backupQuery ? $backupQuery['value'] : false;
