@@ -4,7 +4,7 @@
  * 
  * @package MDr
  * @author FlyingSky
- * @version 1.0.4 Dev
+ * @version 1.0.4
  * @link https://fsky7.com/
  */
 $this->need('header.php');?>
