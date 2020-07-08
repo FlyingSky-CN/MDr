@@ -58,6 +58,7 @@ endif;
         <?php endif; ?>
     </head>
     <body class="<?php if($this->options->DarkMode and @$_COOKIE['dark'] == '1'): ?>mdui-theme-layout-dark<?php endif; ?> <?php if ($this->options->mdrNavDefOpen): ?>mdui-drawer-body-left<?php endif; ?> mdui-appbar-with-toolbar mdui-drawer-body-right mdui-theme-accent-<?=(($this->options->DarkMode and @$_COOKIE['dark']=='1') ? $this->options->mdrAccentD() : $this->options->mdrAccent() )?> mdui-theme-primary-<?=$this->options->mdrPrimary?>">
+        <?php if (!MDR_PJAX): ?>
         <div class="mdui-progress" style="z-index:9999;position: fixed; <?php if ($this->options->mdrLoading == 'bottom') { ?> bottom:0 <?php } else { ?> top:0 <?php } ?>; left:0;display:none;border-radius: 0px;" id="loading">
             <div class="mdui-progress-indeterminate"></div>
         </div>
@@ -154,4 +155,5 @@ endif;
         <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed): ?> fixed<?php endif; ?>" id="mdrDrawerR" style="z-index: 3000;padding-bottom:128px;">
             <?php $this->need('sidebar.php'); ?>
         </aside>
+        <?php endif; ?>
         <main class="mdui-container">
