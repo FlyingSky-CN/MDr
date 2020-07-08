@@ -44,6 +44,7 @@
 		<?php endif; ?>
 	</footer>
 </main>
+<?php if (!MDR_PJAX): ?>
 <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
   	<button class="mdui-fab mdui-ripple mdui-color-theme-accent">
     	<i class="mdui-icon material-icons">apps</i>
@@ -628,6 +629,7 @@ function switchQrCode() {
 <?php endif; ?>
 <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']): ?>
 <script> mdrDebug() </script>
+<?php endif; ?>
 <?php endif; ?>
 </body>
 </html>
