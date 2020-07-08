@@ -1,11 +1,12 @@
-<?php if(!defined('__TYPECHO_ROOT_DIR__'))exit;
-if( !defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl ) define ('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
+<?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-/* MDr Theme Version */
-$parseInfo = Typecho_Plugin::parseInfo(__DIR__.'/index.php');
-define('MDR_VERSION', $parseInfo['version']);
+/* MDr */
+if (!defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl)
+	define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
+define('MDR_PJAX', isset($_GET['_pjax']) ? true : false);
+define('MDR_VERSION', Typecho_Plugin::parseInfo(__DIR__.'/index.php')['version']);
 
-/* MDr themeConfig */
+/* MDr Theme Config */
 function themeConfig($form) {
 
 	$db = Typecho_Db::get();
@@ -14,38 +15,37 @@ function themeConfig($form) {
 	$themeQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:$name"));
 
 	/**
-	 * mdr Install Match
+	 * MDr Install Match
 	 * 统计安装量
 	 * 
 	 * @author FlyingSky-CN
 	 * @link   https://mdr.docs.fsky7.com/privacy/
 	 */
-	$mdr_first_run = isset($themeQuery['value']) ? false : true;
-	if ($mdr_first_run && function_exists('file_get_contents')) {
-        $contexts = stream_context_create([
-			'http' => [
+	if (!isset($themeQuery['value']) && function_exists('file_get_contents')) {
+        file_get_contents(
+			'https://api.fsky7.com/InstallMatch/newInstall?class='.
+				urlencode('MDr '.MDR_VERSION).'&hostname='.$_SERVER['HTTP_HOST'],
+			false,
+			stream_context_create(['http' => [
 				'method'=>"GET",
 				'header'=>"User-Agent: ForInstallMatch\r\n",
 				'timeout' => 5
-			]
-		]);
-        file_get_contents('https://api.fsky7.com/InstallMatch/newInstall?class='.urlencode('MDr '.MDR_VERSION).'&hostname='.$_SERVER['HTTP_HOST'], false, $contexts);
+			]])
+		);
 	}
 	
 	/**
-	 * mdr Options Backup
+	 * MDr Options Backup
 	 * 主题设置备份
 	 * 
 	 * @link https://qqdie.com/archives/typecho-templates-backup-and-restore.html
 	 */
 	if (isset($_GET['themeBackup']) && isset($_POST['type'])):
-		
 		$theme = $themeQuery ? $themeQuery['value'] : false;
 		$backupQuery = $db->fetchRow($db->select()->from('table.options')->where('name = ?', "theme:themeBackup-$name"));
 		$backup = $backupQuery ? $backupQuery['value'] : false;
 
 		if ($_POST["type"] == "备份主题设置") {
-
 			if ($theme) {
 				if ($backup) {
 					$update = $db->update('table.options')->rows(array('value' => $theme))->where('name = ?', "theme:themeBackup-$name");
@@ -57,15 +57,9 @@ function themeConfig($form) {
 					Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份已完成'),'success');
 				}
 			} else {
-				/**
-				 *  mdr Options Backup | Error 01
-				 *  无法找到主题设置数据
-				 */
-				Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 01'),'error');
+				Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 无法找到主题设置数据'),'error');
 			}
-
 		} else if ($_POST["type"] == "还原主题设置") {
-
 			if ($backup) {
 				$update = $db->update('table.options')->rows(array('value' => $backup))->where('name = ?', "theme:$name");
 				$db->query($update);
@@ -74,9 +68,7 @@ function themeConfig($form) {
 			}else{
 				Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'),'notice');
 			}
-
 		} else if ($_POST["type"] == "删除备份设置") {
-
 			if ($backup) {
 				$delete = $db->delete('table.options')->where ('name = ?', "theme:themeBackup-$name");
 				$db->query($delete);
@@ -84,24 +76,15 @@ function themeConfig($form) {
 			}else{
 				Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'),'notice');
 			}
-
 		} else {
-
-			/**
-			 *  mdr Options Backup | Error 00 
-			 *  未知操作
-			 */
-			Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 00'),'error');
-
+			Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 未知操作'),'error');
 		}
-	
 	endif;
 
     echo <<<EOF
-    <script type="text/javascript" src="https://npmcdn.com/headroom.js@0.9.3/dist/headroom.min.js"></script>
-    <style>h2{margin-bottom:10px}h2 small{opacity:0.5}#mdr-botnav{position:fixed;right:0;left:0;bottom:0;min-height:36px;background-color:#292d33;display:flex;padding:0;margin:0 auto;overflow:hidden;white-space:nowrap;z-index:9999;padding:0 10px;transition:all 1s ease-in-out;}#mdr-botnav.slideDown{transform: translate3d(0,100%,0)!important}#mdr-botnav.slideUp{ransform: translate3d(0,0,0)!important;}</style>
+	<style> h2 {margin-bottom: 10px} h2 small {opacity: 0.5} .btn {margin: 2px 0} </style>
     <p>
-        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">感谢您使用 MDr 主题</span>
+        <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 16px;">MDr <small>书写你的篇章</small></span>
         <span style="display: block;margin-bottom: 10px;margin-top: 10px;font-size: 14px;opacity:0.5">版本 <code id="mdr-version"></code></span>
 	</p>
 	<p>
@@ -122,19 +105,17 @@ function themeConfig($form) {
 	</p>
 	<textarea id="mdr-update-pre" class="w-100 mono" style="display:none" readonly></textarea>
 	<style>#mdr-update-pre{height:512px;}</style>
-    <div id="mdr-botnav" class="row">
-        <nav id="typecho-nav-list">
-            <ul class="root"><li class="parent"><a href="#mdr-color">主题色</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-cdn">CDN</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-nav">边栏</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-pjax">Ajax</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-dark">黑暗模式</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-music">背景音乐</a></li></ul>
-            <ul class="root"><li class="parent"><a href="#mdr-func">附加功能</a></li></ul>
-			<ul class="root"><li class="parent"><a href="#mdr-custom">自定义</a></li></ul>
-			<ul class="root"><li class="parent"><a href="#mdr-end">完成</a></li></ul>
-        </nav>
-	</div>
+    <p>
+        <a href="#mdr-color"><button class="btn btn-s">主题色</button></a>
+        <a href="#mdr-cdn"><button class="btn btn-s">CDN</button></a>
+        <a href="#mdr-nav"><button class="btn btn-s">边栏</button></a>
+        <a href="#mdr-pjax"><button class="btn btn-s">Ajax</button></a>
+        <a href="#mdr-dark"><button class="btn btn-s">黑暗模式</button></a>
+        <a href="#mdr-music"><button class="btn btn-s">背景音乐</button></a>
+        <a href="#mdr-func"><button class="btn btn-s">附加功能</button></a>
+		<a href="#mdr-custom"><button class="btn btn-s">自定义</button></a>
+		<a href="#mdr-end"><button class="btn btn-s">完成</button></a>
+	</p>
 	<script>
 	window.onload = function(){
 		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
@@ -150,7 +131,6 @@ function themeConfig($form) {
 		})
 	}
 	</script>
-    <script>(function(){new Headroom(document.querySelector("#mdr-botnav"),{classes:{pinned:"slideDown",unpinned:"slideUp"}}).init();}());</script>
 EOF;
 	echo "<script>document.getElementById('mdr-version').innerHTML = '".MDR_VERSION."'</script>".'<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';cjUrl('update.php');echo '",true);xmlhttp.send();}}</script>'.'<script>document.getElementById("mdr-update-dev").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问\n更新开发版需要服务器能访问 githubusercontent 服务器")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';cjUrl('update.php?dev=true');echo '",true);xmlhttp.send();}}</script>';
 
@@ -967,7 +947,7 @@ function themeFields($layout) {
 	
 }
 
-/* MDr themeInit */
+/* MDr Theme Init */
 function themeInit($archive) {
 	$options = Helper::options();
 	$options->commentsAntiSpam = false;
@@ -1371,28 +1351,6 @@ function compressHtml($html_source) {
 		$compress .= $c;
 	}
 	return $compress;
-}
-
-/* function 加载时间 */
-function timer_start() {
-	global $timestart;
-	$mtime = explode( ' ', microtime() );
-	$timestart = $mtime[1] + $mtime[0];
-	return true;
-}
-
-timer_start();
-
-function timer_stop( $display = 0, $precision = 3 ) {
-	global $timestart, $timeend;
-	$mtime = explode( ' ', microtime() );
-	$timeend = $mtime[1] + $mtime[0];
-	$timetotal = number_format( $timeend - $timestart, $precision );
-	$loadtime = $timetotal < 1 ? $timetotal * 1000 . ' ms' : $timetotal . ' s';
-	if ( $display ) {
-		echo $loadtime;
-	}
-	return $loadtime;
 }
 
 /* function 总访问量 */
