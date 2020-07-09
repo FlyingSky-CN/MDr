@@ -2,10 +2,23 @@
 
 Typecho Theme | MDr - 书写你的篇章
 
-**Attention** `master` 分支的代码可能会是 `Dev ( 开发版本 )` 的，前往 [Releases](https://github.com/FlyingSky-CN/MDr/releases) 页面下载正式版。
+![Version](https://img.shields.io/badge/version-1.0.5-40c4ff.svg?style=flat)
+![Typecho](https://img.shields.io/badge/Typecho-1.1%2B-467b96.svg?style=flat)
+![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat)
+![QQ Group](https://img.shields.io/badge/qq%20group-1061965682-ff69b4.svg?style=flat)
+![Docs](https://github.com/FlyingSky-CN/MDr-docs/workflows/docs%20publish/badge.svg?branch=master)
+![Author](https://img.shields.io/badge/author-FlyingSky-6cf.svg?style=flat)
 
-主题发布 : https://blog.fsky7.com/archives/60/
+## 演示
 
-使用指南 : https://blog.fsky7.com/archives/93/
+- [FlyingSky's Blog](https://blog.fsky7.com)
 
-主题文档 : https://mdr.docs.fsky7.com/
+## 使用
+
+前往 [Releases](https://github.com/FlyingSky-CN/MDr/releases) 页面下载正式版。
+
+主题发布 : <https://blog.fsky7.com/archives/60>
+
+使用指南 : <https://blog.fsky7.com/archives/93>
+
+主题文档 : <https://mdr.docs.fsky7.com>
