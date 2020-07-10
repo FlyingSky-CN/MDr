@@ -2,10 +2,6 @@
  * MDr 是一套基于 MDUI 开发的 Typecho 模板
  */
 
-/** Element **/
-
-/* Table */
-
 table {
     width: 100%;
     border-radius: 2px;
@@ -32,7 +28,7 @@ table tr:last-child td {
     border-color: rgba(255, 255, 255, .12);
 }
 
-/* Unclean */
+/* TODO #19 */
 
 a {
     color: #444;
@@ -90,8 +86,6 @@ button, input[type=submit] {
     cursor: pointer
 }
 
-/* Scrollbar */
-
 body::-webkit-scrollbar {
     width: 8px;
     height: 8px;
@@ -107,8 +101,6 @@ body::-webkit-scrollbar-thumb {
 body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, .3)!important
 }
-
-/** Helper **/
 
 .mdui-theme-layout-dark img {
     filter: brightness(75%)
@@ -159,8 +151,6 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     }
 }
 
-/* Pray */
-
 html.pray {
     -webkit-filter: grayscale(100%);
     -moz-filter: grayscale(100%);
@@ -169,8 +159,6 @@ html.pray {
     filter: grayscale(100%);
     filter: gray;
 }
-
-/* Dark Mode */
 
 html {
     content: ""
@@ -187,8 +175,6 @@ html {
         content: "dark"
     }
 }
-
-/* @print */
 
 @media print {
     header, .mdui-fab-wrapper, .respond {
@@ -219,10 +205,6 @@ html {
         font: 13pt Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif!important
     }
 }
-
-/** Widget **/
-
-/* Sidebar */
 
 .widget {
     margin-bottom: 30px;
@@ -263,8 +245,6 @@ html {
     }
 }
 
-/* SidebarFix */
-
 @media(min-width: 1024px) {
     .mdui-drawer#mdrDrawerR.fixed {
         position: absolute!important;
@@ -274,7 +254,14 @@ html {
     }
 }
 
-/* QrCode */
+#mdrDrawerL {
+    z-index: 4000
+}
+
+#mdrDrawerR {
+    z-index: 3000;
+    padding-bottom: 128px
+}
 
 #pageQrCode {
     background: #fff!important;
@@ -285,8 +272,6 @@ html {
     bottom: 16px
 }
 
-/* Post */
-
 .post {
     margin-top: 20px
 }
@@ -294,8 +279,6 @@ html {
 .tags {
     margin: 15px 0
 }
-
-/* Post[Status] */
 
 .post.status {
     background-color: #e8e8e8
@@ -342,8 +325,6 @@ html {
     padding: 70px 16px 24px
 }
 
-/* PageNavigator */
-
 .page-navigator {
     list-style: none;
     margin: 20px 0;
@@ -379,8 +360,6 @@ html {
     width: 100%
 }
 
-/* Comment */
-
 #comments {
     margin-top: 8px
 }
@@ -412,83 +391,6 @@ html {
 .respond #cancel-comment-reply-link {
     padding: 10px 0
 }
-
-/* Catalog */
-
-/**TODO clean */
-
-#catalog-col::-webkit-scrollbar {
-    width: 6px;
-    height: 6px
-}
-
-#catalog-col::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: #ddd
-}
-
-#catalog-col ul {
-    padding-left: 1em;
-}
-
-#catalog-col {
-    position: fixed;
-    bottom: 5px;
-    z-index: 5000
-}
-
-#catalog-col {
-    min-width: 150px;
-    max-width: 50%;
-    max-height: 50%;
-    padding: 15px 15px 15px 15px;
-    border-right-width: .3em;
-    overflow: auto
-}
-
-#catalog-col.catalog {
-    bottom: 25px;
-}
-
-#catalog-col li {
-    margin: 5px 0;
-    line-height: 1.6
-}
-
-#catalog.catalog:before {
-    margin: -4px 0 0 -11px;
-    transform: rotate(-30deg);
-    -webkit-transform: rotate(-30deg)
-}
-
-#catalog.catalog:after {
-    margin: 2px 0 0 -11px;
-    transform: rotate(30deg);
-    -webkit-transform: rotate(30deg)
-}
-
-/* Music */
-
-#music span {
-    position: absolute;
-    display: block;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background: none;
-    opacity: .7
-}
-
-#music.play span i {
-    position: absolute;
-    bottom: 0;
-    display: block;
-    height: 0;
-    width: 100%;
-    background: #aaa
-}
-
-/* Footer Nav */
 
 .footer-nav {
     margin: 32px 0 16px
@@ -543,8 +445,6 @@ html {
     margin-left: 10px
 }
 
-/* Breadcrumbs */
-
 .breadcrumbs {
     margin-top: 20px;
     background-color: rgba(180, 180, 180, 0.25)
@@ -552,4 +452,83 @@ html {
 
 .breadcrumbs .mdui-chip-icon {
     border-radius: 2px
+}
+
+#loading {
+    left: 0;
+    display: none;
+    border-radius: 0px;
+    z-index: 9999;
+    position: fixed
+}
+
+/**TODO #19 */
+
+#catalog-col::-webkit-scrollbar {
+    width: 6px;
+    height: 6px
+}
+
+#catalog-col::-webkit-scrollbar-thumb {
+    border-radius: 3px;
+    background-color: #ddd
+}
+
+#catalog-col ul {
+    padding-left: 1em;
+}
+
+#catalog-col {
+    position: fixed;
+    bottom: 5px;
+    z-index: 5000
+}
+
+#catalog-col {
+    min-width: 150px;
+    max-width: 50%;
+    max-height: 50%;
+    padding: 15px 15px 15px 15px;
+    border-right-width: .3em;
+    overflow: auto
+}
+
+#catalog-col.catalog {
+    bottom: 25px;
+}
+
+#catalog-col li {
+    margin: 5px 0;
+    line-height: 1.6
+}
+
+#catalog.catalog:before {
+    margin: -4px 0 0 -11px;
+    transform: rotate(-30deg);
+    -webkit-transform: rotate(-30deg)
+}
+
+#catalog.catalog:after {
+    margin: 2px 0 0 -11px;
+    transform: rotate(30deg);
+    -webkit-transform: rotate(30deg)
+}
+
+#music span {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background: none;
+    opacity: .7
+}
+
+#music.play span i {
+    position: absolute;
+    bottom: 0;
+    display: block;
+    height: 0;
+    width: 100%;
+    background: #aaa
 }
