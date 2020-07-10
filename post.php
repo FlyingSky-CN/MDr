@@ -52,21 +52,21 @@ window.onload=function (){
 </div>
 <div class="tags"><?php mdrTags($this); ?></div>
 <?php $this->need('comments.php'); ?>
-<div class="mdui-row" style="margin-top: 32px;margin-bottom: 16px;">
-<div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6" style="text-align: left;">
-<div style="display: inline-block;box-sizing: border-box;width: 100%;height: 100%;font-weight: 500;font-size: 20px;line-height: 24px;-webkit-font-smoothing: antialiased;">
-<i class="mdui-icon material-icons" style="float: left;margin-right: 10px;padding-top: 24px;width: 24px;">arrow_back</i>
-<span style="margin-bottom: 1px;font-size: 15px;line-height: 18px;opacity: .75;">上一篇</span>
-<div style="overflow: hidden;margin-left: 34px;height: 24px;text-overflow: ellipsis;white-space: nowrap;"><?php $this->thePrev('%s','没有了'); ?></div>
-</div>
-</div>
-<div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6" style="text-align: right;">
-<div style="display: inline-block;box-sizing: border-box;width: 100%;height: 100%;font-weight: 500;font-size: 20px;line-height: 24px;-webkit-font-smoothing: antialiased;">
-<i class="mdui-icon material-icons" style="float: right;margin-left: 10px;padding-top: 24px;width: 24px;">arrow_forward</i>
-<span style="margin-bottom: 1px;font-size: 15px;line-height: 18px;opacity: .75;">下一篇</span>
-<div style="overflow: hidden;margin-left: 34px;height: 24px;text-overflow: ellipsis;white-space: nowrap;"><?php $this->theNext('%s','没有了'); ?></div>
-</div>
-</div>
+<div class="mdui-row footer-nav">
+    <div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6 footer-nav-left">
+        <div class="footer-nav-inner">
+            <i class="mdui-icon material-icons footer-nav-icon">arrow_back</i>
+            <span class="footer-nav-title">上一篇</span>
+            <div class="footer-nav-text"><?php $this->thePrev('%s','没有了'); ?></div>
+        </div>
+    </div>
+    <div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6 footer-nav-right">
+        <div class="footer-nav-inner">
+            <i class="mdui-icon material-icons footer-nav-icon">arrow_forward</i>
+            <span class="footer-nav-title">下一篇</span>
+            <div class="footer-nav-text"><?php $this->theNext('%s','没有了'); ?></div>
+        </div>
+    </div>
 </div>
 </div>
 <?php $this->need('footer.php'); ?>
