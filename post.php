@@ -2,14 +2,14 @@
 <?php $this->need('header.php'); ?>
 <div id="main">
 <?php if (!empty($this->options->Breadcrumbs) && in_array('Postshow', $this->options->Breadcrumbs)): ?>
-<div class="mdui-card" style="margin-top:20px;background-color: rgba(180, 180, 180, 0.25);">
-    <span class="mdui-chip-icon" style="border-radius:2px;"><i class="mdui-icon material-icons">chevron_right</i></span>
+<div class="mdui-card breadcrumbs">
+    <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
     <span class="mdui-chip-title">
         <a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->category(); ?> &raquo; <?php if (!empty($this->options->Breadcrumbs) && in_array('Text', $this->options->Breadcrumbs)): ?>正文<?php else: $this->title(); endif; ?>
     </span>
 </div>
 <?php endif; ?>
-<div id="post" class="mdui-card <?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top:20px;">
+<div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden): ?> protected<?php endif; ?>" style="margin-top:20px;">
     <?php if ($this->options->mdrPostThumb): ?>
     <div class="mdui-card-media">
         <?php echo postThumb($this); ?>
@@ -28,24 +28,15 @@
         </div>
     </div>
     <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
-<?php if ($this->options->TimeNotice): ?>
-<?php 
-$time=time() - $this->modified;
-$lock=$this->options->TimeNoticeLock;
-$lock=$lock*24*60*60;
-if ($time>=$lock) {
-?>
-<script defer>
-<?php if ($_GET['_pjax']) { ?>
-mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: '<?=$this->options->mdrSnackbar?>',timeout:5000});
-<?php } else { ?>
-window.onload=function (){
-    mdui.snackbar({message: '此文章最后修订于 <?php echo date('Y年m月d日' , $this->modified);?>，其中的信息可能已经有所发展或是发生改变。',position: '<?=$this->options->mdrSnackbar?>',timeout:5000});
-}
-<?php } ?>
-</script>
-<?php } ?>
-<?php endif; ?>
+<?php /* MDr Time Notice */
+if ($this->options->TimeNotice):
+if ((time() - $this->modified) >= ($this->options->TimeNoticeLock)*24*60*60): ?>
+    <script defer>
+    <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
+        mdui.snackbar({message: '此文章最后修订于 <?=date('Y年m月d日', $this->modified)?>，其中的信息可能已经有所发展或是发生改变。',position: '<?=$this->options->mdrSnackbar?>',timeout:5000});
+    <?php if (!MDR_PJAX) echo "}"; ?>
+    </script>
+<?php endif; endif; ?>
 <?php $this->content(); ?>
 <?php license($this->fields->linceses); ?>
 </div>
