@@ -113,6 +113,24 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     font-size: .875em;
     line-height: 1.5
 }
+@media(max-width: 1023px) {
+    .mdui-container {
+        padding: 0;
+        margin: 0;
+        width: 100%;
+    }
+    .mdui-card {
+        border-radius: 0
+    }
+    footer {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    .tags {
+        padding: 0 10px;
+        text-align: center;
+    }
+}
 /* Pray */
 html.pray {
     -webkit-filter: grayscale(100%); 
@@ -271,7 +289,6 @@ html {
 }
 .page-navigator li {
     display:inline-block;
-    margin-right:5px;
     height:36px;
     border-radius:2px;
     line-height:36px;
