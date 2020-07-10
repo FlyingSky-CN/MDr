@@ -2,8 +2,8 @@
 <?php $this->need('header.php'); ?>
 <div id="main">
 <?php if (!empty($this->options->Breadcrumbs) && in_array('Pageshow', $this->options->Breadcrumbs)): ?>
-<div class="mdui-card" style="margin-top:20px;background-color: rgba(180, 180, 180, 0.25);">
-    <span class="mdui-chip-icon" style="border-radius:2px;"><i class="mdui-icon material-icons">chevron_right</i></span>
+<div class="mdui-card breadcrumbs">
+    <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
     <span class="mdui-chip-title">
         <a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->title() ?>
 

@@ -542,3 +542,14 @@ html {
     float: right;
     margin-left: 10px
 }
+
+/* Breadcrumbs */
+
+.breadcrumbs {
+    margin-top: 20px;
+    background-color: rgba(180, 180, 180, 0.25)
+}
+
+.breadcrumbs .mdui-chip-icon {
+    border-radius: 2px
+}
