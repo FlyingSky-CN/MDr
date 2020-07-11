@@ -77,6 +77,7 @@
             "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
             "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
             "");
+        const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
     </script>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | pageQrCode -->
@@ -211,7 +212,7 @@
                     console.log(ar);
                     mdui.snackbar({
                         message: '评论正在发送中...',
-                        position: '<?= $this->options->mdrSnackbar ?>',
+                        position: mdrSnackbar,
                         timeout: 5000
                     });
                     if (ar[1]) {
@@ -226,7 +227,7 @@
                         error: function() {
                             mdui.snackbar({
                                 message: '提交失败，请检查网络并重试或者联系管理员。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                position: mdrSnackbar,
                                 timeout: 5000
                             });
                             return false
@@ -235,7 +236,7 @@
                             if (!$(g, d).length) {
                                 mdui.snackbar({
                                     message: '您输入的内容不符合规则或者回复太频繁，请修改内容或者稍等片刻。',
-                                    position: '<?= $this->options->mdrSnackbar ?>',
+                                    position: mdrSnackbar,
                                     timeout: 5000
                                 });
                                 return false
@@ -267,7 +268,7 @@
                                 c();
                                 mdui.snackbar({
                                     message: '评论已发送。',
-                                    position: '<?= $this->options->mdrSnackbar ?>',
+                                    position: mdrSnackbar,
                                     timeout: 5000
                                 });
                                 if (k) {
@@ -338,7 +339,7 @@
                                     $(ap_m).removeAttr("class").text("- 阅读全文 -");
                                     mdui.snackbar({
                                         message: '提交失败，请检查网络并重试或者联系管理员。',
-                                        position: '<?= $this->options->mdrSnackbar ?>',
+                                        position: mdrSnackbar,
                                         timeout: 3000
                                     });
                                     ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
@@ -360,7 +361,7 @@
                         $(ap_m).removeAttr("class").text("- 阅读全文 -");
                         mdui.snackbar({
                             message: '提交失败，请检查网络并重试或者联系管理员。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
+                            position: mdrSnackbar,
                             timeout: 3000
                         });
                         ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
@@ -371,7 +372,7 @@
                             $(ap_m).removeAttr("class").text("- 阅读全文 -");
                             mdui.snackbar({
                                 message: '对不起,您输入的密码错误。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                position: mdrSnackbar,
                                 timeout: 3000
                             });
                             ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 10);
@@ -442,7 +443,7 @@
                         error: function() {
                             mdui.snackbar({
                                 message: '请求失败，请检查网络并重试或者联系管理员。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                position: mdrSnackbar,
                                 timeout: 3000
                             });
                             $(a).removeAttr("class").text("查看更多");
@@ -527,7 +528,7 @@
                         b.style.display = "none";
                         mdui.snackbar({
                             message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
+                            position: mdrSnackbar,
                             timeout: 5000
                         });
                     } else {
@@ -567,7 +568,7 @@
                     } else {
                         mdui.snackbar({
                             message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
+                            position: mdrSnackbar,
                             timeout: 5000
                         });
                     }
@@ -575,10 +576,8 @@
                 b.removeAttribute("class")
             })();
         </script>
-    <?php endif;
-    if ($this->options->CustomContent) : $this->options->CustomContent(); ?>
-
     <?php endif; ?>
+    <?php if ($this->options->CustomContent) $this->options->CustomContent(); ?>
     <script>
         var cornertool = true;
 
@@ -626,153 +625,13 @@
     <?php endif;
     if ($this->options->DarkMode) : ?>
         <!-- mdr | DarkMode -->
-        <?php
-        if ($this->options->DarkModeFD && $this->options->DarkModeDomain) {
-            $DarkModeFD = "domain=" . $this->options->DarkModeDomain;
-        } else {
-            $DarkModeFD = "";
-        }
-        ?>
         <script>
-            /**Attention: Dark Mode 不使用 jQuery 库 */
-            function onDarkMode() {
-                var body = mdui.JQ('body'),
-                    appbar = document.getElementsByClassName('mdui-appbar')[0];
-                console.log('Dark mode on');
-                document.cookie = "dark=1;path=/;<?= $DarkModeFD ?>";
-                body.addClass('mdui-theme-layout-dark');
-                body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-                body.addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-                appbar.style.backgroundColor = '#212121';
-                var meta = document.getElementsByTagName('meta');
-                meta["theme-color"].setAttribute('content', '#212121');
-            }
-
-            function offDarkMode() {
-                var body = mdui.JQ('body'),
-                    appbar = document.getElementsByClassName('mdui-appbar')[0];
-                console.log('Dark mode off');
-                document.cookie = "dark=0;path=/;<?= $DarkModeFD ?>";
-                body.removeClass('mdui-theme-layout-dark');
-                body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-                body.addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-                appbar.style.backgroundColor = '#ffffff';
-                var meta = document.getElementsByTagName('meta');
-                meta["theme-color"].setAttribute('content', '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>');
-            }
+            const mdrDarkModeFD = '<?= ($this->options->DarkModeFD && $this->options->DarkModeDomain) ? "domain=" . $this->options->DarkModeDomain : '' ?>';
+            const mdrThemeColor = '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>';
+            const mdrAccent = 'mdui-theme-accent-<?= $this->options->mdrAccent ?>';
+            const mdrAccentD = 'mdui-theme-accent-<?= $this->options->mdrAccentD ?>';
         </script>
-        <script>
-            /* Dark Mode 对于 @print 的适配 */
-            window.addEventListener("beforeprint", function() {
-                var body = mdui.JQ('body'),
-                    appbar = mdui.JQ('.mdui-appbar');
-                appbar.hide();
-                if (body.hasClass('mdui-theme-layout-dark')) {
-                    body.addClass('mdui-theme-layout-dark-print');
-                    body.removeClass('mdui-theme-layout-dark')
-                }
-            });
-            window.addEventListener("afterprint", function() {
-                var body = mdui.JQ('body'),
-                    appbar = mdui.JQ('.mdui-appbar');
-                appbar.show();
-                if (body.hasClass('mdui-theme-layout-dark-print')) {
-                    body.addClass('mdui-theme-layout-dark');
-                    body.removeClass('mdui-theme-layout-dark-print')
-                }
-            });
-        </script>
-        <script>
-            /* Dark Mode 的控制（系统黑暗模式优先于 Cookie 中的黑暗模式） */
-            function switchDarkMode() {
-                /* 手动触发 */
-                var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                if (night == '0') {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，早 6 点之前保持开启。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                } else {
-                    offDarkMode();
-                    mdui.snackbar({
-                        message: '已关闭 Dark Mode ',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                }
-            }
-            (function() {
-                /* 加载完触发，判断时间段（当系统开启黑暗模式时不执行） */
-                if (getComputedStyle(document.documentElement).getPropertyValue('content') != '"dark"') {
-                    if (document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") === '') {
-                        if (new Date().getHours() > 22 || new Date().getHours() < 6) {
-                            onDarkMode();
-                        } else {
-                            offDarkMode();
-                        }
-                    } else {
-                        var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                        if (dark == '0') {
-                            offDarkMode();
-                        } else if (dark == '1') {
-                            onDarkMode();
-                        }
-                    }
-                }
-            })();
-            document.addEventListener('visibilitychange', function() {
-                /* 切换标签页时触发 */
-                var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                if (dark == '0') {
-                    offDarkMode();
-                    if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
-                        onDarkMode();
-                        mdui.snackbar({
-                            message: '已开启 Dark Mode ，跟随系统。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
-                            timeout: 1000
-                        });
-                    };
-                } else if (dark == '1') {
-                    onDarkMode();
-                }
-            });
-            if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
-                var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                /* 加载完触发，判断系统黑暗模式是否开启 */
-                if (dark == '0') {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，跟随系统。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                }
-            };
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", (e) => {
-                /* 系统黑暗模式切换时触发 */
-                if (e.matches) {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，跟随系统。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                } else {
-                    var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                    if (night == '1') {
-                        offDarkMode();
-                        mdui.snackbar({
-                            message: '已关闭 Dark Mode ',
-                            position: '<?= $this->options->mdrSnackbar ?>',
-                            timeout: 1000
-                        });
-                    }
-                }
-            });
-        </script>
+        <script src="<?php cjUrl('darkmode.js') ?>"></script>
     <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
