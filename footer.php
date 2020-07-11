@@ -205,7 +205,6 @@
                     if ($this->options->AjaxLoad) : ?>
                         al();
                     <?php endif; ?>
-                    cl();
                     ac();
                     ap();
                     <?php if ($this->options->CustomContent) : ?>
