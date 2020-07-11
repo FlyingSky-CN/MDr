@@ -99,7 +99,7 @@
             data.forEach((value) => {
                 var dom = mdui.JQ(document.createElement('a'));
                 dom.addClass('mdui-list-item mdui-ripple');
-                dom.addClass('mdui-p-l-' + ((value.depth * 2 < 5) ? (value.depth * 2) : 5));
+                dom.addClass('mdui-p-l-' + Math.min(value.depth * 2, 5));
                 dom.attr('href', '#cl-' + value.count);
                 dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
                 list.append(dom);
