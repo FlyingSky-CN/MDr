@@ -54,7 +54,9 @@ $this->need('header.php'); ?>
                         <?php if ($this->options->mdrPostTitle != 'normal') { ?>
                             <div class="mdui-card-media-covered mdui-card-media-covered-transparent <?php if ($this->options->mdrPostTitle == 'top') { ?>mdui-card-media-covered-top<?php } ?>">
                                 <div class="mdui-card-primary" style="padding-bottom:8px;">
-                                    <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                                    <a href="<?php $this->permalink() ?>">
+                                        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                                    </a>
                                     <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
                                         <div class="mdui-card-primary-subtitle">
                                             <?php $this->date(); ?>
@@ -73,7 +75,9 @@ $this->need('header.php'); ?>
                 <?php endif; ?>
                 <?php if ($this->options->mdrPostTitle == 'normal' || !postThumb($this)) { ?>
                     <div class="mdui-card-primary" style="padding-bottom:8px;">
-                        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                        <a href="<?php $this->permalink() ?>">
+                            <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                        </a>
                         <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
                             <div class="mdui-card-primary-subtitle">
                                 <?php $this->date(); ?>

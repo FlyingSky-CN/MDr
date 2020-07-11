@@ -276,6 +276,18 @@ html {
     top: -86px
 }
 
+.mdui-card-primary-title {
+    color: #000
+}
+
+.mdui-theme-layout-dark .mdui-card-primary-title {
+    color: #fff
+}
+
+.mdui-card-primary-title {
+    opacity: 1
+}
+
 #mdrDrawerLtoc span {
     font-size: 12px;
     padding: 3px 6px;
