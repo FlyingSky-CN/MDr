@@ -267,6 +267,10 @@ html {
     top: 0
 }
 
+.cl-offset {
+    top: -86px
+}
+
 #mdrDrawerLtoc span {
     font-size: 12px;
     padding: 3px 6px;
