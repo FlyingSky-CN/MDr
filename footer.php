@@ -85,12 +85,12 @@
     </script>
     <script>
         /* MDr Catalog */
-        mdrTabDom.hide();
+        mdrTabDom.attr('style', 'margin-top: -48px');
         mdrTab.show(0);
         const mdrCatalog = (data) => {
             if (data === false) {
                 mdrTab.show(0);
-                mdrTabDom.hide();
+                mdrTabDom.attr('style', 'margin-top: -48px');
                 return;
             }
             mdrTab.show(0);
@@ -104,7 +104,7 @@
                 dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
                 list.append(dom);
             })
-            mdrTabDom.show();
+            mdrTabDom.attr('style', 'margin-top: 0');
         }
     </script>
     <?php if ($this->options->mdrQrCode) : ?>

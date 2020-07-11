@@ -263,6 +263,11 @@ html {
     padding-bottom: 128px
 }
 
+#mdrTab {
+    transition: margin-top 1s;
+    margin-top: -48px
+}
+
 #mdrTab .mdui-tab-indicator {
     top: 0
 }
