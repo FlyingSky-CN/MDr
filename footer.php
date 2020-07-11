@@ -605,28 +605,6 @@
         </script>
     <?php endif; ?>
     <?php if ($this->options->CustomContent) $this->options->CustomContent(); ?>
-    <script>
-        var cornertool = true;
-
-        function cl() {
-            var a = document.getElementById("catalog-col"),
-                b = document.getElementById("catalog"),
-                c = document.getElementById("cornertool"),
-                d;
-            if (a && !b) {
-                d = document.createElement("button");
-                d.setAttribute("id", "catalog");
-                d.setAttribute("onclick", "Catalogswith()");
-                d.setAttribute("class", "mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
-                d.innerHTML = '<i class="mdui-icon material-icons">&#xe5d2;</i>';
-                c.appendChild(d);
-            }
-            if (!a && b) {
-                cornertool ? c.removeChild(b) : document.body.removeChild(c)
-            }
-        }
-        cl();
-    </script>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | mdrQrCode -->
         <script src="<?= staticUrl('jquery.qrcode.min.js') ?>"></script>

@@ -489,56 +489,6 @@ html {
 
 /**TODO #19 */
 
-#catalog-col::-webkit-scrollbar {
-    width: 6px;
-    height: 6px
-}
-
-#catalog-col::-webkit-scrollbar-thumb {
-    border-radius: 3px;
-    background-color: #ddd
-}
-
-#catalog-col ul {
-    padding-left: 1em;
-}
-
-#catalog-col {
-    position: fixed;
-    bottom: 5px;
-    z-index: 5000
-}
-
-#catalog-col {
-    min-width: 150px;
-    max-width: 50%;
-    max-height: 50%;
-    padding: 15px 15px 15px 15px;
-    border-right-width: .3em;
-    overflow: auto
-}
-
-#catalog-col.catalog {
-    bottom: 25px;
-}
-
-#catalog-col li {
-    margin: 5px 0;
-    line-height: 1.6
-}
-
-#catalog.catalog:before {
-    margin: -4px 0 0 -11px;
-    transform: rotate(-30deg);
-    -webkit-transform: rotate(-30deg)
-}
-
-#catalog.catalog:after {
-    margin: 2px 0 0 -11px;
-    transform: rotate(30deg);
-    -webkit-transform: rotate(30deg)
-}
-
 #music span {
     position: absolute;
     display: block;

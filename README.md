@@ -5,7 +5,6 @@ Typecho Theme | MDr - 书写你的篇章
 ![Version](https://img.shields.io/badge/version-1.0.5-40c4ff.svg?style=flat)
 ![Typecho](https://img.shields.io/badge/Typecho-1.1%2B-467b96.svg?style=flat)
 ![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat)
-![QQ Group](https://img.shields.io/badge/qq%20group-1061965682-ff69b4.svg?style=flat)
 ![Docs](https://github.com/FlyingSky-CN/MDr-docs/workflows/docs%20publish/badge.svg?branch=master)
 ![Author](https://img.shields.io/badge/author-FlyingSky-6cf.svg?style=flat)
 
