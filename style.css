@@ -263,6 +263,22 @@ html {
     padding-bottom: 128px
 }
 
+#mdrTab .mdui-tab-indicator {
+    top: 0
+}
+
+#mdrDrawerLtoc span {
+    font-size: 12px;
+    padding: 3px 6px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, .3);
+    color: #fff;
+    margin-right: 10px;
+    font-weight: 400;
+    min-width: 7px;
+    text-align: center;
+}
+
 #pageQrCode {
     background: #fff!important;
     padding: 10px 0px 0px 10px;

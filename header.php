@@ -78,85 +78,94 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                     </a>
                 </div>
             </div>
-            <ul class="mdui-list" mdui-collapse="{accordion: true}">
-                <a href="<?php $this->options->siteUrl(); ?>">
-                    <li class="mdui-list-item mdui-ripple">
-                        <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-blue<?php } ?>">home</i>
-                        <div class="mdui-list-item-content">首页</div>
-                    </li>
-                </a>
-                <?php if (!empty($this->options->Navset) && in_array('ShowCategory', $this->options->Navset)) : ?>
-                    <li class="mdui-collapse-item <?= (!empty($this->options->Navset) && in_array('OpenCategory', $this->options->Navset)) ? 'mdui-collapse-item-open' : '' ?>">
-                        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                            <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-green<?php } ?>">widgets</i>
-                            <div class="mdui-list-item-content">分类</div>
-                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                            <?php $this->widget('Widget_Metas_Category_List')->to($categorys); ?>
-                            <?php while ($categorys->next()) : ?>
-                                <?php if ($categorys->levels == 0) : $children = $categorys->getAllChildren($categorys->mid); ?>
-                                    <?php if (empty($children)) : ?>
-                                        <a href="<?php $categorys->permalink(); ?>">
-                                            <li class="mdui-list-item mdui-ripple"><?php $categorys->name(); ?></li>
-                                        </a>
-                                    <?php else : ?>
-                                        <a href="<?php $categorys->permalink(); ?>">
-                                            <li class="mdui-list-item mdui-ripple"><?php $categorys->name(); ?></li>
-                                        </a>
-                                        <?php foreach ($children as $mid) : $child = $categorys->getCategory($mid); ?>
-                                            <a href="<?php echo $child['permalink'] ?>">
-                                                <li class="mdui-list-item mdui-ripple"><?php echo $child['name']; ?></li>
+            <div class="mdui-tab mdui-tab-full-width" id="mdrTab">
+                <a href="#mdrDrawerLmenu" class="mdui-ripple">菜单</a>
+                <a href="#mdrDrawerLtoc" class="mdui-ripple">目录</a>
+            </div>
+            <div id="mdrDrawerLmenu">
+                <ul class="mdui-list" mdui-collapse="{accordion: true}">
+                    <a href="<?php $this->options->siteUrl(); ?>">
+                        <li class="mdui-list-item mdui-ripple">
+                            <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-blue<?php } ?>">home</i>
+                            <div class="mdui-list-item-content">首页</div>
+                        </li>
+                    </a>
+                    <?php if (!empty($this->options->Navset) && in_array('ShowCategory', $this->options->Navset)) : ?>
+                        <li class="mdui-collapse-item <?= (!empty($this->options->Navset) && in_array('OpenCategory', $this->options->Navset)) ? 'mdui-collapse-item-open' : '' ?>">
+                            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                                <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-green<?php } ?>">widgets</i>
+                                <div class="mdui-list-item-content">分类</div>
+                                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                            </div>
+                            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                                <?php $this->widget('Widget_Metas_Category_List')->to($categorys); ?>
+                                <?php while ($categorys->next()) : ?>
+                                    <?php if ($categorys->levels == 0) : $children = $categorys->getAllChildren($categorys->mid); ?>
+                                        <?php if (empty($children)) : ?>
+                                            <a href="<?php $categorys->permalink(); ?>">
+                                                <li class="mdui-list-item mdui-ripple"><?php $categorys->name(); ?></li>
                                             </a>
-                                        <?php endforeach; ?>
+                                        <?php else : ?>
+                                            <a href="<?php $categorys->permalink(); ?>">
+                                                <li class="mdui-list-item mdui-ripple"><?php $categorys->name(); ?></li>
+                                            </a>
+                                            <?php foreach ($children as $mid) : $child = $categorys->getCategory($mid); ?>
+                                                <a href="<?php echo $child['permalink'] ?>">
+                                                    <li class="mdui-list-item mdui-ripple"><?php echo $child['name']; ?></li>
+                                                </a>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
                                     <?php endif; ?>
-                                <?php endif; ?>
-                            <?php endwhile; ?>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-                <?php if (!empty($this->options->Navset) && in_array('ShowPage', $this->options->Navset)) : ?>
-                    <li class="mdui-collapse-item <?= (!empty($this->options->Navset) && in_array('OpenPage', $this->options->Navset)) ? 'mdui-collapse-item-open' : '' ?>">
-                        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                            <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-deep-orange<?php } ?>">layers</i>
-                            <div class="mdui-list-item-content">页面</div>
-                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                            <?php $this->widget('Widget_Contents_Page_List')->to($pages); ?>
-                            <?php while ($pages->next()) : ?>
-                                <a href="<?php $pages->permalink(); ?>">
-                                    <li class="mdui-list-item mdui-ripple"><?php $pages->title(); ?></li>
-                                </a>
-                            <?php endwhile; ?>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-                <?php if (!empty($this->options->MyLinks)) : ?>
-                    <li class="mdui-collapse-item mdui-collapse-item-open">
-                        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                            <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-purple<?php } ?>">link</i>
-                            <div class="mdui-list-item-content">其他</div>
-                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                            <?php MyLinks($this->options->MyLinks); ?>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-                <?php if (!empty($this->options->Navset) && in_array('ShowArchive', $this->options->Navset)) : ?>
-                    <li class="mdui-collapse-item">
-                        <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
-                            <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-brown<?php } ?>">archive</i>
-                            <div class="mdui-list-item-content">归档</div>
-                            <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
-                        </div>
-                        <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
-                            <?php $this->widget('Widget_Contents_Post_Date', 'type=month&format=Y 年 n 月')->parse('<a href="{permalink}"><li class="mdui-list-item mdui-ripple">{date}</li></a>'); ?>
-                        </ul>
-                    </li>
-                <?php endif; ?>
-            </ul>
+                                <?php endwhile; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if (!empty($this->options->Navset) && in_array('ShowPage', $this->options->Navset)) : ?>
+                        <li class="mdui-collapse-item <?= (!empty($this->options->Navset) && in_array('OpenPage', $this->options->Navset)) ? 'mdui-collapse-item-open' : '' ?>">
+                            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                                <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-deep-orange<?php } ?>">layers</i>
+                                <div class="mdui-list-item-content">页面</div>
+                                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                            </div>
+                            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                                <?php $this->widget('Widget_Contents_Page_List')->to($pages); ?>
+                                <?php while ($pages->next()) : ?>
+                                    <a href="<?php $pages->permalink(); ?>">
+                                        <li class="mdui-list-item mdui-ripple"><?php $pages->title(); ?></li>
+                                    </a>
+                                <?php endwhile; ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if (!empty($this->options->MyLinks)) : ?>
+                        <li class="mdui-collapse-item mdui-collapse-item-open">
+                            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                                <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-purple<?php } ?>">link</i>
+                                <div class="mdui-list-item-content">其他</div>
+                                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                            </div>
+                            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                                <?php MyLinks($this->options->MyLinks); ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                    <?php if (!empty($this->options->Navset) && in_array('ShowArchive', $this->options->Navset)) : ?>
+                        <li class="mdui-collapse-item">
+                            <div class="mdui-collapse-item-header mdui-list-item mdui-ripple">
+                                <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-brown<?php } ?>">archive</i>
+                                <div class="mdui-list-item-content">归档</div>
+                                <i class="mdui-collapse-item-arrow mdui-icon material-icons">keyboard_arrow_down</i>
+                            </div>
+                            <ul class="mdui-collapse-item-body mdui-list mdui-list-dense">
+                                <?php $this->widget('Widget_Contents_Post_Date', 'type=month&format=Y 年 n 月')->parse('<a href="{permalink}"><li class="mdui-list-item mdui-ripple">{date}</li></a>'); ?>
+                            </ul>
+                        </li>
+                    <?php endif; ?>
+                </ul>
+            </div>
+            <div id="mdrDrawerLtoc">
+                <ul class="mdui-list"></ul>
+            </div>
         </aside>
         <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed) : ?> fixed<?php endif; ?>" id="mdrDrawerR">
             <?php $this->need('sidebar.php'); ?>

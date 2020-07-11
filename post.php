@@ -39,6 +39,11 @@ if ((time() - $this->modified) >= ($this->options->TimeNoticeLock)*24*60*60): ?>
 <?php endif; endif; ?>
 <?php $this->content(); ?>
 <?php license($this->fields->linceses); ?>
+<script defer>
+<?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
+    mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)
+<?php if (!MDR_PJAX) echo "}"; ?>
+</script>
 </div>
 </div>
 <div class="tags"><?php mdrTags($this); ?></div>

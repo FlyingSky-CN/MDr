@@ -71,22 +71,46 @@
             <?php endif; ?>
         </div>
     </div>
+    <script src="<?= staticUrl('mdui.min.js') ?>"></script>
     <script>
+        /* MDr Global JavaScript */
         console.log(
             "\n %c MDr <?= MDR_VERSION ?> %c FlyingSky-CN/MDr %c \n",
             "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
             "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
             "");
         const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
+        const mdrTab = new mdui.Tab('#mdrTab');
+        const mdrTabDom = mdui.JQ('#mdrTab');
+    </script>
+    <script>
+        /* MDr Catalog */
+        mdrTabDom.hide();
+        mdrTab.show(0);
+        const mdrCatalog = (data) => {
+            if (data === false) {
+                mdrTab.show(0);
+                mdrTabDom.hide();
+                return;
+            }
+            mdrTab.show(0);
+            var list = mdui.JQ('#mdrDrawerLtoc .mdui-list');
+            list.empty();
+            data.forEach((value) => {
+                var dom = mdui.JQ(document.createElement('a'));
+                dom.addClass('mdui-list-item mdui-ripple');
+                dom.addClass('mdui-p-l-' + ((value.depth * 2 < 5) ? (value.depth * 2) : 5));
+                dom.attr('href', '#cl-' + value.count);
+                dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
+                list.append(dom);
+            })
+            mdrTabDom.show();
+        }
     </script>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | pageQrCode -->
         <div id="pageQrCode" class="mdui-menu" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
     <?php endif; ?>
-    <!-- mdr | Script -->
-    <!-- MDUI STR -->
-    <script src="<?= staticUrl('mdui.min.js') ?>"></script>
-    <!-- MDUI END -->
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
             var $$ = mdui.JQ;
@@ -158,6 +182,9 @@
                 })
                 .on('pjax:send', function() {
                     $('#loading').fadeIn();
+                })
+                .on('pjax:beforeReplace', function() {
+                    mdrCatalog(false);
                 })
                 .on('pjax:complete', function() {
                     setTimeout(function() {
