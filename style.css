@@ -243,11 +243,13 @@ html.pray {
 }
 
 @media(min-width: 1024px) {
-    .mdui-drawer#mdrDrawerR.fixed {
+    #mdrDrawerR.fixed {
         position: absolute!important;
-        overflow-y: hidden;
         right: 0;
         bottom: auto
+    }
+    #mdrDrawerR.fixed.mdui-drawer-close {
+        width: 0
     }
 }
 
