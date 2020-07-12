@@ -172,7 +172,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                         </li>
                     <?php endif; ?>
                     <?php if ($this->options->DarkMode) : ?>
-                        <button class="mdui-btn mdui-btn-icon mdui-ripple mdr-switcher" onclick="switchDarkMode()">
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple mdr-switcher" id="mdrDarkMode">
                             <i class="mdui-icon material-icons">brightness_4</i>
                         </button>
                     <?php endif; ?>
