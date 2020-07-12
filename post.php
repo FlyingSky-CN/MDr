@@ -11,26 +11,28 @@
         </div>
     <?php endif; ?>
     <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>" style="margin-top:20px;">
-        <?php if ($this->options->mdrPostThumb) : ?>
+        <?php if ($this->options->mdrPostThumb && !$this->hidden) : ?>
             <div class="mdui-card-media">
                 <?php echo postThumb($this); ?>
             </div>
         <?php endif; ?>
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-            <div class="mdui-card-primary-subtitle">
-                <?php $this->date(); ?>
-                | <?php $this->category(','); ?>
-                | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
-                | <?php Postviews($this); ?>
-                <?php if ($this->options->WordCount) : ?>
-                    | <?php WordCount($this->cid); ?>
-                <?php endif; ?>
-            </div>
+            <?php if (!$this->hidden) : ?>
+                <div class="mdui-card-primary-subtitle">
+                    <?php $this->date(); ?>
+                    | <?php $this->category(','); ?>
+                    | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
+                    | <?php Postviews($this); ?>
+                    <?php if ($this->options->WordCount) : ?>
+                        | <?php WordCount($this->cid); ?>
+                    <?php endif; ?>
+                </div>
+            <?php endif; ?>
         </div>
         <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
             <?php /* MDr Time Notice */
-            if ($this->options->TimeNotice) :
+            if ($this->options->TimeNotice && !$this->hidden) :
                 if ((time() - $this->modified) >= ($this->options->TimeNoticeLock) * 24 * 60 * 60) : ?>
                     <script defer>
                         <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
@@ -44,16 +46,20 @@
             <?php endif;
             endif; ?>
             <?php $this->content(); ?>
-            <?php license($this->fields->linceses); ?>
-            <script defer>
-                <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
-                mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)
-                <?php if (!MDR_PJAX) echo "}"; ?>
-            </script>
+            <?php if (!$this->hidden) : ?>
+                <?php license($this->fields->linceses); ?>
+                <script defer>
+                    <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
+                    mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)
+                    <?php if (!MDR_PJAX) echo "}"; ?>
+                </script>
+            <?php endif; ?>
         </div>
     </div>
-    <div class="tags"><?php mdrTags($this); ?></div>
-    <?php $this->need('comments.php'); ?>
+    <?php if (!$this->hidden) : ?>
+        <div class="tags"><?php mdrTags($this); ?></div>
+        <?php $this->need('comments.php'); ?>
+    <?php endif; ?>
     <div class="mdui-row footer-nav">
         <div class="mdui-ripple mdui-col-xs-6 mdui-col-sm-6 footer-nav-left">
             <div class="footer-nav-inner">

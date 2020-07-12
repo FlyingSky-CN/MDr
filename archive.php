@@ -75,19 +75,7 @@
                     <?php } ?>
                     <div class="mdui-card-content" style="padding: 0px 16px;">
                         <?php if ($this->options->PjaxOption && $this->hidden) : ?>
-                            <form method="post" style="margin: 14px 0px;">
-                                <div class="mdui-row">
-                                    <div class="mdui-col-xs-12 mdui-col-md-6">
-                                        <div class="mdui-textfield" style="padding-bottom: 32px;">
-                                            <label class="mdui-textfield-label">请输入密码访问</label>
-                                            <input class="mdui-textfield-input" type="password" class="text" name="protectPassword" />
-                                        </div>
-                                    </div>
-                                    <div class="mdui-col-xs-12 mdui-col-md-6" style="padding-top:40px">
-                                        <input type="submit" class="mdui-btn mdui-ripple" value="提交" />
-                                    </div>
-                                </div>
-                            </form>
+                            <p>这篇文章受密码保护，输入密码才能看哦</p>
                         <?php else : ?>
                             <p><?php $this->excerpt(200, ''); ?></p>
                         <?php endif; ?>

@@ -78,7 +78,7 @@
         mdrTabDom.attr('style', 'margin-top: -48px');
         mdrTab.show(0);
         const mdrCatalog = (data) => {
-            if (data === false) {
+            if (data === false || data === null) {
                 mdrTab.show(0);
                 mdrTabDom.attr('style', 'margin-top: -48px');
                 return;
@@ -315,101 +315,45 @@
                 }
             }
             ac();
-            var protoken = '<?php echo Typecho_Widget::widget('Widget_Security')->getTokenUrl('Token'); ?>'.replace('Token', "");
 
             function ap() {
-                $('.protected .post-title a, .protected .more a').click(function() {
-                    var a = $(this).parent().parent();
-                    a.find('.word').text("请输入密码访问").css('color', 'red').Shake(2, 10);
-                    a.find(':password').focus();
-                    return false
-                });
-                $('.protected form').submit(function() {
-                    ap_btn = $(this);
-                    ap_m = ap_btn.parent().find('.more a');
-                    ap_n = ap_btn.find('.word');
-                    $(ap_m).addClass('loading').text("请稍等");
-                    <?php if (!$this->options->AjaxLoad) : ?>
-                        apt();
-                    <?php else : ?>
-                        aps();
-                    <?php endif; ?>
-                    return false
-                })
-            }
-            ap();
-            <?php if (!$this->options->AjaxLoad) : ?>
-
-                function apt() {
-                    var b = $('.protected .post-title a').attr("href");
-                    if ($('h1.post-title').length) {
-                        aps()
-                    } else {
-                        $.ajax({
-                            url: window.location.href,
-                            success: function(d) {
-                                protoken = $('.protected form[action^="' + b + '"]', d).attr("action").replace(b, "");
-                                if (protoken) {
-                                    aps()
-                                } else {
-                                    $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                                    mdui.snackbar({
-                                        message: '提交失败，请检查网络并重试或者联系管理员。',
-                                        position: mdrSnackbar,
-                                        timeout: 3000
-                                    });
-                                    ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
-                                    return false
-                                }
-                            }
-                        })
-                    }
-                }
-            <?php endif; ?>
-
-            function aps() {
-                var c = ap_btn.parent().parent().find('.post-title a').attr("href");
-                $.ajax({
-                    url: c + protoken,
-                    type: 'post',
-                    data: ap_btn.serializeArray(),
-                    error: function() {
-                        $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                        mdui.snackbar({
-                            message: '提交失败，请检查网络并重试或者联系管理员。',
-                            position: mdrSnackbar,
-                            timeout: 3000
-                        });
-                        ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
-                        return false
-                    },
-                    success: function(d) {
-                        if (!$('h1.post-title', d).length) {
-                            $(ap_m).removeAttr("class").text("- 阅读全文 -");
+                $('form.protected').submit(() => {
+                    token = $('form.protected').attr('action');
+                    ap_n = $('form.protected  .word');
+                    $.ajax({
+                        url: token,
+                        type: 'post',
+                        data: $('form.protected').serializeArray(),
+                        error: function() {
                             mdui.snackbar({
-                                message: '对不起,您输入的密码错误。',
+                                message: '提交失败，请检查网络并重试或者联系管理员。',
                                 position: mdrSnackbar,
                                 timeout: 3000
                             });
-                            ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 10);
-                            $(":password").val("");
+                            ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
                             return false
-                        } else {
-                            $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                            $('h1.post-title').length ? $.pjax.reload({
-                                container: '#main',
-                                fragment: '#main',
-                                timeout: 10000
-                            }) : $.pjax({
-                                url: c,
+                        },
+                        success: function(d) {
+                            if (!$('#post', d).length) {
+                                mdui.snackbar({
+                                    message: '对不起,您输入的密码错误。',
+                                    position: mdrSnackbar,
+                                    timeout: 3000
+                                });
+                                ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 5);
+                                $(":password").val("");
+                                return false
+                            } else $.pjax.reload({
                                 container: '#main',
                                 fragment: '#main',
                                 timeout: 10000
                             })
                         }
-                    }
+                    })
+                    return false
                 })
             }
+            ap();
         </script>
         <!-- mdr | Pjax END -->
     <?php endif;
@@ -480,7 +424,6 @@
                             }
                             if ($('.protected', d).length) {
                                 $('.protected *').unbind();
-                                ap()
                             }
                             isbool = true;
                             return false
