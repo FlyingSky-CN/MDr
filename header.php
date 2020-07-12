@@ -174,6 +174,12 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                             </span>
                         </li>
                     <?php endif; ?>
+                    <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">Search</label>
+                            <input class="mdui-textfield-input" type="text" id="s" name="s" />
+                        </div>
+                    </form>
                     <?php if ($this->options->DarkMode) : ?>
                         <button class="mdui-btn mdui-btn-icon mdui-ripple mdr-switcher" id="mdrDarkMode">
                             <i class="mdui-icon material-icons">brightness_4</i>

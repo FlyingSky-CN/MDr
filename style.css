@@ -257,7 +257,12 @@ html.pray {
 
 #mdrDrawerR {
     z-index: 3000;
-    padding-bottom: 128px
+    padding-bottom: 128px;
+    padding-top: 8px
+}
+
+#search .mdui-textfield {
+    padding: 0 16px 16px
 }
 
 #mdrTab {

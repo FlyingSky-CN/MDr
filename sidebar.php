@@ -1,12 +1,4 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-<div class="widget">
-    <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
-        <div class="mdui-textfield mdui-textfield-floating-label">
-            <label class="mdui-textfield-label">Search</label>
-            <input class="mdui-textfield-input" type="text" id="s" name="s" />
-        </div>
-    </form>
-</div>
 <?php if (!empty($this->options->ShowWhisper) && in_array('sidebar', $this->options->ShowWhisper)) : ?>
     <?php $whisper = Whisper(); ?>
     <div class="widget">
