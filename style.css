@@ -288,6 +288,20 @@ html {
     opacity: 1
 }
 
+#mdrDrawerLmenu .mdui-list {
+    position: relative
+}
+
+.mdr-switcher {
+    position: absolute;
+    top: 14px;
+    right: 10px
+}
+
+.mdr-switcher .mdui-icon {
+    font-size: 18px
+}
+
 #mdrDrawerLtoc span {
     font-size: 12px;
     padding: 3px 6px;
@@ -501,21 +515,29 @@ html {
 
 /**TODO #19 */
 
+#music {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0
+}
+
 #music span {
     position: absolute;
     display: block;
-    bottom: 0;
     width: 100%;
     height: 100%;
     background: none;
-    opacity: .7
+    opacity: .08
 }
 
 #music.play span i {
     position: absolute;
-    bottom: 0;
+    left: 0;
     display: block;
-    height: 0;
-    width: 100%;
-    background: #aaa
+    height: 100%;
+    width: 0;
+    background: #aaa;
+    transition: width .5s
 }

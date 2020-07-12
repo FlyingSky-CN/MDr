@@ -161,6 +161,21 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                             </ul>
                         </li>
                     <?php endif; ?>
+                    <?php if ($this->options->MusicSet && $this->options->MusicUrl) : ?>
+                        <li class="mdui-list-item mdui-ripple" style="position: relative">
+                            <i class="mdui-list-item-icon mdui-icon material-icons">music_note</i>
+                            <div class="mdui-list-item-content">音乐</div>
+                            <span class="hidden" id="music">
+                                <span><i></i></span>
+                                <audio id="audio" preload="none"></audio>
+                            </span>
+                        </li>
+                    <?php endif; ?>
+                    <?php if ($this->options->DarkMode) : ?>
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple mdr-switcher" onclick="switchDarkMode()">
+                            <i class="mdui-icon material-icons">brightness_4</i>
+                        </button>
+                    <?php endif; ?>
                 </ul>
             </div>
             <div id="mdrDrawerLtoc">
