@@ -333,6 +333,18 @@ EOF;
     );
     $form->addInput($mdrNavColorBut);
 
+    $mdrSidebar = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrSidebar',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        true,
+        _t('右侧边栏总开关'),
+        _t('默认开启')
+    );
+    $form->addInput($mdrSidebar);
+
     $SidebarFixed = new Typecho_Widget_Helper_Form_Element_Radio(
         'SidebarFixed',
         array(

@@ -48,7 +48,8 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
 
 <body class="<?php if (@$_COOKIE['dark'] == '1') : ?>mdui-theme-layout-dark<?php endif; ?>
              <?php if ($this->options->mdrNavDefOpen) : ?>mdui-drawer-body-left<?php endif; ?>
-             mdui-appbar-with-toolbar mdui-drawer-body-right 
+             mdui-appbar-with-toolbar
+             <?php if ($this->options->mdrSidebar) : ?>mdui-drawer-body-right<?php endif; ?> 
              mdui-theme-accent-<?= (@$_COOKIE['dark'] == '1') ? $this->options->mdrAccentD : $this->options->mdrAccent ?> 
              mdui-theme-primary-<?= $this->options->mdrPrimary ?>">
     <?php if (!MDR_PJAX) : ?>
@@ -64,9 +65,11 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                     <?php ($this->options->customTitle) ? $this->options->customTitle() : $this->options->title() ?>
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
-                <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerR'}">
-                    <i class="mdui-icon material-icons">more_vert</i>
-                </a>
+                <?php if ($this->options->mdrSidebar) : ?>
+                    <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerR'}">
+                        <i class="mdui-icon material-icons">more_vert</i>
+                    </a>
+                <?php endif; ?>
             </div>
         </header>
         <aside class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen) : ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL">
@@ -182,8 +185,10 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 <ul class="mdui-list"></ul>
             </div>
         </aside>
-        <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed) : ?> fixed<?php endif; ?>" id="mdrDrawerR">
-            <?php $this->need('sidebar.php'); ?>
-        </aside>
+        <?php if ($this->options->mdrSidebar) : ?>
+            <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed) : ?> fixed<?php endif; ?>" id="mdrDrawerR">
+                <?php $this->need('sidebar.php'); ?>
+            </aside>
+        <?php endif; ?>
     <?php endif; ?>
     <main class="mdui-container">
