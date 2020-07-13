@@ -411,7 +411,7 @@ html.pray {
     text-align: center
 }
 
-.mdui-card-header {
+#post .mdui-card-header {
     padding-top: 0;
     padding-bottom: 16px;
     height: 56px
