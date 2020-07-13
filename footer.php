@@ -47,17 +47,9 @@
 </footer>
 </main>
 <?php if (!MDR_PJAX) : ?>
-    <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
-        <button class="mdui-fab mdui-ripple mdui-color-theme-accent">
-            <i class="mdui-icon material-icons">apps</i>
-            <i class="mdui-icon mdui-fab-opened material-icons">close</i>
-        </button>
-        <div class="mdui-fab-dial" id="cornertool">
-            <?php if ($this->options->scrollTop) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" id="top"><i class="mdui-icon material-icons"></i></button>
-            <?php endif; ?>
-        </div>
-    </div>
+    <button class="mdui-fab mdui-color-theme-accent mdui-fab-fixed mdui-ripple mdui-fab-hide" id="top">
+        <i class="mdui-icon material-icons">keyboard_arrow_up</i>
+    </button>
     <script src="<?= staticUrl('mdui.min.js') ?>"></script>
     <script>
         /* MDr Global JavaScript */
@@ -182,6 +174,7 @@
                     }, 300);
                     $('#header').removeClass("on");
                     $('#s').val("");
+                    $("#top").addClass("mdui-fab-hide");
                 })
                 .on('pjax:end', function() {
                     mdui.mutation();

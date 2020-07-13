@@ -178,7 +178,7 @@ html.pray {
 }
 
 @media print {
-    header, .mdui-fab-wrapper, .respond {
+    header, .mdui-fab, .respond {
         display: none!important
     }
     body {
@@ -543,6 +543,10 @@ div.mdui-card-header-avatar img {
     border-radius: 0px;
     z-index: 9999;
     position: fixed
+}
+
+.mdui-fab {
+    z-index: 9999;
 }
 
 /**TODO #19 */
