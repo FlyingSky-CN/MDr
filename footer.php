@@ -55,9 +55,6 @@
         <div class="mdui-fab-dial" id="cornertool">
             <?php if ($this->options->scrollTop) : ?>
                 <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" id="top"><i class="mdui-icon material-icons"></i></button>
-            <?php endif;
-            if ($this->options->mdrQrCode) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
             <?php endif; ?>
         </div>
     </div>

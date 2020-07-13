@@ -112,7 +112,7 @@ function themeConfig($form)
 	</p>
 	<script>
 	window.onload = function(){
-		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
+		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置</button>')
 	};
 	function mdrInstantView() {
 		$.ajax({

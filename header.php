@@ -65,6 +65,9 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                     <?php ($this->options->customTitle) ? $this->options->customTitle() : $this->options->title() ?>
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
+                <?php if ($this->options->mdrQrCode) : ?>
+                    <button class="mdui-btn mdui-btn-icon" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
+                <?php endif; ?>
                 <?php if ($this->options->mdrSidebar) : ?>
                     <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerR'}">
                         <i class="mdui-icon material-icons">more_vert</i>
