@@ -30,7 +30,14 @@
                 </div>
             <?php endif; ?>
         </div>
-        <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
+        <?php if ($this->options->mdrPostAuthor) : ?>
+            <div class="mdui-card-header">
+                <div class="mdui-card-header-avatar"><?php $this->author->gravatar(40); ?></div>
+                <div class="mdui-card-header-title"><a href="<?php $this->author->permalink(); ?>"><?php $this->author() ?></a></div>
+                <div class="mdui-card-header-subtitle">author</div>
+            </div>
+        <?php endif; ?>
+        <div class="mdui-card-content mdui-typo">
             <?php /* MDr Time Notice */
             if ($this->options->TimeNotice && !$this->hidden) :
                 if ((time() - $this->modified) >= ($this->options->TimeNoticeLock) * 24 * 60 * 60) : ?>

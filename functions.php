@@ -789,6 +789,18 @@ EOF;
     );
     $form->addInput($mdrPostThumb);
 
+    $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrPostAuthor',
+        array(
+            true => _t('显示'),
+            false => _t('不显示')
+        ),
+        false,
+        _t('文章内页显示作者'),
+        _t('默认不显示')
+    );
+    $form->addInput($mdrPostAuthor);
+
     $subTitle = new Typecho_Widget_Helper_Form_Element_Text(
         'subTitle',
         NULL,
