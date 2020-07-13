@@ -64,13 +64,15 @@ function themeConfig($form)
                 Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置已恢复，若浏览器没有自动刷新，请手动刷新页面'), 'success');
                 echo '<script language="JavaScript">window.setTimeout("location=\'\'", 2000);</script>';
             } else Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'), 'notice');
-        } else if ($_POST["type"] == "删除备份设置") {
+        }
+        else if ($_POST["type"] == "删除备份设置") {
             if ($backup) {
                 $delete = $db->delete('table.options')->where('name = ?', "theme:themeBackup-$name");
                 $db->query($delete);
                 Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份已删除'), 'success');
             } else Typecho_Widget::widget('Widget_Notice')->set(_t('没有找到主题设置备份'), 'notice');
-        } else Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 未知操作'), 'error');
+        }
+        else Typecho_Widget::widget('Widget_Notice')->set(_t('主题设置备份错误: 未知操作'), 'error');
     endif;
 
     echo <<<EOF
@@ -110,7 +112,7 @@ function themeConfig($form)
 	</p>
 	<script>
 	window.onload = function(){
-		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置 (Dev)</button>')
+		$('form').last().find('[type="submit"]').first().parent().append('<button onclick="mdrInstantView();return false" class="btn primary">预览设置</button>')
 	};
 	function mdrInstantView() {
 		$.ajax({
@@ -330,6 +332,18 @@ EOF;
         _t('开启时抽屉导航栏图标为彩色，关闭后则为灰色')
     );
     $form->addInput($mdrNavColorBut);
+
+    $mdrSidebar = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrSidebar',
+        array(
+            true => _t('开'),
+            false => _t('关')
+        ),
+        true,
+        _t('右侧边栏总开关'),
+        _t('默认开启')
+    );
+    $form->addInput($mdrSidebar);
 
     $SidebarFixed = new Typecho_Widget_Helper_Form_Element_Radio(
         'SidebarFixed',
@@ -775,6 +789,18 @@ EOF;
     );
     $form->addInput($mdrPostThumb);
 
+    $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
+        'mdrPostAuthor',
+        array(
+            true => _t('显示'),
+            false => _t('不显示')
+        ),
+        false,
+        _t('文章内页显示作者'),
+        _t('默认不显示')
+    );
+    $form->addInput($mdrPostAuthor);
+
     $subTitle = new Typecho_Widget_Helper_Form_Element_Text(
         'subTitle',
         NULL,
@@ -1030,6 +1056,10 @@ function Postviews($archive)
     echo $exist == 0 ? '暂无阅读' : $exist . ' 次阅读';
 }
 
+/**
+ * MDr Catalog
+ * 创建目录
+ */
 function createCatalog($obj)
 {
     global $catalog;
@@ -1040,49 +1070,24 @@ function createCatalog($obj)
         global $catalog;
         global $catalog_count;
         $catalog_count++;
-        $catalog[] = array('text' => trim(strip_tags($obj[3])), 'depth' => $obj[1], 'count' => $catalog_count);
+        $catalog[] = array('text' => trim(strip_tags($obj[3])), 'depth' => (int)$obj[1], 'count' => $catalog_count);
         $text = trim(strip_tags($obj[3]));
         return '<h' . $obj[1] . $obj[2] . '><a class="cl-offset" id="dl-' . $text . '" name="cl-' . $catalog_count . '"></a>' . $text . '</h' . $obj[1] . '>';
     }, $obj);
-    return $obj . "\n" . getCatalog();
+    return $obj;
 }
 
+/**
+ * MDr Catalog
+ * 获取目录
+ * 
+ * @author FlyingSky-CN
+ * @return array
+ */
 function getCatalog()
 {
     global $catalog;
-    $index = '';
-    if ($catalog) {
-        $index = '<ul>' . "\n";
-        $prev_depth = '';
-        $to_depth = 0;
-        foreach ($catalog as $catalog_item) {
-            $catalog_depth = $catalog_item['depth'];
-            if ($prev_depth) {
-                if ($catalog_depth == $prev_depth) {
-                    $index .= '</li>' . "\n";
-                } elseif ($catalog_depth > $prev_depth) {
-                    $to_depth++;
-                    $index .= "\n" . '<ul>' . "\n";
-                } else {
-                    $to_depth2 = ($to_depth > ($prev_depth - $catalog_depth)) ? ($prev_depth - $catalog_depth) : $to_depth;
-                    if ($to_depth2) {
-                        for ($i = 0; $i < $to_depth2; $i++) {
-                            $index .= '</li>' . "\n" . '</ul>' . "\n";
-                            $to_depth--;
-                        }
-                    }
-                    $index .= '</li>' . "\n";
-                }
-            }
-            $index .= '<li><a href="#cl-' . $catalog_item['count'] . '" onclick="Catalogswith()">' . $catalog_item['text'] . '</a>';
-            $prev_depth = $catalog_item['depth'];
-        }
-        for ($i = 0; $i <= $to_depth; $i++) {
-            $index .= '</li>' . "\n" . '</ul>' . "\n";
-        }
-        $index = '<div id="catalog-col" class="mdui-menu" onclick="Catalogswith()" style="right:16px;bottom:16px">' . "\n" . '<b>文章目录</b>' . "\n" . $index . '<script>function Catalogswith(){document.getElementById("catalog-col").classList.toggle("mdui-menu-open")}</script>' . "\n" . '</div>' . "\n";
-    }
-    return $index;
+    return $catalog;
 }
 
 function CommentAuthor($obj, $autoLink = NULL, $noFollow = NULL)
@@ -1330,10 +1335,12 @@ function compressHtml($html_source)
             $c = substr($c, 12, strlen($c) - 12 - 13);
             $compress .= $c;
             continue;
-        } else if (strtolower(substr($c, 0, 4)) == '<pre' || strtolower(substr($c, 0, 9)) == '<textarea') {
+        }
+        else if (strtolower(substr($c, 0, 4)) == '<pre' || strtolower(substr($c, 0, 9)) == '<textarea') {
             $compress .= $c;
             continue;
-        } else if (strtolower(substr($c, 0, 7)) == '<script' && strpos($c, '//') != false && (strpos($c, "\r") !== false || strpos($c, "\n") !== false)) {
+        }
+        else if (strtolower(substr($c, 0, 7)) == '<script' && strpos($c, '//') != false && (strpos($c, "\r") !== false || strpos($c, "\n") !== false)) {
             $tmps = preg_split('/(\r|\n)/ms', $c, -1, PREG_SPLIT_NO_EMPTY);
             $c = '';
             foreach ($tmps as $tmp) {
@@ -1348,7 +1355,8 @@ function compressHtml($html_source)
                             $is_quot = !$is_quot;
                         } else if ($char == '\'' && $chars[$key - 1] != '\\' && !$is_quot) {
                             $is_apos = !$is_apos;
-                        } else if ($char == '/' && $chars[$key + 1] == '/' && !$is_quot && !$is_apos) {
+                        }
+                        else if ($char == '/' && $chars[$key + 1] == '/' && !$is_quot && !$is_apos) {
                             $tmp = substr($tmp, 0, $key);
                             break;
                         }
@@ -1514,8 +1522,7 @@ function staticUrl($file = '')
     } else if (isset($cjCDNlinks[$file])) {
         $links = $cjCDNlinks[$file];
         $which = Helper::options()->cjCDN;
-    } else {
-        return '';
     }
+    else return '';
     return isset($links[$which]) ? '//' . $links[$which] : '';
 }

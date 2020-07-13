@@ -47,45 +47,52 @@
 </footer>
 </main>
 <?php if (!MDR_PJAX) : ?>
-    <div class="mdui-fab-wrapper" mdui-fab="{trigger: 'hover'}">
-        <button class="mdui-fab mdui-ripple mdui-color-theme-accent">
-            <i class="mdui-icon material-icons">apps</i>
-            <i class="mdui-icon mdui-fab-opened material-icons">close</i>
-        </button>
-        <div class="mdui-fab-dial" id="cornertool">
-            <?php if ($this->options->scrollTop) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" id="top"><i class="mdui-icon material-icons"></i></button>
-            <?php endif;
-            if ($this->options->DarkMode) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white" onclick="switchDarkMode()"><i class="mdui-icon material-icons">brightness_4</i></button>
-            <?php endif;
-            if ($this->options->mdrQrCode) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white mdui-fab-hide" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
-            <?php endif;
-            if ($this->options->MusicSet && $this->options->MusicUrl) : ?>
-                <button class="mdui-fab mdui-ripple mdui-fab-mini mdui-color-white">
-                    <div class="hidden" id="music"><span><i></i></span>
-                        <div class="mdui-icon material-icons">music_note</div><audio id="audio" preload="none"></audio>
-                    </div>
-                </button>
-            <?php endif; ?>
-        </div>
-    </div>
+    <button class="mdui-fab mdui-color-theme-accent mdui-fab-fixed mdui-ripple mdui-fab-hide" id="top">
+        <i class="mdui-icon material-icons">keyboard_arrow_up</i>
+    </button>
+    <script src="<?= staticUrl('mdui.min.js') ?>"></script>
     <script>
+        /* MDr Global JavaScript */
         console.log(
             "\n %c MDr <?= MDR_VERSION ?> %c FlyingSky-CN/MDr %c \n",
             "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
             "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
             "");
+        const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
+        const mdrTab = new mdui.Tab('#mdrTab');
+        const mdrTabDom = mdui.JQ('#mdrTab');
+    </script>
+    <script>
+        /* MDr Catalog */
+        window.onresize = () => {
+            setTimeout('mdrTab.handleUpdate()', 500)
+        }
+        mdrTabDom.attr('style', 'margin-top: -48px');
+        mdrTab.show(0);
+        const mdrCatalog = (data) => {
+            if (data === false || data === null) {
+                mdrTab.show(0);
+                mdrTabDom.attr('style', 'margin-top: -48px');
+                return;
+            }
+            mdrTab.show(0);
+            var list = mdui.JQ('#mdrDrawerLtoc .mdui-list');
+            list.empty();
+            data.forEach((value) => {
+                var dom = mdui.JQ(document.createElement('a'));
+                dom.addClass('mdui-list-item mdui-ripple');
+                dom.addClass('mdui-p-l-' + Math.min(value.depth * 2, 5));
+                dom.attr('href', '#cl-' + value.count);
+                dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
+                list.append(dom);
+            })
+            mdrTabDom.attr('style', 'margin-top: 0');
+        }
     </script>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | pageQrCode -->
         <div id="pageQrCode" class="mdui-menu" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
     <?php endif; ?>
-    <!-- mdr | Script -->
-    <!-- MDUI STR -->
-    <script src="<?= staticUrl('mdui.min.js') ?>"></script>
-    <!-- MDUI END -->
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
             var $$ = mdui.JQ;
@@ -158,12 +165,16 @@
                 .on('pjax:send', function() {
                     $('#loading').fadeIn();
                 })
+                .on('pjax:beforeReplace', function() {
+                    mdrCatalog(false);
+                })
                 .on('pjax:complete', function() {
                     setTimeout(function() {
                         $("#loading").fadeOut()
                     }, 300);
                     $('#header').removeClass("on");
                     $('#s').val("");
+                    $("#top").addClass("mdui-fab-hide");
                 })
                 .on('pjax:end', function() {
                     mdui.mutation();
@@ -177,7 +188,6 @@
                     if ($this->options->AjaxLoad) : ?>
                         al();
                     <?php endif; ?>
-                    cl();
                     ac();
                     ap();
                     <?php if ($this->options->CustomContent) : ?>
@@ -211,7 +221,7 @@
                     console.log(ar);
                     mdui.snackbar({
                         message: '评论正在发送中...',
-                        position: '<?= $this->options->mdrSnackbar ?>',
+                        position: mdrSnackbar,
                         timeout: 5000
                     });
                     if (ar[1]) {
@@ -226,7 +236,7 @@
                         error: function() {
                             mdui.snackbar({
                                 message: '提交失败，请检查网络并重试或者联系管理员。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                position: mdrSnackbar,
                                 timeout: 5000
                             });
                             return false
@@ -235,7 +245,7 @@
                             if (!$(g, d).length) {
                                 mdui.snackbar({
                                     message: '您输入的内容不符合规则或者回复太频繁，请修改内容或者稍等片刻。',
-                                    position: '<?= $this->options->mdrSnackbar ?>',
+                                    position: mdrSnackbar,
                                     timeout: 5000
                                 });
                                 return false
@@ -267,7 +277,7 @@
                                 c();
                                 mdui.snackbar({
                                     message: '评论已发送。',
-                                    position: '<?= $this->options->mdrSnackbar ?>',
+                                    position: mdrSnackbar,
                                     timeout: 5000
                                 });
                                 if (k) {
@@ -298,101 +308,45 @@
                 }
             }
             ac();
-            var protoken = '<?php echo Typecho_Widget::widget('Widget_Security')->getTokenUrl('Token'); ?>'.replace('Token', "");
 
             function ap() {
-                $('.protected .post-title a, .protected .more a').click(function() {
-                    var a = $(this).parent().parent();
-                    a.find('.word').text("请输入密码访问").css('color', 'red').Shake(2, 10);
-                    a.find(':password').focus();
-                    return false
-                });
-                $('.protected form').submit(function() {
-                    ap_btn = $(this);
-                    ap_m = ap_btn.parent().find('.more a');
-                    ap_n = ap_btn.find('.word');
-                    $(ap_m).addClass('loading').text("请稍等");
-                    <?php if (!$this->options->AjaxLoad) : ?>
-                        apt();
-                    <?php else : ?>
-                        aps();
-                    <?php endif; ?>
-                    return false
-                })
-            }
-            ap();
-            <?php if (!$this->options->AjaxLoad) : ?>
-
-                function apt() {
-                    var b = $('.protected .post-title a').attr("href");
-                    if ($('h1.post-title').length) {
-                        aps()
-                    } else {
-                        $.ajax({
-                            url: window.location.href,
-                            success: function(d) {
-                                protoken = $('.protected form[action^="' + b + '"]', d).attr("action").replace(b, "");
-                                if (protoken) {
-                                    aps()
-                                } else {
-                                    $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                                    mdui.snackbar({
-                                        message: '提交失败，请检查网络并重试或者联系管理员。',
-                                        position: '<?= $this->options->mdrSnackbar ?>',
-                                        timeout: 3000
-                                    });
-                                    ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
-                                    return false
-                                }
-                            }
-                        })
-                    }
-                }
-            <?php endif; ?>
-
-            function aps() {
-                var c = ap_btn.parent().parent().find('.post-title a').attr("href");
-                $.ajax({
-                    url: c + protoken,
-                    type: 'post',
-                    data: ap_btn.serializeArray(),
-                    error: function() {
-                        $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                        mdui.snackbar({
-                            message: '提交失败，请检查网络并重试或者联系管理员。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
-                            timeout: 3000
-                        });
-                        ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
-                        return false
-                    },
-                    success: function(d) {
-                        if (!$('h1.post-title', d).length) {
-                            $(ap_m).removeAttr("class").text("- 阅读全文 -");
+                $('form.protected').submit(() => {
+                    token = $('form.protected').attr('action');
+                    ap_n = $('form.protected  .word');
+                    $.ajax({
+                        url: token,
+                        type: 'post',
+                        data: $('form.protected').serializeArray(),
+                        error: function() {
                             mdui.snackbar({
-                                message: '对不起,您输入的密码错误。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                message: '提交失败，请检查网络并重试或者联系管理员。',
+                                position: mdrSnackbar,
                                 timeout: 3000
                             });
-                            ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 10);
-                            $(":password").val("");
+                            ap_n.text("提交失败，请检查网络并重试或者联系管理员。").css('color', 'red').Shake(2, 10);
                             return false
-                        } else {
-                            $(ap_m).removeAttr("class").text("- 阅读全文 -");
-                            $('h1.post-title').length ? $.pjax.reload({
-                                container: '#main',
-                                fragment: '#main',
-                                timeout: 10000
-                            }) : $.pjax({
-                                url: c,
+                        },
+                        success: function(d) {
+                            if (!$('#post', d).length) {
+                                mdui.snackbar({
+                                    message: '对不起,您输入的密码错误。',
+                                    position: mdrSnackbar,
+                                    timeout: 3000
+                                });
+                                ap_n.text("对不起,您输入的密码错误。").css('color', 'red').Shake(2, 5);
+                                $(":password").val("");
+                                return false
+                            } else $.pjax.reload({
                                 container: '#main',
                                 fragment: '#main',
                                 timeout: 10000
                             })
                         }
-                    }
+                    })
+                    return false
                 })
             }
+            ap();
         </script>
         <!-- mdr | Pjax END -->
     <?php endif;
@@ -442,7 +396,7 @@
                         error: function() {
                             mdui.snackbar({
                                 message: '请求失败，请检查网络并重试或者联系管理员。',
-                                position: '<?= $this->options->mdrSnackbar ?>',
+                                position: mdrSnackbar,
                                 timeout: 3000
                             });
                             $(a).removeAttr("class").text("查看更多");
@@ -463,7 +417,6 @@
                             }
                             if ($('.protected', d).length) {
                                 $('.protected *').unbind();
-                                ap()
                             }
                             isbool = true;
                             return false
@@ -500,6 +453,7 @@
     <?php endif;
     if ($this->options->MusicSet && $this->options->MusicUrl) : ?>
         <script>
+            /* MDr Background Music */
             (function() {
                 var a = document.getElementById("audio");
                 var b = document.getElementById("music");
@@ -527,7 +481,7 @@
                         b.style.display = "none";
                         mdui.snackbar({
                             message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
+                            position: mdrSnackbar,
                             timeout: 5000
                         });
                     } else {
@@ -551,7 +505,7 @@
                 }
 
                 function k() {
-                    b.getElementsByTagName("i")[0].style.height = (a.currentTime / a.duration * 100).toFixed(1) + "%"
+                    b.getElementsByTagName("i")[0].style.width = (a.currentTime / a.duration * 100).toFixed(1) + "%"
                 }
                 b.onclick = function() {
                     if (a.canPlayType('audio/mpeg') != "" || a.canPlayType('audio/ogg;codes="vorbis"') != "" || a.canPlayType('audio/mp4;codes="mp4a.40.5"') != "") {
@@ -567,7 +521,7 @@
                     } else {
                         mdui.snackbar({
                             message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
+                            position: mdrSnackbar,
                             timeout: 5000
                         });
                     }
@@ -575,32 +529,8 @@
                 b.removeAttribute("class")
             })();
         </script>
-    <?php endif;
-    if ($this->options->CustomContent) : $this->options->CustomContent(); ?>
-
     <?php endif; ?>
-    <script>
-        var cornertool = true;
-
-        function cl() {
-            var a = document.getElementById("catalog-col"),
-                b = document.getElementById("catalog"),
-                c = document.getElementById("cornertool"),
-                d;
-            if (a && !b) {
-                d = document.createElement("button");
-                d.setAttribute("id", "catalog");
-                d.setAttribute("onclick", "Catalogswith()");
-                d.setAttribute("class", "mdui-fab mdui-ripple mdui-fab-mini mdui-color-white");
-                d.innerHTML = '<i class="mdui-icon material-icons">&#xe5d2;</i>';
-                c.appendChild(d);
-            }
-            if (!a && b) {
-                cornertool ? c.removeChild(b) : document.body.removeChild(c)
-            }
-        }
-        cl();
-    </script>
+    <?php if ($this->options->CustomContent) $this->options->CustomContent(); ?>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | mdrQrCode -->
         <script src="<?= staticUrl('jquery.qrcode.min.js') ?>"></script>
@@ -626,153 +556,13 @@
     <?php endif;
     if ($this->options->DarkMode) : ?>
         <!-- mdr | DarkMode -->
-        <?php
-        if ($this->options->DarkModeFD && $this->options->DarkModeDomain) {
-            $DarkModeFD = "domain=" . $this->options->DarkModeDomain;
-        } else {
-            $DarkModeFD = "";
-        }
-        ?>
         <script>
-            /**Attention: Dark Mode 不使用 jQuery 库 */
-            function onDarkMode() {
-                var body = mdui.JQ('body'),
-                    appbar = document.getElementsByClassName('mdui-appbar')[0];
-                console.log('Dark mode on');
-                document.cookie = "dark=1;path=/;<?= $DarkModeFD ?>";
-                body.addClass('mdui-theme-layout-dark');
-                body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-                body.addClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-                appbar.style.backgroundColor = '#212121';
-                var meta = document.getElementsByTagName('meta');
-                meta["theme-color"].setAttribute('content', '#212121');
-            }
-
-            function offDarkMode() {
-                var body = mdui.JQ('body'),
-                    appbar = document.getElementsByClassName('mdui-appbar')[0];
-                console.log('Dark mode off');
-                document.cookie = "dark=0;path=/;<?= $DarkModeFD ?>";
-                body.removeClass('mdui-theme-layout-dark');
-                body.removeClass('mdui-theme-accent-<?php $this->options->mdrAccentD() ?>');
-                body.addClass('mdui-theme-accent-<?php $this->options->mdrAccent() ?>');
-                appbar.style.backgroundColor = '#ffffff';
-                var meta = document.getElementsByTagName('meta');
-                meta["theme-color"].setAttribute('content', '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>');
-            }
+            const mdrDarkModeFD = '<?= ($this->options->DarkModeFD && $this->options->DarkModeDomain) ? "domain=" . $this->options->DarkModeDomain : '' ?>';
+            const mdrThemeColor = '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>';
+            const mdrAccent = 'mdui-theme-accent-<?= $this->options->mdrAccent ?>';
+            const mdrAccentD = 'mdui-theme-accent-<?= $this->options->mdrAccentD ?>';
         </script>
-        <script>
-            /* Dark Mode 对于 @print 的适配 */
-            window.addEventListener("beforeprint", function() {
-                var body = mdui.JQ('body'),
-                    appbar = mdui.JQ('.mdui-appbar');
-                appbar.hide();
-                if (body.hasClass('mdui-theme-layout-dark')) {
-                    body.addClass('mdui-theme-layout-dark-print');
-                    body.removeClass('mdui-theme-layout-dark')
-                }
-            });
-            window.addEventListener("afterprint", function() {
-                var body = mdui.JQ('body'),
-                    appbar = mdui.JQ('.mdui-appbar');
-                appbar.show();
-                if (body.hasClass('mdui-theme-layout-dark-print')) {
-                    body.addClass('mdui-theme-layout-dark');
-                    body.removeClass('mdui-theme-layout-dark-print')
-                }
-            });
-        </script>
-        <script>
-            /* Dark Mode 的控制（系统黑暗模式优先于 Cookie 中的黑暗模式） */
-            function switchDarkMode() {
-                /* 手动触发 */
-                var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                if (night == '0') {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，早 6 点之前保持开启。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                } else {
-                    offDarkMode();
-                    mdui.snackbar({
-                        message: '已关闭 Dark Mode ',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                }
-            }
-            (function() {
-                /* 加载完触发，判断时间段（当系统开启黑暗模式时不执行） */
-                if (getComputedStyle(document.documentElement).getPropertyValue('content') != '"dark"') {
-                    if (document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") === '') {
-                        if (new Date().getHours() > 22 || new Date().getHours() < 6) {
-                            onDarkMode();
-                        } else {
-                            offDarkMode();
-                        }
-                    } else {
-                        var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                        if (dark == '0') {
-                            offDarkMode();
-                        } else if (dark == '1') {
-                            onDarkMode();
-                        }
-                    }
-                }
-            })();
-            document.addEventListener('visibilitychange', function() {
-                /* 切换标签页时触发 */
-                var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                if (dark == '0') {
-                    offDarkMode();
-                    if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
-                        onDarkMode();
-                        mdui.snackbar({
-                            message: '已开启 Dark Mode ，跟随系统。',
-                            position: '<?= $this->options->mdrSnackbar ?>',
-                            timeout: 1000
-                        });
-                    };
-                } else if (dark == '1') {
-                    onDarkMode();
-                }
-            });
-            if (getComputedStyle(document.documentElement).getPropertyValue('content') == '"dark"') {
-                var dark = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                /* 加载完触发，判断系统黑暗模式是否开启 */
-                if (dark == '0') {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，跟随系统。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                }
-            };
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener("change", (e) => {
-                /* 系统黑暗模式切换时触发 */
-                if (e.matches) {
-                    onDarkMode();
-                    mdui.snackbar({
-                        message: '已开启 Dark Mode ，跟随系统。',
-                        position: '<?= $this->options->mdrSnackbar ?>',
-                        timeout: 1000
-                    });
-                } else {
-                    var night = document.cookie.replace(/(?:(?:^|.*;\s*)dark\s*\=\s*([^;]*).*$)|^.*$/, "$1") || '0';
-                    if (night == '1') {
-                        offDarkMode();
-                        mdui.snackbar({
-                            message: '已关闭 Dark Mode ',
-                            position: '<?= $this->options->mdrSnackbar ?>',
-                            timeout: 1000
-                        });
-                    }
-                }
-            });
-        </script>
+        <script src="<?php cjUrl('darkmode.js') ?>"></script>
     <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
