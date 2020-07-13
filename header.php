@@ -87,6 +87,12 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             </div>
             <div id="mdrDrawerLmenu">
                 <ul class="mdui-list" mdui-collapse="{accordion: true}">
+                    <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <label class="mdui-textfield-label">Search</label>
+                            <input class="mdui-textfield-input" type="text" id="s" name="s" />
+                        </div>
+                    </form>
                     <a href="<?php $this->options->siteUrl(); ?>">
                         <li class="mdui-list-item mdui-ripple">
                             <i class="mdui-list-item-icon mdui-icon material-icons <?php if ($this->options->mdrNavColorBut) { ?>mdui-text-color-blue<?php } ?>">home</i>
@@ -174,14 +180,8 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                             </span>
                         </li>
                     <?php endif; ?>
-                    <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
-                        <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">Search</label>
-                            <input class="mdui-textfield-input" type="text" id="s" name="s" />
-                        </div>
-                    </form>
                     <?php if ($this->options->DarkMode) : ?>
-                        <button class="mdui-btn mdui-btn-icon mdui-ripple mdr-switcher" id="mdrDarkMode">
+                        <button class="mdui-btn mdui-btn-icon mdui-ripple" id="mdrDarkMode">
                             <i class="mdui-icon material-icons">brightness_4</i>
                         </button>
                     <?php endif; ?>

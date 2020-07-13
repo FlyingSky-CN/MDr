@@ -276,6 +276,12 @@ html.pray {
     top: 0
 }
 
+@media (min-width: 1440px) {
+    .mdui-tab a {
+        min-width: 112px!important;
+    }
+}
+
 .cl-offset {
     top: -86px
 }
@@ -296,13 +302,13 @@ html.pray {
     position: relative
 }
 
-.mdr-switcher {
+#mdrDarkMode {
     position: absolute;
-    top: 14px;
+    top: 84px;
     right: 10px
 }
 
-.mdr-switcher .mdui-icon {
+#mdrDarkMode .mdui-icon {
     font-size: 18px
 }
 
@@ -384,11 +390,12 @@ html.pray {
 
 .page-navigator {
     list-style: none;
-    margin: 20px 0;
+    margin: 20px -4px;
     padding: 0px
 }
 
 .page-navigator li {
+    margin: 0 4px;
     display: inline-block;
     height: 36px;
     border-radius: 2px;

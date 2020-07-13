@@ -75,6 +75,9 @@
     </script>
     <script>
         /* MDr Catalog */
+        window.onresize = () => {
+            setTimeout('mdrTab.handleUpdate()', 500)
+        }
         mdrTabDom.attr('style', 'margin-top: -48px');
         mdrTab.show(0);
         const mdrCatalog = (data) => {
