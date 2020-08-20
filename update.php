@@ -156,7 +156,7 @@ $upnew = false;
 
 foreach ($hash as $remote) {
     list($remote_sha256, $filename) = explode('  ', $remote);
-    $trimname = trim($filename);
+    $trimname = str_replace('./', '', trim($filename));
     if (!file_exists(__DIR__ . '/' . $trimname) || !hash_equals(hash('sha256', file_get_contents(__DIR__ . '/' . $trimname)), $remote_sha256)) {
         echo "检测到 " . $trimname . " 有新版本";
         if (!is_writable(__DIR__ . '/' . $trimname) && file_exists(__DIR__ . '/' . $trimname)) {
