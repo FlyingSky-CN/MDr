@@ -40,7 +40,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             }
         </style>
     <?php } ?>
-    <link rel="stylesheet" href="<?php cjUrl('style.css?v=22') ?>" />
+    <link rel="stylesheet" href="<?php cjUrl('style.min.css?v=22') ?>" />
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
     <?php endif; ?>

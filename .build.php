@@ -15,12 +15,12 @@ function compressCSS($buffer)
         ['{', ':', ',', '}', '!'],
         $buffer
     );
-    return '/* '.Copyright.' */'.PHP_EOL.$buffer;
+    return '/* ' . Copyright . ' */' . PHP_EOL . $buffer;
 }
 
 file_put_contents(
-    'style.css',
+    'style.min.css',
     compressCSS(
-        file_get_contents('style.less')
+        file_get_contents('style.css')
     )
 );
