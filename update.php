@@ -149,7 +149,6 @@ if (!$hash) {
 echo $hash . "\n";
 
 $hash = explode("\n", $hash);
-array_pop($hash);
 
 echo "检查本地文件...\n\n";
 
