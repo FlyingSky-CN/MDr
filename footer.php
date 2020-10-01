@@ -197,7 +197,13 @@
                         if (typeof ga !== 'undefined') {
                             ga('send', 'pageview', location.pathname + location.search)
                         }
-                        /**TODO gtag.js 的回调 #28 */
+                        if (typeof gtag !== 'undefined') {
+                            gtag('event', 'page_view', {
+                                page_location: location.href,
+                                page_path: location.pathname + location.search,
+                                page_title: document.title
+                            })
+                        }
                     <?php endif;
                     if ($this->options->ViewImg) : ?>
                         mdrfa();
