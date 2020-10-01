@@ -15,7 +15,7 @@ bdf925d6ad2f7e6a4d0f02e25f77df0af40d3e09c6a361d0d0f9eda20ab8a9d8  ./footer.php
 e0941917e8cf6698826c0d199a00505e0587ce27afacd4616d7c570080992556  ./darkmode.js
 910974de55b7b039d73acf685e8f11105c645b5c7947d90dc0f86e0daea1bda8  ./core/lib/ShortCode.php
 f49bb4402f27732f0709d3764803752f5018574b3a44f250f76a87032c7cc836  ./core/lib/Main.php
-fed2f05feb1823ade4912de1d0c8efe59d6d4c1fbd963fc1fbeb8ac4d0d4ecec  ./core/functions.php
+ff44ddc3a5143a1c86015cfc1ecfa25ad275ffd6d3bd54c25d5ece86cc7ce71b  ./core/functions.php
 05ae6e92dc7e4fc99117a0d03b9dce84a00fbd319ab950ddaadbd708cb202b1f  ./comments.php
 22ad59c091ebf1eb89890c1d879a0465bc6672a6b32814a576cc60acff25c1e5  ./archive.php
 cc95b09d54956fa44a7829ff6b68c0d28806210b9c9bf13cc66b74a4e59991ec  ./README.md
