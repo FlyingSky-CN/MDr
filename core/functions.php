@@ -1,7 +1,7 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-require_once __DIR__ . './lib/Main.php';
-require_once __DIR__ . './lib/ShortCode.php';
+require_once __DIR__ . '/lib/Main.php';
+require_once __DIR__ . '/lib/ShortCode.php';
 
 function cjUrl($path)
 {
