@@ -160,7 +160,7 @@ foreach ($hash as $remote) {
     if (!file_exists(__DIR__ . '/' . $trimname) || !hash_equals(hash('sha256', file_get_contents(__DIR__ . '/' . $trimname)), $remote_sha256)) {
         echo "检测到 " . $trimname . " 有新版本";
         if (!is_dir(dirname(__DIR__ . '/' . $trimname)))
-            mkdir(__DIR__ . '/' . $trimname, 0777, true);
+            mkdir(dirname(__DIR__ . '/' . $trimname), 0777, true);
         if (!is_writable(__DIR__ . '/' . $trimname) && file_exists(__DIR__ . '/' . $trimname)) {
             echo "，该文件没有写入的权限，无法更新。\n";
         } else {
