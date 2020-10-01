@@ -27,7 +27,7 @@ define('exceptFiles', ['.git', '.github', '.build.php', 'style.src.css', 'hash.t
  */
 function fetchFiles(string $subdir)
 {
-    $items = array_diff(scandir($subdir), ['.', '..']);
+    $items = array_reverse(array_diff(scandir($subdir), ['.', '..']));
     $files = [];
 
     foreach ($items as $item) {
@@ -159,6 +159,8 @@ foreach ($hash as $remote) {
     $trimname = str_replace('./', '', trim($filename));
     if (!file_exists(__DIR__ . '/' . $trimname) || !hash_equals(hash('sha256', file_get_contents(__DIR__ . '/' . $trimname)), $remote_sha256)) {
         echo "检测到 " . $trimname . " 有新版本";
+        if (!is_dir(dirname(__DIR__ . '/' . $trimname)))
+            mkdir(__DIR__ . '/' . $trimname, 0777, true);
         if (!is_writable(__DIR__ . '/' . $trimname) && file_exists(__DIR__ . '/' . $trimname)) {
             echo "，该文件没有写入的权限，无法更新。\n";
         } else {

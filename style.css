@@ -439,8 +439,8 @@ html.pray {
 }
 
 #post .mdui-card-header {
-    padding-top: 0;
-    padding-bottom: 16px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     height: 56px
 }
 
@@ -579,8 +579,6 @@ div.mdui-card-header-avatar img {
     z-index: 9999;
 }
 
-/**TODO #19 */
-
 #music {
     position: absolute;
     top: 0;
@@ -606,4 +604,16 @@ div.mdui-card-header-avatar img {
     width: 0;
     background: #aaa;
     transition: width .5s
+}
+
+.comment-body {
+    margin-bottom: 8px;
+}
+
+.comment-content {
+    padding: 0px 16px;
+}
+
+.pingback {
+    background-color: unset !important;
 }

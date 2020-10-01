@@ -22,36 +22,50 @@ function threadedComments($comments, $options)
             $commentClass .= ' comment-by-user';
         }
     }
-?>
-    <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php echo $commentClass; ?>" style="margin-bottom:8px;">
-        <div class="mdui-card-header">
-            <div class="mdui-card-header-avatar">
-                <?php $comments->gravatar('40'); ?>
+    if ($comments->type == 'pingback') : ?>
+        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php echo $commentClass; ?> mdui-shadow-0 pingback">
+            <div class="mdui-card-header">
+                <div class="mdui-card-header-avatar" mdui-tooltip="{content: 'Pingback'}">
+                    <i class="mdui-icon material-icons">reply</i>
+                </div>
+                <div class="mdui-card-header-title">
+                    <?php CommentAuthor($comments); ?>
+                </div>
+                <div class="mdui-card-header-subtitle"><?php $comments->date(); ?></div>
             </div>
-            <div class="mdui-card-header-title">
-                <?php CommentAuthor($comments); ?>
-                <?php if ($comments->authorId == $comments->ownerId) { ?>
-                    <span class="author-icon">博主</span>
+        </div>
+    <?php else : ?>
+        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php echo $commentClass; ?>">
+            <div class="mdui-card-header">
+                <div class="mdui-card-header-avatar">
+                    <?php $comments->gravatar('40'); ?>
+                </div>
+                <div class="mdui-card-header-title">
+                    <?php CommentAuthor($comments); ?>
+                    <?php if ($comments->authorId == $comments->ownerId) { ?>
+                        <span class="author-icon">博主</span>
+                    <?php } ?>
+                </div>
+                <div class="mdui-card-header-subtitle"><?php $comments->date(); ?></div>
+            </div>
+            <div class="mdui-card-content mdui-typo comment-content">
+                <?php $comments->content(); ?>
+            </div>
+            <div class="mdui-card-actions" style="text-align: right">
+                <?php if ($comments->status == 'waiting') { ?>
+                    <span class="mdui-btn mdui-btn-dense">您的评论正等待审核！</span>
                 <?php } ?>
+                <span class="mdui-btn mdui-ripple mdui-btn-dense"><?php $comments->reply(); ?></span>
             </div>
-            <div class="mdui-card-header-subtitle"><?php $comments->date(); ?></div>
+            <?php if ($comments->children) : ?>
+                <div class="mdui-card-content" style="padding: 0px 8px;">
+                    <?php $comments->threadedComments($options); ?>
+                </div>
+            <?php endif; ?>
         </div>
-        <div class="mdui-card-content mdui-typo" style="padding: 0px 16px;">
-            <?php $comments->content(); ?>
-        </div>
-        <div class="mdui-card-actions" style="text-align: right">
-            <?php if ($comments->status == 'waiting') { ?>
-                <span class="mdui-btn mdui-btn-dense">您的评论正等待审核！</span>
-            <?php } ?>
-            <span class="mdui-btn mdui-ripple mdui-btn-dense"><?php $comments->reply(); ?></span>
-        </div>
-        <?php if ($comments->children) : ?>
-            <div class="mdui-card-content" style="padding: 0px 8px;">
-                <?php $comments->threadedComments($options); ?>
-            </div>
-        <?php endif; ?>
-    </div>
-<?php } ?>
+<?php
+    endif;
+} ?>
 <!-- mdr | Comments -->
 <div id="comments" <?php if ($showLimited) : ?> class="limited" <?php endif; ?>>
     <?php $this->comments()->to($comments); ?>
