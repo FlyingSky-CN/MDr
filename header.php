@@ -1,4 +1,9 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
+
+/**
+ * MDr Update Config
+ */
+foreach (MDR_CONFIG as $key => $value) $this->options->$key = $value;
 if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) {
     if ($_GET['debug'] == 'start') {
         $_SESSION['mdrConfig'] = $_POST;
@@ -40,7 +45,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             }
         </style>
     <?php } ?>
-    <link rel="stylesheet" href="<?php cjUrl('style.min.css?v=23') ?>" />
+    <link rel="stylesheet" href="<?php cjUrl('css/style.min.css') ?>" />
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
     <?php endif; ?>
@@ -49,8 +54,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
 <body class="<?php if (@$_COOKIE['dark'] == '1') : ?>mdui-theme-layout-dark<?php endif; ?>
              <?php if ($this->options->mdrNavDefOpen) : ?>mdui-drawer-body-left<?php endif; ?>
              mdui-appbar-with-toolbar
-             <?php if ($this->options->mdrSidebar) : ?>mdui-drawer-body-right<?php endif; ?> 
-             mdui-theme-accent-<?= (@$_COOKIE['dark'] == '1') ? $this->options->mdrAccentD : $this->options->mdrAccent ?> 
+             mdui-theme-accent-<?= $this->options->mdrAccent ?> 
              mdui-theme-primary-<?= $this->options->mdrPrimary ?>">
     <?php if (!MDR_PJAX) : ?>
         <div class="mdui-progress" <?= 'style="' . (($this->options->mdrLoading == 'bottom') ? 'bottom: 0' : 'top: 0') . '"' ?> id="loading">
@@ -67,11 +71,6 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 <div class="mdui-toolbar-spacer"></div>
                 <?php if ($this->options->mdrQrCode) : ?>
                     <button class="mdui-btn mdui-btn-icon" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
-                <?php endif; ?>
-                <?php if ($this->options->mdrSidebar) : ?>
-                    <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerR'}">
-                        <i class="mdui-icon material-icons">more_vert</i>
-                    </a>
                 <?php endif; ?>
             </div>
         </header>
@@ -173,16 +172,6 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                             </ul>
                         </li>
                     <?php endif; ?>
-                    <?php if ($this->options->MusicSet && $this->options->MusicUrl) : ?>
-                        <li class="mdui-list-item mdui-ripple" style="position: relative">
-                            <i class="mdui-list-item-icon mdui-icon material-icons">music_note</i>
-                            <div class="mdui-list-item-content">音乐</div>
-                            <span class="hidden" id="music">
-                                <span><i></i></span>
-                                <audio id="audio" preload="none"></audio>
-                            </span>
-                        </li>
-                    <?php endif; ?>
                     <?php if ($this->options->DarkMode) : ?>
                         <button class="mdui-btn mdui-btn-icon mdui-ripple" id="mdrDarkMode">
                             <i class="mdui-icon material-icons">brightness_4</i>
@@ -194,10 +183,5 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 <ul class="mdui-list"></ul>
             </div>
         </aside>
-        <?php if ($this->options->mdrSidebar) : ?>
-            <aside class="mdui-drawer mdui-drawer-right<?php if ($this->options->SidebarFixed) : ?> fixed<?php endif; ?>" id="mdrDrawerR">
-                <?php $this->need('sidebar.php'); ?>
-            </aside>
-        <?php endif; ?>
     <?php endif; ?>
     <main class="mdui-container">

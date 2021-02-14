@@ -42,8 +42,6 @@ const onDarkMode = () => {
     console.log('Dark mode on');
     document.cookie = "dark=1;path=/;" + mdrDarkModeFD;
     body.addClass('mdui-theme-layout-dark');
-    body.removeClass(mdrAccent);
-    body.addClass(mdrAccentD);
     appbar.style.backgroundColor = '#212121';
     var meta = document.getElementsByTagName('meta');
     meta["theme-color"].setAttribute('content', '#212121');
@@ -56,8 +54,6 @@ const offDarkMode = () => {
     console.log('Dark mode off');
     document.cookie = "dark=0;path=/;" + mdrDarkModeFD;
     body.removeClass('mdui-theme-layout-dark');
-    body.removeClass(mdrAccentD);
-    body.addClass(mdrAccent);
     appbar.style.backgroundColor = '#ffffff';
     var meta = document.getElementsByTagName('meta');
     meta["theme-color"].setAttribute('content', mdrThemeColor);

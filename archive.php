@@ -45,9 +45,6 @@
                                                 | <?php $this->category(',', false); ?>
                                                 | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
                                                 | <?php Postviews($this); ?>
-                                                <?php if ($this->options->WordCount) : ?>
-                                                    | <?php WordCount($this->cid); ?>
-                                                <?php endif; ?>
                                             </div>
                                         <?php } ?>
                                     </div>
@@ -66,9 +63,6 @@
                                     | <?php $this->category(',', false); ?>
                                     | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
                                     | <?php Postviews($this); ?>
-                                    <?php if ($this->options->WordCount) : ?>
-                                        | <?php WordCount($this->cid); ?>
-                                    <?php endif; ?>
                                 </div>
                             <?php } ?>
                         </div>
@@ -99,13 +93,6 @@
                                         <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
                                     </a>
                                 </li>
-                                <?php if ($this->options->WordCount) : ?>
-                                    <li class="mdui-menu-item">
-                                        <a class="mdui-ripple">
-                                            <?php WordCount($this->cid); ?>
-                                        </a>
-                                    </li>
-                                <?php endif; ?>
                             </ul>
                         <?php } ?>
                         <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple" <?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%" <?php } ?>>阅读全文</a>

@@ -456,85 +456,6 @@
                 };
             }
         </script>
-    <?php endif;
-    if ($this->options->MusicSet && $this->options->MusicUrl) : ?>
-        <script>
-            /* MDr Background Music */
-            (function() {
-                var a = document.getElementById("audio");
-                var b = document.getElementById("music");
-                var c = <?php Playlist() ?>;
-                <?php if ($this->options->MusicVol) : ?>
-                    var d = <?php $this->options->MusicVol(); ?>;
-                    if (d >= 0 && d <= 1) {
-                        a.volume = d
-                    }
-                <?php endif; ?>
-                a.src = c.shift();
-                a.addEventListener('play', g);
-                a.addEventListener('pause', h);
-                a.addEventListener('ended', f);
-                a.addEventListener('error', f);
-                a.addEventListener('canplay', j);
-
-                function f() {
-                    if (!c.length) {
-                        a.removeEventListener('play', g);
-                        a.removeEventListener('pause', h);
-                        a.removeEventListener('ended', f);
-                        a.removeEventListener('error', f);
-                        a.removeEventListener('canplay', j);
-                        b.style.display = "none";
-                        mdui.snackbar({
-                            message: '本站的背景音乐好像有问题了，希望您可以通过留言等方式通知管理员，谢谢您的帮助。',
-                            position: mdrSnackbar,
-                            timeout: 5000
-                        });
-                    } else {
-                        a.src = c.shift();
-                        a.play()
-                    }
-                }
-
-                function g() {
-                    b.setAttribute("class", "play");
-                    a.addEventListener('timeupdate', k)
-                }
-
-                function h() {
-                    b.removeAttribute("class");
-                    a.removeEventListener('timeupdate', k)
-                }
-
-                function j() {
-                    c.push(a.src)
-                }
-
-                function k() {
-                    b.getElementsByTagName("i")[0].style.width = (a.currentTime / a.duration * 100).toFixed(1) + "%"
-                }
-                b.onclick = function() {
-                    if (a.canPlayType('audio/mpeg') != "" || a.canPlayType('audio/ogg;codes="vorbis"') != "" || a.canPlayType('audio/mp4;codes="mp4a.40.5"') != "") {
-                        if (a.paused) {
-                            if (a.error) {
-                                f()
-                            } else {
-                                a.play()
-                            }
-                        } else {
-                            a.pause()
-                        }
-                    } else {
-                        mdui.snackbar({
-                            message: '对不起，您的浏览器不支持HTML5音频播放，请升级您的浏览器。',
-                            position: mdrSnackbar,
-                            timeout: 5000
-                        });
-                    }
-                };
-                b.removeAttribute("class")
-            })();
-        </script>
     <?php endif; ?>
     <?php if ($this->options->CustomContent) $this->options->CustomContent(); ?>
     <?php if ($this->options->mdrQrCode) : ?>
@@ -565,10 +486,8 @@
         <script>
             const mdrDarkModeFD = '<?= ($this->options->DarkModeFD && $this->options->DarkModeDomain) ? "domain=" . $this->options->DarkModeDomain : '' ?>';
             const mdrThemeColor = '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>';
-            const mdrAccent = 'mdui-theme-accent-<?= $this->options->mdrAccent ?>';
-            const mdrAccentD = 'mdui-theme-accent-<?= $this->options->mdrAccentD ?>';
         </script>
-        <script src="<?php cjUrl('darkmode.js') ?>"></script>
+        <script src="<?php cjUrl('js/darkmode.js') ?>"></script>
     <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>

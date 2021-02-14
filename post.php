@@ -24,9 +24,6 @@
                     | <?php $this->category(','); ?>
                     | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
                     | <?php Postviews($this); ?>
-                    <?php if ($this->options->WordCount) : ?>
-                        | <?php WordCount($this->cid); ?>
-                    <?php endif; ?>
                 </div>
             <?php endif; ?>
         </div>

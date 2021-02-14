@@ -1,0 +1,21 @@
+name: Auto Build
+
+on:
+  push:
+    branches:
+    - petals
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check
+      uses: actions/checkout@v1
+    - name: Build
+      run: php .build.php
+    - name: Commit
+      uses: stefanzweifel/git-auto-commit-action@v2.5.0
+      with:
+        commit_message: Auto Build
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

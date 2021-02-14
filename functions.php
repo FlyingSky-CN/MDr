@@ -1,11 +1,5 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 
-/* MDr */
-if (!defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl)
-    define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
-define('MDR_PJAX', isset($_GET['_pjax']) ? true : false);
-define('MDR_VERSION', Typecho_Plugin::parseInfo(__DIR__ . '/index.php')['version']);
-
 require_once __DIR__ . '/core/functions.php';
 
 Typecho_Plugin::factory('Widget_Abstract_Contents')->contentEx = array('MDr', 'contentEx');
@@ -141,27 +135,7 @@ EOF;
 
     $mdrPrimary = new Typecho_Widget_Helper_Form_Element_Select(
         'mdrPrimary',
-        array(
-            'red' => _t('red'),
-            'pink' => _t('pink'),
-            'purple' => _t('purple'),
-            'deep-purple' => _t('deep-purple'),
-            'indigo' => _t('indigo'),
-            'blue' => _t('blue'),
-            'light-blue' => _t('light-blue'),
-            'cyan' => _t('cyan'),
-            'teal' => _t('teal'),
-            'green' => _t('green'),
-            'light-green'  => _t('light-green'),
-            'lime' => _t('lime'),
-            'yellow' => _t('yellow'),
-            'amber' => _t('amber'),
-            'orange' => _t('orange'),
-            'deep-orange' => _t('deep-orange'),
-            'brown' => _t('brown'),
-            'grey' => _t('grey'),
-            'blue-grey' => _t('blue-grey')
-        ),
+        MDR_COLOR['primary'],
         'indigo',
         _t('主题主色'),
         _t('默认为 indigo ，详情参见 <a href="https://www.mdui.org/docs/color" target="_blank">颜色和主题 - MDUI 文档</a>')
@@ -170,65 +144,12 @@ EOF;
 
     $mdrAccent = new Typecho_Widget_Helper_Form_Element_Select(
         'mdrAccent',
-        array(
-            'red' => _t('red'),
-            'pink' => _t('pink'),
-            'purple' => _t('purple'),
-            'deep-purple' => _t('deep-purple'),
-            'indigo' => _t('indigo'),
-            'blue' => _t('blue'),
-            'light-blue' => _t('light-blue'),
-            'cyan' => _t('cyan'),
-            'teal' => _t('teal'),
-            'green' => _t('green'),
-            'light-green'  => _t('light-green'),
-            'lime' => _t('lime'),
-            'yellow' => _t('yellow'),
-            'amber' => _t('amber'),
-            'orange' => _t('orange'),
-            'deep-orange' => _t('deep-orange')
-        ),
+        MDR_COLOR['accent'],
         'pink',
         _t('主题强调色'),
         _t('默认为 pink ，详情参见 <a href="https://www.mdui.org/docs/color" target="_blank">颜色和主题 - MDUI 文档</a>')
     );
     $form->addInput($mdrAccent);
-
-    $mdrAccentD = new Typecho_Widget_Helper_Form_Element_Select(
-        'mdrAccentD',
-        array(
-            'red' => _t('red'),
-            'pink' => _t('pink'),
-            'purple' => _t('purple'),
-            'deep-purple' => _t('deep-purple'),
-            'indigo' => _t('indigo'),
-            'blue' => _t('blue'),
-            'light-blue' => _t('light-blue'),
-            'cyan' => _t('cyan'),
-            'teal' => _t('teal'),
-            'green' => _t('green'),
-            'light-green'  => _t('light-green'),
-            'lime' => _t('lime'),
-            'yellow' => _t('yellow'),
-            'amber' => _t('amber'),
-            'orange' => _t('orange'),
-            'deep-orange' => _t('deep-orange')
-        ),
-        'pink',
-        _t('主题强调色 ( Dark Mode )'),
-        _t('默认为 pink ，详情参见 <a href="https://www.mdui.org/docs/color" target="_blank">颜色和主题 - MDUI 文档</a>')
-    );
-    $form->addInput($mdrAccentD);
-
-    $mdrChrome = new Typecho_Widget_Helper_Form_Element_Text(
-        'mdrChrome',
-        NULL,
-        '#ffffff',
-        _t('Chrome 顶栏颜色'),
-        _t('即未开启 Dark Mode 时的 <code>meta["theme-color"]</code> 的值，为十六进制颜色码，默认为 <code>#ffffff</code>')
-    );
-    $mdrChrome->input->setAttribute('class', 'mini');
-    $form->addInput($mdrChrome);
 
     /* MDr CDN 设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-cdn">CDN 设置 <small>CDN</small></h2>'));
@@ -249,15 +170,6 @@ EOF;
     );
     $form->addInput($mdrMDUICDN);
 
-    $mdrMDUICDNlink = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'mdrMDUICDNlink',
-        null,
-        null,
-        _t('MDUI 静态资源自建地址'),
-        _t('只在上面的选项选择自建时需要。')
-    );
-    $form->addInput($mdrMDUICDNlink);
-
     $cjCDN = new Typecho_Widget_Helper_Form_Element_Radio(
         'cjCDN',
         array(
@@ -271,15 +183,6 @@ EOF;
         _t('默认BootCDN，请根据需求选择合适来源')
     );
     $form->addInput($cjCDN);
-
-    $mdrcjCDNlink = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'mdrcjCDNlink',
-        null,
-        null,
-        _t('其他公共静态资源自建地址'),
-        _t('只在上面的选项选择自建时需要。')
-    );
-    $form->addInput($mdrcjCDNlink);
 
     $GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio(
         'GravatarUrl',
@@ -335,30 +238,6 @@ EOF;
     );
     $form->addInput($mdrNavColorBut);
 
-    $mdrSidebar = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrSidebar',
-        array(
-            true => _t('开'),
-            false => _t('关')
-        ),
-        true,
-        _t('右侧边栏总开关'),
-        _t('默认开启')
-    );
-    $form->addInput($mdrSidebar);
-
-    $SidebarFixed = new Typecho_Widget_Helper_Form_Element_Radio(
-        'SidebarFixed',
-        array(
-            1 => _t('启用'),
-            0 => _t('关闭')
-        ),
-        0,
-        _t('动态显示侧边栏'),
-        _t('默认关闭')
-    );
-    $form->addInput($SidebarFixed);
-
     $Navset = new Typecho_Widget_Helper_Form_Element_Checkbox(
         'Navset',
         array(
@@ -377,33 +256,6 @@ EOF;
         _t('抽屉导航栏显示')
     );
     $form->addInput($Navset->multiMode());
-
-    $sidebarBlock = new Typecho_Widget_Helper_Form_Element_Checkbox(
-        'sidebarBlock',
-        array(
-            'ShowWaySit' => _t('显示导航位（下方自定义）'),
-            'ShowEatFoodSit' => _t('显示广告位（下方自定义）'),
-            'ShowHotPosts' => _t('显示热门文章（根据浏览量排序）'),
-            'ShowRecentPosts' => _t('显示最新文章'),
-            'ShowRecentComments' => _t('显示最近回复'),
-            'IgnoreAuthor' => _t('不显示作者回复'),
-            'ShowCategory' => _t('显示分类'),
-            'ShowTag' => _t('显示标签'),
-            'ShowArchive' => _t('显示归档'),
-            'ShowStats' => _t('显示网站统计'),
-            'ShowOther' => _t('显示其它杂项')
-        ),
-        array(
-            'ShowRecentPosts',
-            'ShowRecentComments',
-            'ShowCategory',
-            'ShowTag',
-            'ShowArchive',
-            'ShowOther'
-        ),
-        _t('侧边栏显示')
-    );
-    $form->addInput($sidebarBlock->multiMode());
 
     /* MDr Pjax Ajax 设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-pjax">Ajax 设置 <small>Ajax</small></h2>'));
@@ -445,125 +297,10 @@ EOF;
     $AjaxLoadTimes->input->setAttribute('class', 'mini');
     $form->addInput($AjaxLoadTimes);
 
-    $mdrLoading = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrLoading',
-        array(
-            'top' => _t('顶部'),
-            'bottom' => _t('底部')
-        ),
-        'top',
-        _t('Ajax 加载条位置'),
-        _t('默认为顶部，然后作者表示强迫症犯了')
-    );
-    $form->addInput($mdrLoading);
-
-    /* MDr Dark 黑暗模式设置 */
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-dark">黑暗模式设置 <small>Dark Mode</small></h2>'));
-    $mdrNotice->input->setAttribute('style', 'display:none');
-    $form->addInput($mdrNotice);
-
-    $DarkMode = new Typecho_Widget_Helper_Form_Element_Radio(
-        'DarkMode',
-        array(
-            1 => _t('启用'),
-            0 => _t('关闭')
-        ),
-        1,
-        _t('黑暗模式总开关'),
-        _t('默认开启')
-    );
-    $form->addInput($DarkMode);
-
-    $DarkModeFD = new Typecho_Widget_Helper_Form_Element_Radio(
-        'DarkModeFD',
-        array(
-            1 => _t('启用'),
-            0 => _t('关闭')
-        ),
-        0,
-        _t('黑暗模式跨域使用开关'),
-        _t('默认关闭')
-    );
-    $form->addInput($DarkModeFD);
-
-    $DarkModeDomain = new Typecho_Widget_Helper_Form_Element_Text(
-        'DarkModeDomain',
-        NULL,
-        NULL,
-        _t('黑暗模式跨域使用总域名')
-    );
-    $DarkModeDomain->input->setAttribute('class', 'mini');
-    $form->addInput($DarkModeDomain);
-
-    /* MDr Music 背景音乐设置 */
-    $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-music">背景音乐设置 <small>Music</small></h2>'));
-    $mdrNotice->input->setAttribute('style', 'display:none');
-    $form->addInput($mdrNotice);
-
-    $MusicSet = new Typecho_Widget_Helper_Form_Element_Radio(
-        'MusicSet',
-        array(
-            'order' => _t('顺序播放'),
-            'shuffle' => _t('随机播放'),
-            0 => _t('关闭')
-        ),
-        0,
-        _t('背景音乐'),
-        _t('默认关闭，启用后请填写音乐地址,否则开启无效')
-    );
-    $form->addInput($MusicSet);
-
-    $MusicUrl = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'MusicUrl',
-        NULL,
-        NULL,
-        _t('背景音乐地址（建议使用mp3格式）'),
-        _t('请输入完整的音频文件路径，例如：https://music.163.com/song/media/outer/url?id={MusicID}.mp3（好东西 QwQ），可设置多个音频，一行一个，留空则关闭背景音乐')
-    );
-    $form->addInput($MusicUrl);
-
-    $MusicVol = new Typecho_Widget_Helper_Form_Element_Text(
-        'MusicVol',
-        NULL,
-        NULL,
-        _t('背景音乐播放音量（输入范围：0~1）'),
-        _t('请输入一个0到1之间的小数（0为静音  0.5为50%音量  1为100%最大音量）输入错误内容或留空则使用默认音量100%')
-    );
-    $MusicVol->input->setAttribute('class', 'mini');
-    $form->addInput($MusicVol->addRule('isInteger', _t('请填入一个0~1内的数字')));
-
     /* MDr Func 附加功能设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-func">附加功能设置 <small>Func</small></h2>'));
     $mdrNotice->input->setAttribute('style', 'display:none');
     $form->addInput($mdrNotice);
-
-    $mdrSnackbar = new Typecho_Widget_Helper_Form_Element_Select(
-        'mdrSnackbar',
-        array(
-            'bottom' => _t('下方'),
-            'top' => _t('上方'),
-            'left-bottom' => _t('左下角'),
-            'left-top' => _t('左上角'),
-            'right-bottom' => _t('右下角'),
-            'right-top' => _t('右上角')
-        ),
-        'right-bottom',
-        _t('Snackbar 位置'),
-        _t('默认为右下角，即所谓的 “通知系统” 弹出的通知的位置')
-    );
-    $form->addInput($mdrSnackbar);
-
-    $mdrCornertool = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrCornertool',
-        array(
-            true => _t('开'),
-            false => _t('关')
-        ),
-        true,
-        _t('界面滚动条'),
-        _t('强迫症犯了')
-    );
-    $form->addInput($mdrCornertool);
 
     $RandomLinks = new Typecho_Widget_Helper_Form_Element_Radio(
         'RandomLinks',
@@ -668,18 +405,6 @@ EOF;
     $SiteTime->input->setAttribute('class', 'mini');
     $form->addInput($SiteTime);
 
-    $WordCount = new Typecho_Widget_Helper_Form_Element_Radio(
-        'WordCount',
-        array(
-            1 => _t('启用'),
-            0 => _t('关闭')
-        ),
-        1,
-        _t('文章字数统计'),
-        _t('默认开启')
-    );
-    $form->addInput($WordCount);
-
     $ViewImg = new Typecho_Widget_Helper_Form_Element_Radio(
         'ViewImg',
         array(
@@ -716,55 +441,10 @@ EOF;
     );
     $form->addInput($compressHtml);
 
-    $scrollTop = new Typecho_Widget_Helper_Form_Element_Radio(
-        'scrollTop',
-        array(
-            1 => _t('启用'),
-            0 => _t('关闭')
-        ),
-        1,
-        _t('返回顶部'),
-        _t('默认开启，启用将在右下角显示“返回顶部”按钮')
-    );
-    $form->addInput($scrollTop);
-
     /* MDr Custom 自定义设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
     $mdrNotice->input->setAttribute('style', 'display:none');
     $form->addInput($mdrNotice);
-
-    $ShowLinks = new Typecho_Widget_Helper_Form_Element_Checkbox(
-        'ShowLinks',
-        array(
-            'sidebar' => _t('侧边栏')
-        ),
-        NULL,
-        _t('首页显示链接')
-    );
-    $form->addInput($ShowLinks->multiMode());
-
-    $ShowWhisper = new Typecho_Widget_Helper_Form_Element_Checkbox(
-        'ShowWhisper',
-        array(
-            'index' => _t('首页'),
-            'sidebar' => _t('侧边栏')
-        ),
-        NULL,
-        _t('显示最新的“轻语”')
-    );
-    $form->addInput($ShowWhisper->multiMode());
-
-    $mdrPostInfo = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrPostInfo',
-        array(
-            'menu' => _t('作为弹出菜单'),
-            'subtitle' => _t('作为副标题')
-        ),
-        'menu',
-        _t('文章信息显示方式'),
-        _t('默认为弹出菜单，为文章列表中文章的信息显示方式')
-    );
-    $form->addInput($mdrPostInfo);
 
     $mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPostTitle',
@@ -778,18 +458,6 @@ EOF;
         _t('默认在图片下方')
     );
     $form->addInput($mdrPostTitle);
-
-    $mdrPostThumb = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrPostThumb',
-        array(
-            true => _t('显示'),
-            false => _t('不显示')
-        ),
-        true,
-        _t('文章内页缩略图显示'),
-        _t('默认显示')
-    );
-    $form->addInput($mdrPostThumb);
 
     $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPostAuthor',
@@ -821,24 +489,6 @@ EOF;
     );
     $form->addInput($favicon);
 
-    $customTitle = new Typecho_Widget_Helper_Form_Element_Text(
-        'customTitle',
-        NULL,
-        NULL,
-        _t('自定义头部站点标题'),
-        _t('仅在页面头部标题位置显示，和 Typecho 后台设置的站点名称不冲突，留空则显示默认站点名称')
-    );
-    $form->addInput($customTitle);
-
-    $mdrCopytext = new Typecho_Widget_Helper_Form_Element_Text(
-        'mdrCopytext',
-        NULL,
-        NULL,
-        _t('自定义底部版权所属'),
-        _t('默认为站点名称')
-    );
-    $form->addInput($mdrCopytext);
-
     $MyLinks = new Typecho_Widget_Helper_Form_Element_Textarea(
         'MyLinks',
         NULL,
@@ -847,60 +497,6 @@ EOF;
         _t('格式为 <b class="notice">文字=链接</b>，一行一个，留空则没有')
     );
     $form->addInput($MyLinks);
-
-    $AttUrlReplace = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'AttUrlReplace',
-        NULL,
-        NULL,
-        _t('文章内的链接地址替换'),
-        _t('按照格式输入你的CDN链接以替换原链接，格式 <b class="notice">原地址=替换地址</b><br>建议用在图片等静态资源的链接上，可设置多个规则，换行即可，一行一个')
-    );
-    $form->addInput($AttUrlReplace);
-
-    $WaySit = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'WaySit',
-        NULL,
-        NULL,
-        _t('导航位内容'),
-        _t('位于侧边栏')
-    );
-    $form->addInput($WaySit);
-
-    $EatFoodSit = new Typecho_Widget_Helper_Form_Element_Textarea(
-        'EatFoodSit',
-        NULL,
-        NULL,
-        _t('广告位内容'),
-        _t('位于侧边栏')
-    );
-    $form->addInput($EatFoodSit);
-
-    $ICPbeian = new Typecho_Widget_Helper_Form_Element_Text(
-        'ICPbeian',
-        NULL,
-        NULL,
-        _t('ICP备案号'),
-        _t('在这里输入ICP备案号，留空则不显示')
-    );
-    $form->addInput($ICPbeian);
-
-    $beianProvince = new Typecho_Widget_Helper_Form_Element_Text(
-        'beianProvince',
-        NULL,
-        NULL,
-        _t('公网安备案所在省份'),
-        _t('在这里输入公网安备案所在省份缩写，如北京=京，山东=鲁，留空则不显示')
-    );
-    $form->addInput($beianProvince);
-
-    $beianNumber = new Typecho_Widget_Helper_Form_Element_Text(
-        'beianNumber',
-        NULL,
-        NULL,
-        _t('公网安备案号'),
-        _t('在这里输入公网安备案号，留空则不显示')
-    );
-    $form->addInput($beianNumber);
 
     $ButtomText = new Typecho_Widget_Helper_Form_Element_Textarea(
         'ButtomText',
@@ -975,15 +571,10 @@ function themeInit($archive)
 {
     $options = Helper::options();
     $options->commentsAntiSpam = false;
-    if ($options->PjaxOption || FindContents('page-whisper.php', 'commentsNum', 'd')) {
-        $options->commentsOrder = 'DESC';
-        $options->commentsPageDisplay = 'first';
-    }
+    $options->commentsOrder = 'DESC';
+    $options->commentsPageDisplay = 'first';
     if ($archive->is('single')) {
         $archive->content = hrefOpen($archive->content);
-        if ($options->AttUrlReplace) {
-            $archive->content = UrlReplace($archive->content);
-        }
         if ($archive->fields->catalog) {
             $archive->content = createCatalog($archive->content);
         }

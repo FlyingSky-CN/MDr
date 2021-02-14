@@ -3,66 +3,16 @@
 /**
  * MDr 主题更新程序
  * 
- * @author FlyingSky-Cn
+ * @author FlyingSky-CN
  * @author paizi
  * @package update
  */
 
-/**
- * exceptFiles
- * 排除的文件
- * 
- * @var array
- */
-define('exceptFiles', ['.git', '.github', '.build.php', 'style.src.css', 'hash.txt']);
-
-/**
- * fetchFiles
- * 扫描目录下所有文件
- * 包含子目录
- * 排除 exceptFiles
- * 
- * @param string $subdir
- * @return array
- */
-function fetchFiles(string $subdir)
-{
-    $items = array_reverse(array_diff(scandir($subdir), ['.', '..']));
-    $files = [];
-
-    foreach ($items as $item) {
-        if (is_file($subdir . $item))
-            if (!in_array($item, exceptFiles))
-                $files[] = $subdir . $item;
-        if (is_dir($subdir . $item))
-            if (!in_array($item, exceptFiles))
-                foreach (fetchFiles($subdir . $item . '/') as $file)
-                    $files[] = $file;
-    }
-
-    return $files;
-}
-
-/**
- * GitHub Action 
- * 自动更新 Hash 文件
- */
-if (isset($argv[1]) ? $argv[1] : '' == 'hash') {
-    $files = fetchFiles('./');
-    $hash = [];
-
-    foreach ($files as $file)
-        $hash[] = hash('sha256', file_get_contents($file)) . '  ' . $file;
-
-    file_put_contents("hash.txt", implode("\n", $hash));
-    exit();
-}
-
-/* Header */
+/***** Set HTTP Header *****/
 
 header("Content-Type: text/plain; charset=UTF-8");
 
-/* 载入 Typecho */
+/***** Load Typecho *****/
 
 if (!defined('__DIR__')) {
     define('__DIR__', dirname(__FILE__));
@@ -73,16 +23,16 @@ if (!defined('__TYPECHO_ROOT_DIR__') && !@include_once __DIR__ . '/../../../conf
     exit;
 }
 
-/* 注册 Widget */
+/***** Register Widget *****/
 
 Typecho_Widget::widget('Widget_Options')->to($options);
 Typecho_Cookie::setPrefix($options->originalSiteUrl);
 Typecho_Widget::widget('Widget_User')->to($user);
 
-/* 验证 Administrator 权限 */
+/***** Check Auth *****/
 
 if (!$user->hasLogin()) {
-    /* 未登录 */
+    /* Unlogin */
     header('HTTP/1.1 403 Forbidden');
     header('Location: ../../../admin/login.php');
     print('没有权限访问');
@@ -90,18 +40,16 @@ if (!$user->hasLogin()) {
 }
 
 if (!$user->pass('administrator', true)) {
-    /* 不是 Administrator */
+    /* Not an Administrator */
     header('HTTP/1.1 403 Forbidden');
     header('Location: ../../../admin/login.php');
     print('没有权限访问');
     exit();
 }
 
-/* 更新程序 */
+/***** Update *****/
 
-/** 
- * PHP获取路径或目录实现 
- */
+/* Download URL */
 
 define('__MDR_RAW_DEV_URL__', 'https://raw.githubusercontent.com/FlyingSky-CN/MDr/master/');
 define('__MDR_RAW_REL_URL__', 'https://cdn.jsdelivr.net/gh/FlyingSky-CN/MDr/');
@@ -177,7 +125,7 @@ foreach ($hash as $remote) {
     }
 }
 
-/* 统计更新 */
+/* Update Stats */
 if ($upnew) {
 
     $parseInfo = Typecho_Plugin::parseInfo(__DIR__ . '/index.php');
@@ -190,7 +138,8 @@ if ($upnew) {
                 'timeout' => 5
             ]
         ]);
-        file_get_contents('https://api.fsky7.com/InstallMatch/newUpdate?class=' . urlencode('MDr ' . $parseInfo['version']) . '&hostname=' . $_SERVER['HTTP_HOST'], false, $contexts);
+        file_get_contents('https://api.fsky7.com/InstallMatch/newUpdate' .
+            '?class=' . urlencode('MDr ' . $parseInfo['version']) . '&hostname=' . urlencode($_SERVER['HTTP_HOST']), false, $contexts);
     }
 }
 
