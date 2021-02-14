@@ -1,0 +1,147 @@
+/**
+ * MDr 是一套基于 MDUI 开发的 Typecho 模板
+ */
+
+.ajaxload {
+    height: 36px;
+}
+
+.ajaxload .next {
+    text-align: center;
+    width: 160px;
+    border-radius: 18px;
+    background: #e8e8e8;
+}
+
+.mdui-theme-layout-dark .ajaxload .next {
+    background: #424242;
+}
+
+/***** Helper ******/
+
+#main > * {
+    margin: 24px 0;
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+/***** Material Design 2 ******/
+
+.mdr-appbar-title {
+    font-size    : 1.25rem;
+    line-height  : 1.5;
+    overflow     : hidden;
+    text-overflow: ellipsis;
+    white-space  : nowrap;
+}
+
+body.mdui-theme-layout-dark,
+.mdui-theme-layout-dark header,
+.mdui-theme-layout-dark aside {
+    background: #121212 !important;
+}
+
+.mdui-theme-layout-dark .mdui-card {
+    background: #212121 !important;
+}
+
+.mdui-appbar {
+    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
+}
+
+footer {
+    font-size  : .75rem !important;
+    line-height: 1.25rem !important;
+    opacity    : 0.75 !important;
+}
+
+.mdui-list-item {
+    border-top-right-radius   : 24px;
+    border-bottom-right-radius: 24px;
+}
+
+.mdui-list-dense .mdui-list-item {
+    border-top-right-radius   : 20px;
+    border-bottom-right-radius: 20px;
+}
+
+.mdui-card,
+.mdui-menu {
+    border-radius: 7px!important;
+}
+
+/***** Post ******/
+
+/** Breadcrumbs **/
+
+.breadcrumbs {
+    margin-top: 20px;
+    background-color: rgba(180, 180, 180, 0.25)
+}
+
+.breadcrumbs .mdui-chip-icon {
+    background: none;
+}
+
+.breadcrumbs .mdui-chip-icon .mdui-icon {
+    color: #444;
+}
+
+.mdui-theme-layout-dark .breadcrumbs .mdui-chip-icon .mdui-icon {
+    color: #fff;
+}
+
+/** Status Post **/
+
+.post.status {
+    background-color: #e8e8e8
+}
+
+.mdui-theme-layout-dark .post.status {
+    background-color: #424242
+}
+
+.mdui-theme-layout-dark .post.status .inner {
+    color: hsla(0, 0%, 100%, .8) !important
+}
+
+.post.status .tag,
+.post.status .time {
+    position: absolute;
+    top: 0;
+    font-size: 15px
+}
+
+.mdui-theme-layout-dark .post.status .tag {
+    background-color: #424242;
+}
+
+.mdui-theme-layout-dark .post.status .time {
+    color: #5a5a5a;
+}
+
+.post.status .tag {
+    left: 15px;
+    padding: 10px;
+    border-radius: 0 0 5px 5px;
+    background-color: #dadada;
+    color: grey
+}
+
+.post.status .time {
+    right: 0;
+    padding: 14px 12px;
+    color: #bcbcbc;
+}
+
+.post.status .inner {
+    font-size: 16px;
+    padding: 70px 16px 24px
+}
+
+.mdr-icon-info {
+    font-size: 14px;
+    padding-bottom: 2px;
+}

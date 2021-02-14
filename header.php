@@ -23,8 +23,8 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
 <head>
     <meta charset="<?= $this->options->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-    <meta name="theme-color" content="<?= ($this->options->mdrChrome ? $this->options->mdrChrome : '#FFFFFF') ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="theme-color" content="<?= MDR_COLOR['theme'][$this->options->mdrPrimary] ?>">
     <?php if ($this->options->favicon) : ?>
         <link rel="shortcut icon" href="<?= $this->options->favicon ?>" />
     <?php endif; ?>
@@ -35,7 +35,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 'date'     => _t('在 %s 发布的文章'),
                 'author'   => _t('作者 %s 发布的文章')
             ], '', ' - '); ?><?php $this->options->title(); ?><?= ($this->is('index') && $this->options->subTitle) ? ' - ' . $this->options->subTitle : '' ?></title>
-    <?php $this->header('generator=&xmlrpc=&wlw=&commentReply=&rss1=&rss2=&antiSpam=&atom='); ?>
+    <?php $this->header('generator=&xmlrpc=&wlw=&commentReply=&antiSpam='); ?>
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
     <?php if (!$this->options->mdrCornertool) { ?>
         <style>
@@ -45,7 +45,8 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             }
         </style>
     <?php } ?>
-    <link rel="stylesheet" href="<?php cjUrl('css/style.min.css') ?>" />
+    <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css') ?>" />
+    <link rel="stylesheet" href="<?php cjUrl('css/style.css') ?>" />
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
     <?php endif; ?>
@@ -65,12 +66,13 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
                 </a>
-                <a href="<?php $this->options->siteUrl(); ?>" class="mdui-typo-title">
+                <a href="<?php $this->options->siteUrl(); ?>" class="mdr-appbar-title">
                     <?php ($this->options->customTitle) ? $this->options->customTitle() : $this->options->title() ?>
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
                 <?php if ($this->options->mdrQrCode) : ?>
-                    <button class="mdui-btn mdui-btn-icon" onclick="switchQrCode()"><i class="mdui-icon material-icons">phonelink</i></button>
+                    <div id="pageQrCode" class="mdui-menu" onclick="mdrQrCode.close()"></div>
+                    <button class="mdui-btn mdui-btn-icon" id="switchQrCode"><i class="mdui-icon material-icons">phonelink</i></button>
                 <?php endif; ?>
             </div>
         </header>

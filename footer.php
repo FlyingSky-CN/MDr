@@ -1,49 +1,20 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
-<footer class="mdui-typo" style="margin-top: 32px;margin-bottom: 32px;">
-    <!-- mdr | Copyright & Powered by -->
-    &copy; <?php echo date('Y'); ?>
-    <a href="<?php $this->options->siteUrl(); ?>"><?php ($this->options->mdrCopytext) ? $this->options->mdrCopytext() : $this->options->title() ?></a>.
-    Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a> & <a href="https://blog.fsky7.com/archives/60/">MDr</a>.<br>
-    <?php if (!empty($this->options->ButtomText)) : ?>
-        <!-- mdr | BottomText -->
-        <?= $this->options->ButtomText ?>
-    <?php endif; ?>
+<footer class="mdui-typo mdui-m-y-5">
+    <?php if (!empty($this->options->ButtomText)) echo $this->options->ButtomText . '<br />'; ?>
     <?php if ($this->options->mdrHitokoto) : ?>
-        <!-- mdr | Hitokoto -->
         <span id="hitokoto">一言获取中...</span><br>
         <script src="https://v1.hitokoto.cn/?encode=js&c=<?php $this->options->mdrHitokotoc(); ?>&select=%23hitokoto" defer></script>
     <?php endif;  ?>
     <?php if ($this->options->SiteTime) : ?>
-        <!-- mdr | SiteTime -->
-        博客已上线 <span id="runtime_span"></span> .<br />
+        博客已上线 <span id="runtime_span"></span><br />
         <script>
-            function show_runtime() {
-                window.setTimeout("show_runtime()", 1000);
-                var X = new Date("<?= $this->options->SiteTime ?>"),
-                    Y = new Date(),
-                    T = (Y.getTime() - X.getTime()),
-                    M = 24 * 60 * 60 * 1000,
-                    a = T / M,
-                    A = Math.floor(a),
-                    b = (a - A) * 24,
-                    B = Math.floor(b),
-                    c = (b - B) * 60,
-                    C = Math.floor((b - B) * 60),
-                    D = Math.floor((c - C) * 60);
-                runtime_span.innerHTML = A + " 天 " + B + " 时 " + C + " 分 " + D + " 秒";
-            }
-            show_runtime();
+            const mdrSiteTime = '<?= $this->options->SiteTime ?>';
         </script>
     <?php endif; ?>
-    <?php if ($this->options->ICPbeian) : ?>
-        <!-- mdr | ICPbeian -->
-        <a href="http://beian.miit.gov.cn" target="_blank"><?= $this->options->ICPbeian ?></a>
-    <?php endif; ?>
-    <?php if ($this->options->beianProvince && $this->options->beianNumber) : ?>
-        <!-- mdr | GWAB -->
-        <a href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=<?= $this->options->beianNumber ?>" target="_blank"><?= $this->options->beianProvince ?>公网安备<?= $this->options->beianNumber ?>号</a>
-        <img src="<?= mdrGWABlogo() ?>" style="box-shadow:none" alt="公网安备案图标">
-    <?php endif; ?>
+    <br />&copy; <?php echo date('Y'); ?>
+    <a href="<?php $this->options->siteUrl(); ?>"><?php ($this->options->mdrCopytext) ? $this->options->mdrCopytext() : $this->options->title() ?></a>.
+    Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a>.
+    Theme <a href="https://blog.fsky7.com/archives/60/">MDr</a> by <a href="https://fsky7.com">FlyingSky</a>.<br>
 </footer>
 </main>
 <?php if (!MDR_PJAX) : ?>
@@ -89,10 +60,6 @@
             mdrTabDom.attr('style', 'margin-top: 0');
         }
     </script>
-    <?php if ($this->options->mdrQrCode) : ?>
-        <!-- mdr | pageQrCode -->
-        <div id="pageQrCode" class="mdui-menu" onclick="$('#pageQrCode').removeClass('mdui-menu-open')"></div>
-    <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
             var $$ = mdui.JQ;
@@ -365,7 +332,7 @@
                 $(window).scroll(function() {
                     <?php
                     $autoloadtimes = $this->options->AjaxLoadTimes;
-                    if ($autoloadtimes == '0') {
+                    if ($autoloadtimes == '-1') {
                         $leavrolzzzz = "";
                         /**我命名废！**/
                     } else {
@@ -383,12 +350,14 @@
 
             function al() {
                 $('.ajaxload li[class!="next"]').remove();
-                $('.ajaxload .next a').click(function() {
+                $('.ajaxload .next').addClass('mdui-center mdui-hoverable mdui-btn mdui-m-x-0');
+                $('.ajaxload .next').click(function() {
                     if (isbool) {
                         aln()
                     }
                     return false
-                })
+                });
+                $('.ajaxload').removeClass('hidden');
             }
             al();
 
@@ -462,6 +431,11 @@
         <!-- mdr | mdrQrCode -->
         <script src="<?= staticUrl('jquery.qrcode.min.js') ?>"></script>
         <script>
+            var mdrQrCode = new mdui.Menu('#switchQrCode', '#pageQrCode', {
+                position: "bottom",
+                align: "right"
+            });
+
             function getQrCode() {
                 $('#pageQrCode').html('');
                 $('#pageQrCode').qrcode({
@@ -471,14 +445,6 @@
                 })
             }
             getQrCode();
-
-            function switchQrCode() {
-                if ($('#pageQrCode').hasClass('mdui-menu-open')) {
-                    $('#pageQrCode').removeClass('mdui-menu-open')
-                } else {
-                    $('#pageQrCode').addClass('mdui-menu-open')
-                }
-            }
         </script>
     <?php endif;
     if ($this->options->DarkMode) : ?>
@@ -494,6 +460,7 @@
             mdrDebug()
         </script>
     <?php endif; ?>
+    <script src="<?= cjUrl('js/script.js') ?>"></script>
 <?php endif; ?>
 </body>
 

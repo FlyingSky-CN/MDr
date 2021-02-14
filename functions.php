@@ -274,25 +274,12 @@ EOF;
     );
     $form->addInput($PjaxOption);
 
-    $AjaxLoad = new Typecho_Widget_Helper_Form_Element_Radio(
-        'AjaxLoad',
-        array(
-            'auto' => _t('自动'),
-            'click' => _t('点击'),
-            0 => _t('关闭')
-        ),
-        0,
-        _t('Ajax 翻页'),
-        _t('默认关闭，启用则会使用Ajax加载文章翻页')
-    );
-    $form->addInput($AjaxLoad);
-
     $AjaxLoadTimes = new Typecho_Widget_Helper_Form_Element_Text(
         'AjaxLoadTimes',
         NULL,
         '0',
         _t('Ajax 自动翻页限制'),
-        _t('Ajax加载文章最多自动翻页~次，0则无限制')
+        _t('Ajax加载文章最多自动翻页~次，-1 则无限制')
     );
     $AjaxLoadTimes->input->setAttribute('class', 'mini');
     $form->addInput($AjaxLoadTimes);
@@ -400,7 +387,7 @@ EOF;
         NULL,
         NULL,
         _t('建站时间'),
-        _t('格式：月/日/年 时:分:秒（示例：08/19/2018 10:00:00 为 2018年8月19日10点整），显示在网站底部，留空不显示')
+        _t('显示在网站底部，留空不显示。')
     );
     $SiteTime->input->setAttribute('class', 'mini');
     $form->addInput($SiteTime);
@@ -445,19 +432,6 @@ EOF;
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-custom">自定义内容 <small>Custom</small></h2>'));
     $mdrNotice->input->setAttribute('style', 'display:none');
     $form->addInput($mdrNotice);
-
-    $mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrPostTitle',
-        array(
-            'normal' => _t('在图片下方'),
-            'button' => _t('覆盖在图片底部(如果有)'),
-            'top' => _t('覆盖在图片顶部(如果有)')
-        ),
-        'normal',
-        _t('文章标题显示方式'),
-        _t('默认在图片下方')
-    );
-    $form->addInput($mdrPostTitle);
 
     $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPostAuthor',

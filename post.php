@@ -4,28 +4,31 @@
     <?php if (!empty($this->options->Breadcrumbs) && in_array('Postshow', $this->options->Breadcrumbs)) : ?>
         <div class="mdui-card breadcrumbs">
             <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
-            <span class="mdui-chip-title">
-                <a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->category(); ?> &raquo; <?php if (!empty($this->options->Breadcrumbs) && in_array('Text', $this->options->Breadcrumbs)) : ?>正文<?php else : $this->title();
-                                                                                                                                                                                                                    endif; ?>
+            <span class="mdui-chip-title mdui-p-l-0">
+                <a href="<?php $this->options->siteUrl(); ?>">首页</a> /
+                <?php $this->category(' & '); ?> /
+                <?= ((in_array('Text', $this->options->Breadcrumbs)) ? '正文' : $this->title()) ?>
             </span>
         </div>
     <?php endif; ?>
     <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>" style="margin-top:20px;">
-        <?php if ($this->options->mdrPostThumb && !$this->hidden) : ?>
+        <?php if (postThumb($this) && !$this->hidden) : ?>
             <div class="mdui-card-media">
                 <?php echo postThumb($this); ?>
             </div>
         <?php endif; ?>
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-            <?php if (!$this->hidden) : ?>
-                <div class="mdui-card-primary-subtitle">
-                    <?php $this->date(); ?>
-                    | <?php $this->category(','); ?>
-                    | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
-                    | <?php Postviews($this); ?>
-                </div>
-            <?php endif; ?>
+            <div class="mdui-card-primary-subtitle">
+                <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i>
+                <?php $this->date(); ?>&nbsp;&nbsp;
+                <i class="mdui-icon material-icons mdr-icon-info">&#xe866;</i>
+                <?php $this->category(' ', false); ?>&nbsp;&nbsp;
+                <i class="mdui-icon material-icons mdr-icon-info">&#xe0b9;</i>
+                <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>&nbsp;&nbsp;
+                <i class="mdui-icon material-icons mdr-icon-info">&#xe417;</i>
+                <?php Postviews($this); ?>
+            </div>
         </div>
         <?php if ($this->options->mdrPostAuthor) : ?>
             <div class="mdui-card-header">

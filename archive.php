@@ -106,6 +106,6 @@
             <p>你想找的东西可能被吃了</p>
         </div>
     <?php endif; ?>
-    <?php $this->pageNav('上一页', $this->options->AjaxLoad ? '查看更多' : '下一页', 0, '..', $this->options->AjaxLoad ? array('wrapClass' => 'page-navigator ajaxload') : ''); ?>
+    <?php $this->pageNav('', '查看更多', 0, '', array('wrapClass' => 'ajaxload mdui-p-a-0')); ?>
 </div>
 <?php $this->need('footer.php'); ?>
