@@ -17,10 +17,32 @@
     background: #424242;
 }
 
+.error-page {
+    margin: 256px 0!important;
+    text-align: center
+}
+
 /***** Helper ******/
 
-#main > * {
+.mdui-container {
+    max-width: 896px;
+}
+
+#main {
+    margin-top: -20px;
+}
+
+#main>* {
     margin: 24px 0;
+}
+
+@media (max-width: 599px) {
+    #main {
+        margin-top: -8px;
+    }
+    #main>* {
+        margin: 12px 0;
+    }
 }
 
 .hidden {
@@ -30,16 +52,14 @@
 /***** Material Design 2 ******/
 
 .mdr-appbar-title {
-    font-size    : 1.25rem;
-    line-height  : 1.5;
-    overflow     : hidden;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    overflow: hidden;
     text-overflow: ellipsis;
-    white-space  : nowrap;
+    white-space: nowrap;
 }
 
-body.mdui-theme-layout-dark,
-.mdui-theme-layout-dark header,
-.mdui-theme-layout-dark aside {
+body.mdui-theme-layout-dark, .mdui-theme-layout-dark header, .mdui-theme-layout-dark aside {
     background: #121212 !important;
 }
 
@@ -52,24 +72,23 @@ body.mdui-theme-layout-dark,
 }
 
 footer {
-    font-size  : .75rem !important;
+    font-size: .75rem !important;
     line-height: 1.25rem !important;
-    opacity    : 0.75 !important;
+    opacity: 0.75 !important;
 }
 
 .mdui-list-item {
-    border-top-right-radius   : 24px;
+    border-top-right-radius: 24px;
     border-bottom-right-radius: 24px;
 }
 
 .mdui-list-dense .mdui-list-item {
-    border-top-right-radius   : 20px;
+    border-top-right-radius: 20px;
     border-bottom-right-radius: 20px;
 }
 
-.mdui-card,
-.mdui-menu {
-    border-radius: 7px!important;
+.mdui-card, .mdui-menu {
+    border-radius: 7px !important;
 }
 
 /***** Post ******/
@@ -107,8 +126,7 @@ footer {
     color: hsla(0, 0%, 100%, .8) !important
 }
 
-.post.status .tag,
-.post.status .time {
+.post.status .tag, .post.status .time {
     position: absolute;
     top: 0;
     font-size: 15px

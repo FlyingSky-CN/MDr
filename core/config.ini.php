@@ -11,5 +11,4 @@ define('MDR_CONFIG', [
     'mdrCopytext' => null, // 自定义底部版权所属，默认为站点名称。
     'mdrMDUICDNlink' => null, // MDUI 静态资源自建地址，只在上面的选项选择自建时需要。
     'mdrcjCDNlink' => null, // 其他公共静态资源自建地址，只在上面的选项选择自建时需要。
-    'AjaxLoad' => true, // Ajax 加载文章列表翻页，true | false 。
 ]);

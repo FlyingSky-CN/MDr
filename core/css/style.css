@@ -135,12 +135,6 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     filter: brightness(75%)
 }
 
-.error-page {
-    margin-top: 128px;
-    margin-bottom: 512px;
-    text-align: center
-}
-
 .avatar {
     border-radius: 50%
 }
@@ -164,10 +158,6 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     color: #999;
     font-size: .875em;
     line-height: 1.5
-}
-
-.mdui-container {
-    max-width: 960px
 }
 
 @media(max-width: 1023px) {

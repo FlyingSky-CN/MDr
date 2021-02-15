@@ -32,6 +32,7 @@
         const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
         const mdrTab = new mdui.Tab('#mdrTab');
         const mdrTabDom = mdui.JQ('#mdrTab');
+        const mdrAjaxLoadTimes = <?= $this->options->AjaxLoadTimes ?>;
     </script>
     <script>
         /* MDr Catalog */
@@ -73,11 +74,9 @@
             }
         </script>
     <?php endif; ?>
-    <?php if ($this->options->PjaxOption || $this->options->AjaxLoad || $this->options->ViewImg || $this->options->mdrQrCode) : ?>
-        <!-- mdr | jQuery -->
-        <script src="<?= staticUrl('jquery.min.js') ?>"></script>
-    <?php endif;
-    if ($this->options->ViewImg) : ?>
+    <!-- mdr | jQuery -->
+    <script src="<?= staticUrl('jquery.min.js') ?>"></script>
+    <?php if ($this->options->ViewImg) : ?>
         <!-- mdr | FancyBox -->
         <script src="<?= staticUrl('jquery.fancybox.min.js') ?>"></script>
         <script>
@@ -90,8 +89,8 @@
             }
             mdrfa();
         </script>
-    <?php endif;
-    if ($this->options->PjaxOption) : ?>
+    <?php endif; ?>
+    <?php if ($this->options->PjaxOption) : ?>
         <!-- mdr | Pjax STR -->
         <script src="<?= staticUrl('jquery.pjax.min.js') ?>"></script>
         <script>
@@ -322,85 +321,6 @@
             ap();
         </script>
         <!-- mdr | Pjax END -->
-    <?php endif;
-    if ($this->options->AjaxLoad) : ?>
-        <!-- mdr | Ajax STR -->
-        <script>
-            var isbool = true;
-            var autoloadtimes = 0;
-            <?php if ($this->options->AjaxLoad == 'auto') : ?>
-                $(window).scroll(function() {
-                    <?php
-                    $autoloadtimes = $this->options->AjaxLoadTimes;
-                    if ($autoloadtimes == '-1') {
-                        $leavrolzzzz = "";
-                        /**我命名废！**/
-                    } else {
-                        $leavrolzzzz = "&& autoloadtimes<" . $autoloadtimes;
-                    }
-                    ?>
-                    if (isbool<?= $leavrolzzzz ?> && $('.ajaxload .next a').attr("href") && ($(this).scrollTop() + $(window).height() + 20) >= $(document).height()) {
-                        isbool = false;
-                        autoloadtimes++;
-                        console.log('Autoload ' + autoloadtimes + ' times');
-                        aln()
-                    }
-                });
-            <?php endif; ?>
-
-            function al() {
-                $('.ajaxload li[class!="next"]').remove();
-                $('.ajaxload .next').addClass('mdui-center mdui-hoverable mdui-btn mdui-m-x-0');
-                $('.ajaxload .next').click(function() {
-                    if (isbool) {
-                        aln()
-                    }
-                    return false
-                });
-                $('.ajaxload').removeClass('hidden');
-            }
-            al();
-
-            function aln() {
-                var a = '.ajaxload .next a',
-                    b = $(a).attr("href");
-                $(a).addClass('loading').text("正在加载");
-                if (b) {
-                    $.ajax({
-                        url: b,
-                        error: function() {
-                            mdui.snackbar({
-                                message: '请求失败，请检查网络并重试或者联系管理员。',
-                                position: mdrSnackbar,
-                                timeout: 3000
-                            });
-                            $(a).removeAttr("class").text("查看更多");
-                            return false
-                        },
-                        success: function(d) {
-                            var c = $(d).find("#main .mdui-card.post"),
-                                e = $(d).find(a).attr("href");
-                            if (c) {
-                                $('.ajaxload').before(c)
-                            };
-                            $(a).removeAttr("class");
-                            if (e) {
-                                $(a).text("查看更多").attr("href", e)
-                            } else {
-                                $(a).remove();
-                                $('.ajaxload .next').text('没有更多文章了')
-                            }
-                            if ($('.protected', d).length) {
-                                $('.protected *').unbind();
-                            }
-                            isbool = true;
-                            return false
-                        }
-                    })
-                }
-            }
-        </script>
-        <!-- mdr | Ajax END -->
     <?php endif; ?>
     <?php $this->footer(); ?>
     <?php if ($this->options->scrollTop) : ?>
