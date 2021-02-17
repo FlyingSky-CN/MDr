@@ -2,6 +2,12 @@
  * MDr 是一套基于 MDUI 开发的 Typecho 模板
  */
 
+console.log(
+    "\n %c MDr <?= MDR_VERSION ?> %c FlyingSky-CN/MDr %c \n",
+    "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
+    "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
+    "");
+
 const mdrScroll = () => {
     if ($(document).scrollTop() > 0) {
         $('header').removeClass('mdui-shadow-0');
@@ -13,6 +19,29 @@ const mdrScroll = () => {
 $(document).ready(mdrScroll);
 $(document).scroll(mdrScroll);
 
+window.onscroll = function() {
+    var a = document.documentElement.scrollTop || document.body.scrollTop,
+        b = document.getElementById("top");
+    if (a >= 200) {
+        b.classList.remove("mdui-fab-hide")
+    } else {
+        b.classList.add("mdui-fab-hide")
+    }
+    b.onclick = function totop() {
+        var a = document.documentElement.scrollTop || document.body.scrollTop;
+        if (a > 0) {
+            requestAnimationFrame(totop);
+            window.scrollTo(0, a - (a / 5))
+        } else {
+            cancelAnimationFrame(totop)
+        }
+    };
+}
+
+
+/**
+ * Site Time
+ */
 const mdrSiteTimeUpdate = () => {
     window.setTimeout("mdrSiteTimeUpdate()", 1000);
     var X = new Date(mdrSiteTime),
@@ -29,6 +58,34 @@ const mdrSiteTimeUpdate = () => {
     runtime_span.innerHTML = A + " 天 " + B + " 时 " + C + " 分 " + D + " 秒";
 }
 if (typeof mdrSiteTime !== "undefined") mdrSiteTimeUpdate();
+
+/**
+ * MDr Catalog 
+ */
+window.onresize = () => {
+    setTimeout('mdrTab.handleUpdate()', 500)
+}
+mdrTabDom.attr('style', 'margin-top: -48px');
+mdrTab.show(0);
+const mdrCatalog = (data) => {
+    if (data === false || data === null) {
+        mdrTab.show(0);
+        mdrTabDom.attr('style', 'margin-top: -48px');
+        return;
+    }
+    mdrTab.show(0);
+    var list = mdui.JQ('#mdrDrawerLtoc .mdui-list');
+    list.empty();
+    data.forEach((value) => {
+        var dom = mdui.JQ(document.createElement('a'));
+        dom.addClass('mdui-list-item mdui-ripple');
+        dom.addClass('mdui-p-l-' + Math.min(value.depth * 2, 5));
+        dom.attr('href', '#cl-' + value.count);
+        dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
+        list.append(dom);
+    })
+    mdrTabDom.attr('style', 'margin-top: 0');
+}
 
 /**
  * Ajax Loader

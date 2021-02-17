@@ -23,43 +23,10 @@
     </button>
     <script src="<?= staticUrl('mdui.min.js') ?>"></script>
     <script>
-        /* MDr Global JavaScript */
-        console.log(
-            "\n %c MDr <?= MDR_VERSION ?> %c FlyingSky-CN/MDr %c \n",
-            "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
-            "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
-            "");
         const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
         const mdrTab = new mdui.Tab('#mdrTab');
         const mdrTabDom = mdui.JQ('#mdrTab');
         const mdrAjaxLoadTimes = <?= $this->options->AjaxLoadTimes ?>;
-    </script>
-    <script>
-        /* MDr Catalog */
-        window.onresize = () => {
-            setTimeout('mdrTab.handleUpdate()', 500)
-        }
-        mdrTabDom.attr('style', 'margin-top: -48px');
-        mdrTab.show(0);
-        const mdrCatalog = (data) => {
-            if (data === false || data === null) {
-                mdrTab.show(0);
-                mdrTabDom.attr('style', 'margin-top: -48px');
-                return;
-            }
-            mdrTab.show(0);
-            var list = mdui.JQ('#mdrDrawerLtoc .mdui-list');
-            list.empty();
-            data.forEach((value) => {
-                var dom = mdui.JQ(document.createElement('a'));
-                dom.addClass('mdui-list-item mdui-ripple');
-                dom.addClass('mdui-p-l-' + Math.min(value.depth * 2, 5));
-                dom.attr('href', '#cl-' + value.count);
-                dom.html('<span>' + value.count + '</span><div class="mdui-text-truncate">' + value.text + '</div>');
-                list.append(dom);
-            })
-            mdrTabDom.attr('style', 'margin-top: 0');
-        }
     </script>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
@@ -146,7 +113,6 @@
                     mdui.mutation();
                     if (document.body.clientWidth < 1024) {
                         mdui.Drawer('#mdrDrawerL').close();
-                        mdui.Drawer('#mdrDrawerR').close();
                     }
                     <?php if ($this->options->mdrQrCode) : ?>
                         getQrCode();
@@ -321,29 +287,6 @@
         <!-- mdr | Pjax END -->
     <?php endif; ?>
     <?php $this->footer(); ?>
-    <?php if ($this->options->scrollTop) : ?>
-        <!-- mdr | scrollTop -->
-        <script>
-            window.onscroll = function() {
-                var a = document.documentElement.scrollTop || document.body.scrollTop,
-                    b = document.getElementById("top");
-                if (a >= 200) {
-                    b.classList.remove("mdui-fab-hide")
-                } else {
-                    b.classList.add("mdui-fab-hide")
-                }
-                b.onclick = function totop() {
-                    var a = document.documentElement.scrollTop || document.body.scrollTop;
-                    if (a > 0) {
-                        requestAnimationFrame(totop);
-                        window.scrollTo(0, a - (a / 5))
-                    } else {
-                        cancelAnimationFrame(totop)
-                    }
-                };
-            }
-        </script>
-    <?php endif; ?>
     <?php if ($this->options->CustomContent) $this->options->CustomContent(); ?>
     <?php if ($this->options->mdrQrCode) : ?>
         <!-- mdr | mdrQrCode -->
@@ -364,8 +307,8 @@
             }
             getQrCode();
         </script>
-    <?php endif;
-    if ($this->options->DarkMode) : ?>
+    <?php endif; ?>
+    <?php if ($this->options->DarkMode) : ?>
         <!-- mdr | DarkMode -->
         <script>
             const mdrDarkModeFD = '<?= ($this->options->DarkModeFD && $this->options->DarkModeDomain) ? "domain=" . $this->options->DarkModeDomain : '' ?>';
@@ -375,7 +318,7 @@
     <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
-            mdrDebug()
+            mdrDebug();
         </script>
     <?php endif; ?>
     <script src="<?= cjUrl('js/script.js') ?>"></script>
@@ -385,6 +328,10 @@
 </html>
 <?php /* mdr | HTML 压缩 */
 if ($this->options->compressHtml) {
+    return;
+    /**
+     * 请注意，该功能与 JavaScript 冲突，待修复。
+     */
     $html_source = ob_get_contents();
     ob_clean();
     print compressHtml($html_source);
