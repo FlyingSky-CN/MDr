@@ -150,10 +150,8 @@
                     }
                     <?php if ($this->options->mdrQrCode) : ?>
                         getQrCode();
-                    <?php endif;
-                    if ($this->options->AjaxLoad) : ?>
-                        al();
                     <?php endif; ?>
+                    al();
                     ac();
                     ap();
                     <?php if ($this->options->CustomContent) : ?>

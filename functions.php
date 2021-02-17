@@ -342,24 +342,7 @@ EOF;
         _t('默认随机显示')
     );
     $form->addInput($mdrHitokotoc);
-
-    $Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox(
-        'Breadcrumbs',
-        array(
-            'Postshow' => _t('文章内显示'),
-            'Text' => _t('↪文章标题替换为“正文”'),
-            'Pageshow' => _t('页面内显示')
-        ),
-        array(
-            'Postshow',
-            'Text',
-            'Pageshow'
-        ),
-        _t('面包屑导航显示'),
-        _t('默认在文章与页面内显示，并将文章标题替换为“正文”')
-    );
-    $form->addInput($Breadcrumbs->multiMode());
-
+    
     $TimeNotice = new Typecho_Widget_Helper_Form_Element_Radio(
         'TimeNotice',
         array(

@@ -1,16 +1,14 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-    <?php if (!empty($this->options->Breadcrumbs) && in_array('Postshow', $this->options->Breadcrumbs)) : ?>
-        <div class="mdui-card breadcrumbs">
-            <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
-            <span class="mdui-chip-title mdui-p-l-0">
-                <a href="<?php $this->options->siteUrl(); ?>">首页</a> /
-                <?php $this->category(' & '); ?> /
-                <?= ((in_array('Text', $this->options->Breadcrumbs)) ? '正文' : $this->title()) ?>
-            </span>
-        </div>
-    <?php endif; ?>
+    <div class="mdui-card breadcrumbs">
+        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
+        <span class="mdui-chip-title mdui-p-l-0">
+            <a href="<?php $this->options->siteUrl(); ?>">首页</a> &nbsp;&raquo;&nbsp;
+            <?php $this->category(' & '); ?> &nbsp;&raquo;&nbsp;
+            <?= $this->title() ?>
+        </span>
+    </div>
     <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>" style="margin-top:20px;">
         <?php if (postThumb($this) && !$this->hidden) : ?>
             <div class="mdui-card-media">
