@@ -1,14 +1,13 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-    <?php if (!empty($this->options->Breadcrumbs) && in_array('Pageshow', $this->options->Breadcrumbs)) : ?>
-        <div class="mdui-card breadcrumbs">
-            <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
-            <span class="mdui-chip-title">
-                <a href="<?php $this->options->siteUrl(); ?>">首页</a> &raquo; <?php $this->title() ?>
-            </span>
-        </div>
-    <?php endif; ?>
+    <div class="mdui-card breadcrumbs">
+        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
+        <span class="mdui-chip-title mdui-p-l-0">
+            <a href="<?php $this->options->siteUrl(); ?>">首页</a> &nbsp;&raquo;&nbsp;
+            <?php $this->title() ?>
+        </span>
+    </div>
     <div id="post" class="mdui-card <?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>" style="margin-top:20px;">
         <div class="mdui-card-media">
             <?php echo postThumb($this); ?>

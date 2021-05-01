@@ -9,71 +9,66 @@
  */
 $this->need('header.php'); ?>
 <div id="main">
+    <?php if ($this->options->sitePic) : ?>
+        <div class="mdui-card">
+            <div class="mdui-card-media">
+                <img src="<?= $this->options->sitePic ?>">
+            </div>
+            <div class="mdui-card-primary mdui-p-y-3">
+                <div class="mdui-card-primary-title"><?php $this->options->title(); ?></div>
+                <div class="mdui-card-primary-subtitle"><?= $this->options->subTitle ?></div>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php while ($this->next()) : ?>
-        <?php if (is_status($this) && !$this->hidden) : ?>
+        <?php if (is_status($this) && !$this->hidden) : /* Status Post */ ?>
             <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
                 <div class="tag"><i class="mdui-icon material-icons">message</i></div>
-                <div class="time mdui-text-right"><?php $this->date(); ?></div>
+                <div class="time mdui-text-right">
+                    <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i> <?php $this->date(); ?>
+                </div>
                 <article class="inner">
                     <span class="mdui-typo">
                         <?php $this->content(); ?>
                     </span>
                 </article>
             </article>
-        <?php else : ?>
-            <article class="mdui-card post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
-                <?php if (!$this->hidden && postThumb($this)) : ?>
-                    <div class="mdui-card-media">
-                        <a href="<?php $this->permalink() ?>">
+        <?php else : /* Normal Post */ ?>
+            <article class="mdui-card mdui-hoverable post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
+                <a href="<?php $this->permalink() ?>">
+                    <?php if (!$this->hidden && postThumb($this)) : /* If theres thumb */ ?>
+                        <div class="mdui-card-media">
                             <?php echo postThumb($this); ?>
-                        </a>
-                        <?php if ($this->options->mdrPostTitle != 'normal') { ?>
-                            <div class="mdui-card-media-covered mdui-card-media-covered-transparent <?php if ($this->options->mdrPostTitle == 'top') { ?>mdui-card-media-covered-top<?php } ?>">
-                                <div class="mdui-card-primary" style="padding-bottom:8px;">
-                                    <a href="<?php $this->permalink() ?>">
-                                        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-                                    </a>
-                                    <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
-                                        <div class="mdui-card-primary-subtitle">
-                                            <?php $this->date(); ?>
-                                            | <?php $this->category(',', false); ?>
-                                            | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
-                                            | <?php Postviews($this); ?>
-                                        </div>
-                                    <?php } ?>
-                                </div>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php endif; ?>
-                <?php if ($this->options->mdrPostTitle == 'normal' || !postThumb($this)) { ?>
-                    <div class="mdui-card-primary" style="padding-bottom:8px;">
-                        <a href="<?php $this->permalink() ?>">
-                            <div class="mdui-card-primary-title"><?php $this->title() ?></div>
-                        </a>
-                        <?php if ($this->options->mdrPostInfo == 'subtitle') { ?>
-                            <div class="mdui-card-primary-subtitle">
-                                <?php $this->date(); ?>
-                                | <?php $this->category(',', false); ?>
-                                | <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>
-                                | <?php Postviews($this); ?>
-                            </div>
-                        <?php } ?>
-                    </div>
-                <?php } ?>
-                <div class="mdui-card-content" style="padding: 0px 16px;">
-                    <?php if ($this->options->PjaxOption && $this->hidden) : ?>
-                        <p>这篇文章受密码保护，输入密码才能看哦</p>
-                    <?php else : ?>
-                        <p><?php $this->excerpt(200, ''); ?></p>
+                        </div>
                     <?php endif; ?>
-                </div>
-                <div class="mdui-card-actions" style="text-align: center">
-                    <a href="<?php $this->permalink() ?>" class="<?php if ($this->options->mdrPostInfo == 'menu') { ?>mdui-float-right <?php } ?>mdui-btn mdui-ripple" <?php if ($this->options->mdrPostInfo == 'subtitle') { ?> style="width:100%" <?php } ?>>阅读全文</a>
-                </div>
+                    <div class="mdui-card-primary mdui-p-b-0">
+                        <div class="mdui-card-primary-title"><?php $this->title() ?></div>
+                    </div>
+                    <div class="mdui-card-content mdui-p-b-1">
+                        <?php if ($this->options->PjaxOption && $this->hidden) : ?>
+                            这篇文章受密码保护，输入密码才能看哦
+                        <?php else : ?>
+                            <?php $this->excerpt(200, ''); ?>
+                        <?php endif; ?>
+                    </div>
+                    <div class="mdui-card-content mdui-p-t-1">
+                        <div class="mdui-card-primary-subtitle">
+                            <div class="mdui-card-primary-subtitle">
+                                <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i>
+                                <?php $this->date(); ?>&nbsp;&nbsp;
+                                <i class="mdui-icon material-icons mdr-icon-info">&#xe866;</i>
+                                <?php $this->category(' ', false); ?>&nbsp;&nbsp;
+                                <i class="mdui-icon material-icons mdr-icon-info">&#xe0b9;</i>
+                                <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>&nbsp;&nbsp;
+                                <i class="mdui-icon material-icons mdr-icon-info">&#xe417;</i>
+                                <?php Postviews($this); ?>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </article>
         <?php endif; ?>
     <?php endwhile; ?>
-    <?php $this->pageNav('上一页', $this->options->AjaxLoad ? '查看更多' : '下一页', 0, '..', $this->options->AjaxLoad ? array('wrapClass' => 'page-navigator ajaxload') : ''); ?>
+    <?php $this->pageNav('', '查看更多', 0, '', ['wrapClass' => 'ajaxload hidden mdui-p-a-0']); ?>
 </div>
 <?php $this->need('footer.php'); ?>

@@ -187,9 +187,10 @@ EOF;
     $GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio(
         'GravatarUrl',
         array(
-            false => _t('官方源'),
-            'https://cn.gravatar.com/avatar/' => _t('国内源'),
-            'https://cdn.v2ex.com/gravatar/' => _t('V2EX源')
+            false => _t('官方'),
+            'https://gravatar.loli.net/avatar/' => _t('SM.MS'),
+            'https://cdn.v2ex.com/gravatar/' => _t('V2EX'),
+            'https://sdn.geekzu.org/avatar/' => _t('极客族')
         ),
         false,
         _t('Gravatar 头像源'),
@@ -208,7 +209,7 @@ EOF;
             true => _t('开'),
             false => _t('关')
         ),
-        true,
+        false,
         _t('默认打开抽屉导航栏'),
         _t('开启后默认打开抽屉导航栏，关闭后则不自动打开')
     );
@@ -274,25 +275,12 @@ EOF;
     );
     $form->addInput($PjaxOption);
 
-    $AjaxLoad = new Typecho_Widget_Helper_Form_Element_Radio(
-        'AjaxLoad',
-        array(
-            'auto' => _t('自动'),
-            'click' => _t('点击'),
-            0 => _t('关闭')
-        ),
-        0,
-        _t('Ajax 翻页'),
-        _t('默认关闭，启用则会使用Ajax加载文章翻页')
-    );
-    $form->addInput($AjaxLoad);
-
     $AjaxLoadTimes = new Typecho_Widget_Helper_Form_Element_Text(
         'AjaxLoadTimes',
         NULL,
         '0',
         _t('Ajax 自动翻页限制'),
-        _t('Ajax加载文章最多自动翻页~次，0则无限制')
+        _t('Ajax加载文章最多自动翻页~次，-1 则无限制')
     );
     $AjaxLoadTimes->input->setAttribute('class', 'mini');
     $form->addInput($AjaxLoadTimes);
@@ -355,24 +343,7 @@ EOF;
         _t('默认随机显示')
     );
     $form->addInput($mdrHitokotoc);
-
-    $Breadcrumbs = new Typecho_Widget_Helper_Form_Element_Checkbox(
-        'Breadcrumbs',
-        array(
-            'Postshow' => _t('文章内显示'),
-            'Text' => _t('↪文章标题替换为“正文”'),
-            'Pageshow' => _t('页面内显示')
-        ),
-        array(
-            'Postshow',
-            'Text',
-            'Pageshow'
-        ),
-        _t('面包屑导航显示'),
-        _t('默认在文章与页面内显示，并将文章标题替换为“正文”')
-    );
-    $form->addInput($Breadcrumbs->multiMode());
-
+    
     $TimeNotice = new Typecho_Widget_Helper_Form_Element_Radio(
         'TimeNotice',
         array(
@@ -400,7 +371,7 @@ EOF;
         NULL,
         NULL,
         _t('建站时间'),
-        _t('格式：月/日/年 时:分:秒（示例：08/19/2018 10:00:00 为 2018年8月19日10点整），显示在网站底部，留空不显示')
+        _t('显示在网站底部，留空不显示。')
     );
     $SiteTime->input->setAttribute('class', 'mini');
     $form->addInput($SiteTime);
@@ -446,18 +417,14 @@ EOF;
     $mdrNotice->input->setAttribute('style', 'display:none');
     $form->addInput($mdrNotice);
 
-    $mdrPostTitle = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrPostTitle',
-        array(
-            'normal' => _t('在图片下方'),
-            'button' => _t('覆盖在图片底部(如果有)'),
-            'top' => _t('覆盖在图片顶部(如果有)')
-        ),
-        'normal',
-        _t('文章标题显示方式'),
-        _t('默认在图片下方')
+    $sitePic = new Typecho_Widget_Helper_Form_Element_Text(
+        'sitePic',
+        NULL,
+        NULL,
+        _t('自定义站点头图'),
+        _t('')
     );
-    $form->addInput($mdrPostTitle);
+    $form->addInput($sitePic);
 
     $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPostAuthor',
