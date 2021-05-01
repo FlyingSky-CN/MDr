@@ -187,9 +187,10 @@ EOF;
     $GravatarUrl = new Typecho_Widget_Helper_Form_Element_Radio(
         'GravatarUrl',
         array(
-            false => _t('官方源'),
-            'https://cn.gravatar.com/avatar/' => _t('国内源'),
-            'https://cdn.v2ex.com/gravatar/' => _t('V2EX源')
+            false => _t('官方'),
+            'https://gravatar.loli.net/avatar/' => _t('SM.MS'),
+            'https://cdn.v2ex.com/gravatar/' => _t('V2EX'),
+            'https://sdn.geekzu.org/avatar/' => _t('极客族')
         ),
         false,
         _t('Gravatar 头像源'),
