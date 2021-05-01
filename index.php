@@ -9,6 +9,17 @@
  */
 $this->need('header.php'); ?>
 <div id="main">
+    <?php if ($this->options->sitePic) : ?>
+        <div class="mdui-card">
+            <div class="mdui-card-media">
+                <img src="<?= $this->options->sitePic ?>">
+            </div>
+            <div class="mdui-card-primary mdui-p-y-3">
+                <div class="mdui-card-primary-title"><?php $this->options->title(); ?></div>
+                <div class="mdui-card-primary-subtitle"><?= $this->options->subTitle ?></div>
+            </div>
+        </div>
+    <?php endif; ?>
     <?php while ($this->next()) : ?>
         <?php if (is_status($this) && !$this->hidden) : /* Status Post */ ?>
             <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">

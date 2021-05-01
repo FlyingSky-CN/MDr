@@ -417,6 +417,15 @@ EOF;
     $mdrNotice->input->setAttribute('style', 'display:none');
     $form->addInput($mdrNotice);
 
+    $sitePic = new Typecho_Widget_Helper_Form_Element_Text(
+        'sitePic',
+        NULL,
+        NULL,
+        _t('自定义站点头图'),
+        _t('')
+    );
+    $form->addInput($sitePic);
+
     $mdrPostAuthor = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPostAuthor',
         array(
