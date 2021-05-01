@@ -77,14 +77,15 @@ footer {
     opacity: 0.75 !important;
 }
 
-.mdui-list-item {
-    border-top-right-radius: 24px;
-    border-bottom-right-radius: 24px;
-}
-
-.mdui-list-dense .mdui-list-item {
-    border-top-right-radius: 20px;
-    border-bottom-right-radius: 20px;
+@media (min-width: 1024px) {
+    .mdui-list-item {
+        border-top-right-radius: 24px;
+        border-bottom-right-radius: 24px;
+    }
+    .mdui-list-dense .mdui-list-item {
+        border-top-right-radius: 20px;
+        border-bottom-right-radius: 20px;
+    }
 }
 
 .mdui-card, .mdui-menu {
@@ -97,7 +98,7 @@ footer {
 
 .breadcrumbs {
     margin-top: 20px;
-    background-color: rgba(180, 180, 180, 0.25)
+    background-color: rgba(180, 180, 180, 0.25);
 }
 
 .breadcrumbs .mdui-chip-icon {
@@ -106,6 +107,15 @@ footer {
 
 .breadcrumbs .mdui-chip-icon .mdui-icon {
     color: #444;
+}
+
+.breadcrumbs .mdui-chip-title {
+    width: calc(100% - 48px);
+    height: 32px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
 }
 
 .mdui-theme-layout-dark .breadcrumbs .mdui-chip-icon .mdui-icon {
@@ -162,4 +172,47 @@ footer {
 .mdr-icon-info {
     font-size: 14px;
     padding-bottom: 2px;
+}
+
+/* Page Navigator */
+
+.page-navigator {
+    list-style: none;
+    margin: 20px 0;
+    padding: 0px
+}
+
+.page-navigator li {
+    display: inline-block;
+    margin-right: 8px;
+    height: 36px;
+    border-radius: 3px;
+    line-height: 36px;
+    color: #000;
+    font-size: 14px;
+    background: #e8e8e8;
+    text-align: center;
+    -webkit-transition: -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
+    transition: -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
+    transition: box-shadow .25s cubic-bezier(.4, 0, .2, 1);
+    transition: box-shadow .25s cubic-bezier(.4, 0, .2, 1), -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
+    will-change: box-shadow;
+}
+
+.mdui-theme-layout-dark .page-navigator li {
+    background: #444;
+    color: #fff
+}
+
+.page-navigator li:hover, .page-navigator li:focus {
+    -webkit-box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
+}
+
+.page-navigator a, .page-navigator span {
+    padding: 11px 16px
+}
+
+.page-navigator.ajaxload .next {
+    width: 100%
 }
