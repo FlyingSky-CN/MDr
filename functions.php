@@ -190,7 +190,8 @@ EOF;
             false => _t('官方'),
             'https://gravatar.loli.net/avatar/' => _t('SM.MS'),
             'https://cdn.v2ex.com/gravatar/' => _t('V2EX'),
-            'https://sdn.geekzu.org/avatar/' => _t('极客族')
+            'https://sdn.geekzu.org/avatar/' => _t('极客族'),
+            'https://use.sevencdn.com/avatar/' => _t('7ED.NET Public CDN')
         ),
         false,
         _t('Gravatar 头像源'),
