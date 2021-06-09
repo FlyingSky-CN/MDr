@@ -309,8 +309,8 @@ function Links($short = false)
                             <img class="link-logo" style="background: #fff;" src="' . $logo . '" title="' . $name . '"/>
                             <div class="mdui-card-media-covered">
                                 <div class="mdui-card-primary">
-                                    <div class="mdui-card-primary-title">' . $name . '</div>
-                                    <div class="mdui-card-primary-subtitle">' . $description . '</div>
+                                    <div class="mdui-card-primary-title mdui-text-truncate">' . $name . '</div>
+                                    <div class="mdui-card-primary-subtitle mdui-text-truncate">' . $description . '</div>
                                 </div>
                             </div>
                         </div>
