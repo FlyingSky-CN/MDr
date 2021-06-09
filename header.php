@@ -37,16 +37,20 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             ], '', ' - '); ?><?php $this->options->title(); ?><?= ($this->is('index') && $this->options->subTitle) ? ' - ' . $this->options->subTitle : '' ?></title>
     <?php $this->header('generator=&xmlrpc=&wlw=&commentReply=&antiSpam='); ?>
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
-    <?php if (!$this->options->mdrCornertool) { ?>
+    <?php if (!$this->options->mdrCornertool) : ?>
         <style>
             *::-webkit-scrollbar {
                 width: 0px !important;
                 height: 0px !important
             }
         </style>
-    <?php } ?>
-    <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css') ?>" />
-    <link rel="stylesheet" href="<?php cjUrl('css/style.css') ?>" />
+    <?php endif; ?>
+    <?php if (MDR_DEBUG) : ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
+    <?php else : ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css') ?>" />
+    <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
     <?php endif; ?>

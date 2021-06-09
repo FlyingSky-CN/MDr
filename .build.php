@@ -21,7 +21,8 @@ function compressCSS($buffer)
 file_put_contents(
     __DIR__ . '/core/css/style.min.css',
     compressCSS(
-        file_get_contents(__DIR__ . '/core/css/style.css')
+        file_get_contents(__DIR__ . '/core/css/style.css') .
+            file_get_contents(__DIR__ . '/core/css/style-petals.css')
     )
 );
 

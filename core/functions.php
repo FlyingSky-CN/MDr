@@ -4,6 +4,7 @@ require_once __DIR__ . '/config.ini.php';
 require_once __DIR__ . '/lib/Main.php';
 require_once __DIR__ . '/lib/ShortCode.php';
 
+define('MDR_DEBUG', file_exists(__DIR__ . '/.debugger'));
 if (!defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl)
     define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
 define('MDR_PJAX', isset($_GET['_pjax']) ? true : false);
@@ -304,8 +305,9 @@ function Links($short = false)
                 $link .= '
                 <div class="mdui-col" style="padding-top: 16px;">
                     <a href="' . $url . '" target="_blank">
-                        <div class="mdui-card mdui-card-media">
-                            <img class="link-logo" style="min-height: 100px;background: #fff" src="' . $logo . '"/>
+                        <div class="mdui-card mdui-card-media link-card" style="background-color: #bebebe!important;">
+                            <img class="link-logo" style="background: #fff;" src="' . $logo . '"/>
+                            <div class="helper"></div>
                             <div class="mdui-card-media-covered">
                                 <div class="mdui-card-primary">
                                     <div class="mdui-card-primary-title">' . $name . '</div>
