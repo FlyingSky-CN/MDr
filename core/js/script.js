@@ -9,10 +9,13 @@ console.log(
     "");
 
 const mdrScroll = () => {
+    let header = $('header');
     if ($(document).scrollTop() > 0) {
-        $('header').removeClass('mdui-shadow-0');
+        header.removeClass('mdui-shadow-0');
+        header.css('background', getDarkModeFromDom() ? '#212121' : '#ffffff');
     } else {
-        $('header').addClass('mdui-shadow-0');
+        header.addClass('mdui-shadow-0');
+        header.css('background', 'none');
     }
 }
 

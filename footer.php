@@ -322,7 +322,7 @@
             mdrDebug();
         </script>
     <?php endif; ?>
-    <script src="<?= cjUrl('js/script.js' . (MDR_DEBUG ? '?ts=' . time() : '')) ?>"></script>
+    <script src="<?= cjUrl('js/script.js?v=petals-dev-1' . (MDR_DEBUG ? '&ts=' . time() : '')) ?>"></script>
 <?php endif; ?>
 </body>
 
