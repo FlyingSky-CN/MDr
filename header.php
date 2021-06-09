@@ -18,12 +18,12 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
     }
 } ?>
 <!DOCTYPE html>
-<html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?>>
+<html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?> lang="zh-CN">
 
 <head>
     <meta charset="<?= $this->options->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="<?= MDR_COLOR['theme'][$this->options->mdrPrimary] ?>">
     <?php if ($this->options->favicon) : ?>
         <link rel="shortcut icon" href="<?= $this->options->favicon ?>" />
@@ -37,16 +37,20 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             ], '', ' - '); ?><?php $this->options->title(); ?><?= ($this->is('index') && $this->options->subTitle) ? ' - ' . $this->options->subTitle : '' ?></title>
     <?php $this->header('generator=&xmlrpc=&wlw=&commentReply=&antiSpam='); ?>
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
-    <?php if (!$this->options->mdrCornertool) { ?>
+    <?php if (!$this->options->mdrCornertool) : ?>
         <style>
             *::-webkit-scrollbar {
                 width: 0px !important;
                 height: 0px !important
             }
         </style>
-    <?php } ?>
-    <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css') ?>" />
-    <link rel="stylesheet" href="<?php cjUrl('css/style.css') ?>" />
+    <?php endif; ?>
+    <?php if (MDR_DEBUG) : ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
+    <?php else : ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-1') ?>" />
+    <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
     <?php endif; ?>

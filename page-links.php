@@ -16,7 +16,7 @@
             </span>
         </div>
     <?php endif; ?>
-    <div id="post" class="mdui-card" style="margin-top:20px;">
+    <div id="post" class="mdui-card mdui-shadow-6" style="margin-top:20px;">
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
             <div class="mdui-card-primary-subtitle">Links</div>

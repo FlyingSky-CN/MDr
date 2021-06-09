@@ -9,7 +9,7 @@
             <?= $this->title() ?>
         </span>
     </div>
-    <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>" style="margin-top:20px;">
+    <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?> mdui-shadow-6" style="margin-top:20px;">
         <?php if (postThumb($this) && !$this->hidden) : ?>
             <div class="mdui-card-media">
                 <?php echo postThumb($this); ?>

@@ -15,13 +15,14 @@ function compressCSS($buffer)
         ['{', ':', ',', '}', '!'],
         $buffer
     );
-    return '/* ' . Copyright . ' */' . PHP_EOL . $buffer;
+    return '/* ' . Copyright . ' @time '.date('Y-m-d H:i:s').' */' . PHP_EOL . $buffer;
 }
 
 file_put_contents(
     __DIR__ . '/core/css/style.min.css',
     compressCSS(
-        file_get_contents(__DIR__ . '/core/css/style.css')
+        file_get_contents(__DIR__ . '/core/css/style.css') .
+            file_get_contents(__DIR__ . '/core/css/style-petals.css')
     )
 );
 
