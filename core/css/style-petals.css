@@ -64,7 +64,7 @@ body.mdui-theme-layout-dark, .mdui-theme-layout-dark header, .mdui-theme-layout-
 }
 
 .mdui-theme-layout-dark .mdui-card {
-    background: #212121 !important;
+    background-color: #212121 !important;
 }
 
 .mdui-appbar {
@@ -215,4 +215,15 @@ footer {
 
 .page-navigator.ajaxload .next {
     width: 100%
+}
+
+/** Links Page **/
+
+.link-card {
+    padding-top: 100%;
+}
+
+.link-card > * {
+    position: absolute;
+    bottom: 0;
 }
