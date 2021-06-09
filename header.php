@@ -18,12 +18,12 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
     }
 } ?>
 <!DOCTYPE html>
-<html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?>>
+<html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?> lang="zh-CN">
 
 <head>
     <meta charset="<?= $this->options->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="<?= MDR_COLOR['theme'][$this->options->mdrPrimary] ?>">
     <?php if ($this->options->favicon) : ?>
         <link rel="shortcut icon" href="<?= $this->options->favicon ?>" />

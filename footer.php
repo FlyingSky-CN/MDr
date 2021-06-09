@@ -23,6 +23,7 @@
     </button>
     <script src="<?= staticUrl('mdui.min.js') ?>"></script>
     <script>
+        const mdrVersion = '<?= MDR_VERSION ?>';
         const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
         const mdrTab = new mdui.Tab('#mdrTab');
         const mdrTabDom = mdui.JQ('#mdrTab');
@@ -321,7 +322,7 @@
             mdrDebug();
         </script>
     <?php endif; ?>
-    <script src="<?= cjUrl('js/script.js') ?>"></script>
+    <script src="<?= cjUrl('js/script.js' . (MDR_DEBUG ? '?ts=' . time() : '')) ?>"></script>
 <?php endif; ?>
 </body>
 

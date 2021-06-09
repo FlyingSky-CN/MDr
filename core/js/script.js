@@ -3,7 +3,7 @@
  */
 
 console.log(
-    "\n %c MDr <?= MDR_VERSION ?> %c FlyingSky-CN/MDr %c \n",
+    "\n %c MDr " + mdrVersion + " %c FlyingSky-CN/MDr %c \n",
     "color:#fff;background:#6cf;padding:5px 0;border: 1px solid #6cf;",
     "color:#6cf;background:none;padding:5px 0;border: 1px solid #6cf;",
     "");
@@ -19,7 +19,7 @@ const mdrScroll = () => {
 $(document).ready(mdrScroll);
 $(document).scroll(mdrScroll);
 
-window.onscroll = function() {
+window.onscroll = function () {
     var a = document.documentElement.scrollTop || document.body.scrollTop,
         b = document.getElementById("top");
     if (a >= 200) {

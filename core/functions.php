@@ -306,7 +306,7 @@ function Links($short = false)
                 <div class="mdui-col" style="padding-top: 16px;">
                     <a href="' . $url . '" target="_blank">
                         <div class="mdui-card mdui-card-media link-card" style="background-color: #bebebe!important;">
-                            <img class="link-logo" style="background: #fff;" src="' . $logo . '"/>
+                            <img class="link-logo" style="background: #fff;" src="' . $logo . '" title="' . $name . '"/>
                             <div class="mdui-card-media-covered">
                                 <div class="mdui-card-primary">
                                     <div class="mdui-card-primary-title">' . $name . '</div>
