@@ -470,15 +470,17 @@ function staticUrl($file = '')
     $lists = explode("\r\n", Helper::options()->mdrMDUICDNlink);
     $mdrMDUIlinks = [
         'mdui.min.css' => [
-            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css',
-            'bootcss' => 'cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css',
-            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css',
+            'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css',
+            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
+            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/css/mdui.min.css',
+            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'mdui.min.js' => [
-            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js',
-            'bootcss' => 'cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js',
-            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js',
+            'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js',
+            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
+            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/js/mdui.min.js',
+            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ]
     ];

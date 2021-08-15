@@ -16,12 +16,13 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             exit();
         } else foreach ($_SESSION['mdrConfig'] as $name => $key) $this->options->$name = $key;
     }
-} ?>
+}
+?>
 <!DOCTYPE html>
 <html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?> lang="zh-CN">
 
 <head>
-    <meta charset="<?= $this->options->charset ?>" />
+    <meta http-equiv="Content-Type" content="text/html; charset=<?= $this->options->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="<?= MDR_COLOR['theme'][$this->options->mdrPrimary] ?>">
@@ -39,16 +40,20 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
     <?php if (!$this->options->mdrCornertool) : ?>
         <style>
-            *::-webkit-scrollbar {
-                width: 0px !important;
-                height: 0px !important
+            *::-webkit-scrollbar { /* Chrome, Safari, Opera */
+                width: 0px;
+                height: 0px;
+            }
+            html {
+                -ms-overflow-style: none; /* IE, Edge */
+                scrollbar-width: none; /* Firefox */
             }
         </style>
     <?php endif; ?>
     <?php if (MDR_DEBUG) : ?>
         <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
         <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
-    <?php else : ?>
+    <?php else: ?>
         <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-1') ?>" />
     <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>

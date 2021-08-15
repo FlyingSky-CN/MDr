@@ -162,11 +162,12 @@ EOF;
             'bootcss' => _t('BootCDN'),
             'cdnjs' => _t('CDNJS'),
             'cssnet' => _t('CSSnet'),
+            'jsdelivr' => _t('jsDelivr'),
             'custom' => _t('自建')
         ),
-        'cssnet',
+        'jsdelivr',
         _t('MDUI 静态资源来源'),
-        _t('默认 CSSnet ，请根据需求选择合适来源')
+        _t('默认 jsDelivr ，请根据需求选择合适来源')
     );
     $form->addInput($mdrMDUICDN);
 
