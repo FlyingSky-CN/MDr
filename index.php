@@ -45,11 +45,10 @@ $this->need('header.php'); ?>
                         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
                     </div>
                     <div class="mdui-card-content mdui-p-b-1">
-                        <?php if ($this->options->PjaxOption && $this->hidden) : ?>
-                            这篇文章受密码保护，输入密码才能看哦
-                        <?php else : ?>
-                            <?php $this->excerpt(200, ''); ?>
-                        <?php endif; ?>
+                        <?php if ($this->options->PjaxOption && $this->hidden)
+                            _e('这篇文章受密码保护，输入密码才能看哦。');
+                        else
+                            $this->excerpt(200, ''); ?>
                     </div>
                     <div class="mdui-card-content mdui-p-t-1">
                         <div class="mdui-card-primary-subtitle">
@@ -59,7 +58,7 @@ $this->need('header.php'); ?>
                                 <i class="mdui-icon material-icons mdr-icon-info">&#xe866;</i>
                                 <?php $this->category(' ', false); ?>&nbsp;&nbsp;
                                 <i class="mdui-icon material-icons mdr-icon-info">&#xe0b9;</i>
-                                <?php $this->commentsNum('暂无评论', '%d 条评论'); ?>&nbsp;&nbsp;
+                                <?php $this->commentsNum(_t('暂无评论'), _t('%d 条评论')); ?>&nbsp;&nbsp;
                                 <i class="mdui-icon material-icons mdr-icon-info">&#xe417;</i>
                                 <?php Postviews($this); ?>
                             </div>
@@ -69,6 +68,6 @@ $this->need('header.php'); ?>
             </article>
         <?php endif; ?>
     <?php endwhile; ?>
-    <?php $this->pageNav('', '查看更多', 0, '', ['wrapClass' => 'ajaxload hidden mdui-p-a-0']); ?>
+    <?php $this->pageNav('', _t('查看更多'), 0, '', ['wrapClass' => 'ajaxload hidden mdui-p-a-0']); ?>
 </div>
 <?php $this->need('footer.php'); ?>

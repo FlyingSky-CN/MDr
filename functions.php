@@ -207,8 +207,8 @@ EOF;
     $mdrNavDefOpen = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrNavDefOpen',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         false,
         _t('默认打开抽屉导航栏'),
@@ -216,23 +216,11 @@ EOF;
     );
     $form->addInput($mdrNavDefOpen);
 
-    $mdrNavBackground = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrNavBackground',
-        array(
-            true => _t('开'),
-            false => _t('关')
-        ),
-        false,
-        _t('应用栏背景'),
-        _t('开启时应用栏背景颜色为主题主色，关闭后则为白色')
-    );
-    $form->addInput($mdrNavBackground);
-
     $mdrNavColorBut = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrNavColorBut',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('抽屉导航栏彩色按钮'),
@@ -294,8 +282,8 @@ EOF;
     $RandomLinks = new Typecho_Widget_Helper_Form_Element_Radio(
         'RandomLinks',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('友情链接随机排序'),
@@ -306,8 +294,8 @@ EOF;
     $mdrPray = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPray',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         false,
         _t('全站暗淡'),
@@ -318,8 +306,8 @@ EOF;
     $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrHitokoto',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('一言 API 开关'),
@@ -431,7 +419,7 @@ EOF;
         'mdrPostAuthor',
         array(
             true => _t('显示'),
-            false => _t('不显示')
+            false => _t('隐藏')
         ),
         false,
         _t('文章内页显示作者'),
