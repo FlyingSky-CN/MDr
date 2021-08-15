@@ -15,7 +15,7 @@ const mdrScroll = () => {
         header.css('background', getDarkModeFromDom() ? '#212121' : '#ffffff');
     } else {
         header.addClass('mdui-shadow-0');
-        header.css('background', 'none');
+        header.css('background', getDarkModeFromDom() ? '#121212' : '#ffffff');
     }
 }
 

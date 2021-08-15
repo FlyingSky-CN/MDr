@@ -1,14 +1,15 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
 $showLimited = false;
-if (FindContents('page-whisper.php')[0]["permalink"] == $this->permalink) :
-    if (!$this->user->hasLogin()) :
-        $showLimited = true;
-    else :
-        if (!$this->user->pass('editor', true)) :
+if (count(FindContents('page-whisper.php')) > 0)
+    if (FindContents('page-whisper.php')[0]["permalink"] == $this->permalink) :
+        if (!$this->user->hasLogin()) :
             $showLimited = true;
+        else :
+            if (!$this->user->pass('editor', true)) :
+                $showLimited = true;
+            endif;
         endif;
     endif;
-endif;
 if ($showLimited) :
     echo '<style>.respond{display:none}</style>';
 endif;
