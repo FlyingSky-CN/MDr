@@ -195,8 +195,8 @@ body.mdui-theme-layout-dark .license {
     position: absolute;
     width: 128px;
     height: 128px;
-    top: -32px;
-    right: -24px;
+    top: -35px;
+    right: -22px;
     opacity: .25;
 }
 
@@ -204,10 +204,19 @@ body.mdui-theme-layout-dark .license svg {
     filter: invert(1);
 }
 
+/** Sponsor **/
+
+.mdr-sponsor {
+    text-align: center;
+}
+
+.mdr-sponsor .mdui-btn {
+    border-radius: 5px;
+}
+
 /** Tags **/
 
 .tags {
-    margin-top: -15px;
     margin-bottom: 15px;
     padding: 0 10px;
     text-align: center

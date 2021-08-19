@@ -55,6 +55,7 @@
         <?php if (!$this->hidden) : ?>
             <div class="tags"><?php mdrTags($this); ?></div>
             <?php license($this->fields->linceses); ?>
+            <?php mdrSponsor($this->options); ?>
             <script defer>
                 <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
                 mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)

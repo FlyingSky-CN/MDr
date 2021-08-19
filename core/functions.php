@@ -418,10 +418,23 @@ function license($license)
         'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
     );
     $text =  (isset($license) && $license != 'NONE') ?
-        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/deed.zh" target="_blank" class="external">' . $licenselist[$license] . '</a> 许可协议进行许可。' :
+        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/" target="_blank" class="external">' . $licenselist[$license] . '</a> 许可协议进行许可。' :
         "本篇文章未指定许可协议。";
 
     echo "<div class=\"mdui-typo license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
+}
+
+/* function Sponsor */
+function mdrSponsor($class)
+{
+    if (!isset($class->mdrSponsor)) return;
+    if (!is_array($class->mdrSponsor)) return;
+    if (count($class->mdrSponsor) < 1) return;
+    $buttons = '';
+    foreach ($class->mdrSponsor as list($name, $color, $link))
+        $buttons .= "<a href=\"$link\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
+
+    echo '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">喜欢这篇文章？为什么不考虑打赏一下作者呢？</p>' . $buttons . '</div>';
 }
 
 /* function 是否为状态 */
@@ -507,13 +520,13 @@ function staticUrl($file = '')
         'jquery.fancybox.min.css' => [
             'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
-            'jd' => 'cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css',
+            'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.css',
             'custom' => isset($lists[3]) ? $lists[3] : ''
         ],
         'jquery.fancybox.min.js' => [
             'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
-            'jd' => 'cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js',
+            'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js',
             'custom' => isset($lists[4]) ? $lists[4] : ''
         ]
     ];
