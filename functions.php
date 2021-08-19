@@ -80,11 +80,6 @@ function themeConfig($form)
 	<p>
 		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">前往发布页</button></a>
 		<a href="https://mdr.docs.fsky7.com/"><button class="btn primary">查看文档</button></a>
-		<button class="btn" style="outline: 0" id="mdr-update-in" onclick="$(this).hide();$('#mdr-update-more').show()">检查并更新主题</button>
-		<span id="mdr-update-more" style="display:none">
-			<button class="btn success" style="outline: 0" id="mdr-update">更新正式版</button>
-			<button class="btn" style="outline: 0" id="mdr-update-dev">更新开发版</button>
-		</span>
 	</p>
 	<p>
 		<form class="protected" action="?themeBackup" method="post" id="mdr-backup">
@@ -122,11 +117,7 @@ function themeConfig($form)
 	}
 	</script>
 EOF;
-    echo "<script>document.getElementById('mdr-version').innerHTML = '" . MDR_VERSION . "'</script>" . '<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';
-    cjUrl('update.php');
-    echo '",true);xmlhttp.send();}}</script>' . '<script>document.getElementById("mdr-update-dev").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问\n更新开发版需要服务器能访问 githubusercontent 服务器")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';
-    cjUrl('update.php?dev=true');
-    echo '",true);xmlhttp.send();}}</script>';
+    echo "<script>document.getElementById('mdr-version').innerHTML = '" . MDR_VERSION . "'</script>";
 
     /* MDr Color 主题色设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
