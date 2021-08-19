@@ -60,16 +60,3 @@ function fetchFiles(string $subdir)
 
     return $files;
 }
-
-/**
- * GitHub Action 
- * 自动更新 Hash 文件
- */
-
-$files = fetchFiles('./');
-$hash = [];
-
-foreach ($files as $file)
-    $hash[] = hash('sha256', file_get_contents($file)) . '  ' . $file;
-
-file_put_contents(__DIR__ . "/hash.txt", implode("\n", $hash));

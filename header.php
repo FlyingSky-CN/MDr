@@ -16,12 +16,13 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             exit();
         } else foreach ($_SESSION['mdrConfig'] as $name => $key) $this->options->$name = $key;
     }
-} ?>
+}
+?>
 <!DOCTYPE html>
 <html <?php if ($this->options->mdrPray) : ?>class="pray" <?php endif; ?> lang="zh-CN">
 
 <head>
-    <meta charset="<?= $this->options->charset ?>" />
+    <meta http-equiv="Content-Type" content="text/html; charset=<?= $this->options->charset ?>" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="<?= MDR_COLOR['theme'][$this->options->mdrPrimary] ?>">
@@ -39,17 +40,21 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
     <?php if (!$this->options->mdrCornertool) : ?>
         <style>
-            *::-webkit-scrollbar {
-                width: 0px !important;
-                height: 0px !important
+            *::-webkit-scrollbar { /* Chrome, Safari, Opera */
+                width: 0px;
+                height: 0px;
+            }
+            html {
+                -ms-overflow-style: none; /* IE, Edge */
+                scrollbar-width: none; /* Firefox */
             }
         </style>
     <?php endif; ?>
     <?php if (MDR_DEBUG) : ?>
         <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
         <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
-    <?php else : ?>
-        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-1') ?>" />
+    <?php else: ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-3') ?>" />
     <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
@@ -66,7 +71,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
             <div class="mdui-progress-indeterminate"></div>
         </div>
         <header class="mdui-appbar mdui-appbar-fixed" style="background: <?= (@$_COOKIE['dark'] == '1') ? '#212121' : '#fff' ?>;z-index:5000;">
-            <div class="mdui-toolbar <?php if ($this->options->mdrNavBackground) : ?>mdui-color-theme<?php endif; ?>">
+            <div class="mdui-toolbar">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">
                     <i class="mdui-icon material-icons">menu</i>
                 </a>
@@ -82,12 +87,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
         </header>
         <aside class="mdui-drawer <?php if (!$this->options->mdrNavDefOpen) : ?>mdui-drawer-close<?php endif; ?>" id="mdrDrawerL">
             <div class="mdui-appbar mdui-hidden-md-up">
-                <div class="mdui-toolbar">
-                    <a class="mdui-btn mdui-btn-icon"><i class="mdui-icon material-icons">close</i></a>
-                    <a class="mdui-typo-title">
-                        <?php ($this->options->customTitle) ? $this->options->customTitle() : $this->options->title() ?>
-                    </a>
-                </div>
+                <div class="mdui-toolbar"></div>
             </div>
             <div class="mdui-tab mdui-tab-full-width" id="mdrTab">
                 <a href="#mdrDrawerLmenu" class="mdui-ripple">菜单</a>
@@ -97,7 +97,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 <ul class="mdui-list" mdui-collapse="{accordion: true}">
                     <form method="post" id="search" action="<?php $this->options->siteUrl(); ?>">
                         <div class="mdui-textfield mdui-textfield-floating-label">
-                            <label class="mdui-textfield-label">Search</label>
+                            <label class="mdui-textfield-label">搜索</label>
                             <input class="mdui-textfield-input" type="text" id="s" name="s" />
                         </div>
                     </form>

@@ -32,12 +32,12 @@ const getDarkModeFromCookie = () => {
  * 是否为 Dark Mode
  */
 const getDarkModeFromDom = () => {
-    return mdui.JQ('body').hasClass('mdui-theme-layout-dark')
+    return mdui.$('body').hasClass('mdui-theme-layout-dark')
 }
 
 /**MDr On DarkMode */
 const onDarkMode = () => {
-    var body = mdui.JQ('body'),
+    var body = mdui.$('body'),
         appbar = document.getElementsByClassName('mdui-appbar')[0];
     console.log('Dark mode on');
     document.cookie = "dark=1;path=/;" + mdrDarkModeFD;
@@ -49,7 +49,7 @@ const onDarkMode = () => {
 
 /**MDr Off Darkmode */
 const offDarkMode = () => {
-    var body = mdui.JQ('body'),
+    var body = mdui.$('body'),
         appbar = document.getElementsByClassName('mdui-appbar')[0];
     console.log('Dark mode off');
     document.cookie = "dark=0;path=/;" + mdrDarkModeFD;
@@ -61,8 +61,8 @@ const offDarkMode = () => {
 
 /* Dark Mode 对于 @print 的适配 */
 window.addEventListener("beforeprint", function () {
-    var body = mdui.JQ('body'),
-        appbar = mdui.JQ('.mdui-appbar');
+    var body = mdui.$('body'),
+        appbar = mdui.$('.mdui-appbar');
     appbar.hide();
     if (body.hasClass('mdui-theme-layout-dark')) {
         body.addClass('mdui-theme-layout-dark-print');
@@ -70,8 +70,8 @@ window.addEventListener("beforeprint", function () {
     }
 });
 window.addEventListener("afterprint", function () {
-    var body = mdui.JQ('body'),
-        appbar = mdui.JQ('.mdui-appbar');
+    var body = mdui.$('body'),
+        appbar = mdui.$('.mdui-appbar');
     appbar.show();
     if (body.hasClass('mdui-theme-layout-dark-print')) {
         body.addClass('mdui-theme-layout-dark');

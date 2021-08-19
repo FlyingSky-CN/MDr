@@ -4,12 +4,22 @@ require_once __DIR__ . '/config.ini.php';
 require_once __DIR__ . '/lib/Main.php';
 require_once __DIR__ . '/lib/ShortCode.php';
 
+$options = Helper::options();
+
 define('MDR_DEBUG', file_exists(__DIR__ . '/.debugger'));
-if (!defined('MDR_OUTREQUIER') && Helper::options()->GravatarUrl)
-    define('__TYPECHO_GRAVATAR_PREFIX__', Helper::options()->GravatarUrl);
+if (!defined('MDR_OUTREQUIER') && $options->GravatarUrl)
+    define('__TYPECHO_GRAVATAR_PREFIX__', $options->GravatarUrl);
 define('MDR_PJAX', isset($_GET['_pjax']) ? true : false);
 define('MDR_COLOR', json_decode(file_get_contents(__DIR__ . '/lib/Color.json'), true));
 define('MDR_VERSION', Typecho_Plugin::parseInfo(__DIR__ . '/../index.php')['version']);
+define('MDR_LANG', __DIR__ . '/../lang');
+
+/* if ($options->lang && $options->lang != 'zh_CN')
+    if (file_exists(MDR_LANG . '/' . $options->lang . '.mo')) {
+        Typecho_I18n::translate('');
+        Typecho_I18n::addLang(MDR_LANG . '/' . $options->lang . '.mo');
+    }
+*/
 
 function cjUrl($path)
 {
@@ -67,7 +77,7 @@ function Postviews($archive)
             Typecho_Cookie::set('contents_views', $cookie);
         }
     }
-    echo $exist == 0 ? '暂无阅读' : $exist . ' 次阅读';
+    echo $exist == 0 ? _t('暂无阅读') : _t('%d 次阅读', $exist);
 }
 
 /**
@@ -129,7 +139,7 @@ function Contents_Post_Initial($limit = 10, $order = 'created')
             echo '<li><a' . ($post['hidden'] && $options->PjaxOption ? '' : ' href="' . $post['permalink'] . '"') . '>' . htmlspecialchars($post['title']) . '</a></li>' . "\n";
         }
     } else {
-        echo '<li>暂无文章</li>' . "\n";
+        echo '<li>' . _t('暂时没有文章') . '</li>' . "\n";
     }
 }
 
@@ -158,7 +168,7 @@ function Contents_Comments_Initial($limit = 10, $ignoreAuthor = 0)
             echo '<li><a' . ($parent['hidden'] && $options->PjaxOption ? '' : ' href="' . permaLink($comment) . '"') . ' title="来自: ' . $parent['title'] . '">' . $comment['author'] . '</a>: ' . ($parent['hidden'] && $options->PjaxOption ? '内容被隐藏' : Typecho_Common::subStr(strip_tags($comment['text']), 0, 35, '...')) . '</li>' . "\n";
         }
     } else {
-        echo '<li>暂无回复</li>' . "\n";
+        echo '<li>' . _t('暂时没有回复') . '</li>' . "\n";
     }
 }
 
@@ -248,14 +258,14 @@ function Whisper()
             );
         } else {
             return array(
-                '<p>暂无内容</p>',
+                '<p>' . _t('暂时没有内容') . '</p>',
                 $page['permalink'],
                 $page['title']
             );
         }
     } else {
         return array(
-            '<p>暂无内容</p>'
+            '<p>' . _t('暂时没有内容') . '</p>'
         );
     }
 }
@@ -398,6 +408,7 @@ function MyLinks($links)
 /* function 许可协议 */
 function license($license)
 {
+    $svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><path fill='#4a4a4a' d='m245.8 214.9-33.2 17.3c-9.4-19.6-25.2-20-27.4-20-22.2 0-33.3 14.6-33.3 43.9 0 23.5 9.2 43.8 33.3 43.8 14.4 0 24.6-7 30.5-21.3l30.6 15.5a73.2 73.2 0 0 1-65.1 39c-22.6 0-74-10.3-74-77 0-58.7 43-77 72.6-77 30.8-.1 52.7 11.9 66 35.8zm143 0-32.7 17.3c-9.5-19.8-25.7-20-27.9-20-22.1 0-33.2 14.6-33.2 43.9 0 23.5 9.2 43.8 33.2 43.8 14.5 0 24.7-7 30.5-21.3l31 15.5c-2 3.8-21.3 39-65 39-22.7 0-74-9.9-74-77 0-58.7 43-77 72.6-77C354 179 376 191 389 214.8zM247.7 8C104.7 8 0 123 0 256c0 138.4 113.6 248 247.6 248C377.5 504 496 403 496 256 496 118 389.4 8 247.6 8zm.8 450.8c-112.5 0-203.7-93-203.7-202.8 0-105.5 85.5-203.3 203.8-203.3A201.7 201.7 0 0 1 451.3 256c0 121.7-99.7 202.9-202.9 202.9z'/></svg>";
     $licenselist = array(
         'BY' => '署名 4.0 国际 (CC BY 4.0)',
         'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
@@ -406,11 +417,24 @@ function license($license)
         'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
         'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
     );
-    if (isset($license) && $license != 'NONE') {
-        echo '<div class="copyright">本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/deed.zh" target="_blank" class="external">' . $licenselist[$license] . '</a> 许可协议进行许可。</div>';
-    } else {
-        echo '<div class="copyright">本篇文章未指定许可协议。</div>';
-    }
+    $text =  (isset($license) && $license != 'NONE') ?
+        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/" target="_blank" class="external">' . $licenselist[$license] . '</a> 许可协议进行许可。' :
+        "本篇文章未指定许可协议。";
+
+    echo "<div class=\"mdui-typo license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
+}
+
+/* function Sponsor */
+function mdrSponsor($class)
+{
+    if (!isset($class->mdrSponsor)) return;
+    if (!is_array($class->mdrSponsor)) return;
+    if (count($class->mdrSponsor) < 1) return;
+    $buttons = '';
+    foreach ($class->mdrSponsor as list($name, $color, $link))
+        $buttons .= "<a href=\"$link\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
+
+    echo '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">喜欢这篇文章？为什么不考虑打赏一下作者呢？</p>' . $buttons . '</div>';
 }
 
 /* function 是否为状态 */
@@ -459,15 +483,17 @@ function staticUrl($file = '')
     $lists = explode("\r\n", Helper::options()->mdrMDUICDNlink);
     $mdrMDUIlinks = [
         'mdui.min.css' => [
-            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css',
-            'bootcss' => 'cdn.bootcss.com/mdui/0.4.2/css/mdui.min.css',
-            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/css/mdui.min.css',
+            'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css',
+            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
+            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/css/mdui.min.css',
+            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'mdui.min.js' => [
-            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js',
-            'bootcss' => 'cdn.bootcss.com/mdui/0.4.2/js/mdui.min.js',
-            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/0.4.3/js/mdui.min.js',
+            'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js',
+            'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
+            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/js/mdui.min.js',
+            'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ]
     ];
@@ -494,13 +520,13 @@ function staticUrl($file = '')
         'jquery.fancybox.min.css' => [
             'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
-            'jd' => 'cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/css/jquery.fancybox.css',
+            'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.css',
             'custom' => isset($lists[3]) ? $lists[3] : ''
         ],
         'jquery.fancybox.min.js' => [
             'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
-            'jd' => 'cdn.jsdelivr.net/npm/fancybox@3.0.1/dist/js/jquery.fancybox.min.js',
+            'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js',
             'custom' => isset($lists[4]) ? $lists[4] : ''
         ]
     ];

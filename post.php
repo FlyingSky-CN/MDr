@@ -51,18 +51,19 @@
             <?php endif;
             endif; ?>
             <?php $this->content(); ?>
-            <?php if (!$this->hidden) : ?>
-                <?php license($this->fields->linceses); ?>
-                <script defer>
-                    <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
-                    mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)
-                    <?php if (!MDR_PJAX) echo "}"; ?>
-                </script>
-            <?php endif; ?>
         </div>
+        <?php if (!$this->hidden) : ?>
+            <div class="tags"><?php mdrTags($this); ?></div>
+            <?php license($this->fields->linceses); ?>
+            <?php mdrSponsor($this->options); ?>
+            <script defer>
+                <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
+                mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)
+                <?php if (!MDR_PJAX) echo "}"; ?>
+            </script>
+        <?php endif; ?>
     </div>
     <?php if (!$this->hidden) : ?>
-        <div class="tags"><?php mdrTags($this); ?></div>
         <?php $this->need('comments.php'); ?>
     <?php endif; ?>
     <div class="mdui-row footer-nav">

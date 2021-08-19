@@ -25,7 +25,7 @@
             <?php $this->content(); ?>
         </div>
     </div>
-    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3">
+    <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3" style="margin: -16px -8px 0;">
         <?php Links(); ?>
         <?php if ($this->options->RandomLinks) : ?>
             <script>

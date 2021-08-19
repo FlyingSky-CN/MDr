@@ -80,11 +80,6 @@ function themeConfig($form)
 	<p>
 		<a href="https://blog.fsky7.com/archives/60/"><button class="btn primary">前往发布页</button></a>
 		<a href="https://mdr.docs.fsky7.com/"><button class="btn primary">查看文档</button></a>
-		<button class="btn" style="outline: 0" id="mdr-update-in" onclick="$(this).hide();$('#mdr-update-more').show()">检查并更新主题</button>
-		<span id="mdr-update-more" style="display:none">
-			<button class="btn success" style="outline: 0" id="mdr-update">更新正式版</button>
-			<button class="btn" style="outline: 0" id="mdr-update-dev">更新开发版</button>
-		</span>
 	</p>
 	<p>
 		<form class="protected" action="?themeBackup" method="post" id="mdr-backup">
@@ -122,11 +117,7 @@ function themeConfig($form)
 	}
 	</script>
 EOF;
-    echo "<script>document.getElementById('mdr-version').innerHTML = '" . MDR_VERSION . "'</script>" . '<script>document.getElementById("mdr-update").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';
-    cjUrl('update.php');
-    echo '",true);xmlhttp.send();}}</script>' . '<script>document.getElementById("mdr-update-dev").onclick = function(){if(confirm("你确认要执行吗？更新过程中站点可能无法正常访问\n更新开发版需要服务器能访问 githubusercontent 服务器")){$("#mdr-update-more").hide();$("#mdr-update-in").show();document.getElementById("mdr-update-in").innerHTML = "正在检查并更新";document.getElementById("mdr-update-in").setAttribute("disabled","true");var xmlhttp;if (window.XMLHttpRequest){xmlhttp=new XMLHttpRequest()}else{xmlhttp=new ActiveXObject("Microsoft.XMLHTTP")}xmlhttp.onreadystatechange=function(){if(xmlhttp.readyState==4){document.getElementById("mdr-update-pre").innerHTML=xmlhttp.responseText;$("#mdr-update-pre").slideDown();document.getElementById("mdr-update-in").innerHTML = "完成";}else{document.getElementById("mdr-update-in").innerHTML = "正在执行";}};xmlhttp.open("GET","';
-    cjUrl('update.php?dev=true');
-    echo '",true);xmlhttp.send();}}</script>';
+    echo "<script>document.getElementById('mdr-version').innerHTML = '" . MDR_VERSION . "'</script>";
 
     /* MDr Color 主题色设置 */
     $mdrNotice = new Typecho_Widget_Helper_Form_Element_Text('mdrNotice', NULL, NULL, _t('<h2 id="mdr-color">主题色设置 <small>Color</small></h2>'));
@@ -162,11 +153,12 @@ EOF;
             'bootcss' => _t('BootCDN'),
             'cdnjs' => _t('CDNJS'),
             'cssnet' => _t('CSSnet'),
+            'jsdelivr' => _t('jsDelivr'),
             'custom' => _t('自建')
         ),
-        'cssnet',
+        'jsdelivr',
         _t('MDUI 静态资源来源'),
-        _t('默认 CSSnet ，请根据需求选择合适来源')
+        _t('默认 jsDelivr ，请根据需求选择合适来源')
     );
     $form->addInput($mdrMDUICDN);
 
@@ -207,8 +199,8 @@ EOF;
     $mdrNavDefOpen = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrNavDefOpen',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         false,
         _t('默认打开抽屉导航栏'),
@@ -216,23 +208,11 @@ EOF;
     );
     $form->addInput($mdrNavDefOpen);
 
-    $mdrNavBackground = new Typecho_Widget_Helper_Form_Element_Radio(
-        'mdrNavBackground',
-        array(
-            true => _t('开'),
-            false => _t('关')
-        ),
-        false,
-        _t('应用栏背景'),
-        _t('开启时应用栏背景颜色为主题主色，关闭后则为白色')
-    );
-    $form->addInput($mdrNavBackground);
-
     $mdrNavColorBut = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrNavColorBut',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('抽屉导航栏彩色按钮'),
@@ -294,8 +274,8 @@ EOF;
     $RandomLinks = new Typecho_Widget_Helper_Form_Element_Radio(
         'RandomLinks',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('友情链接随机排序'),
@@ -306,8 +286,8 @@ EOF;
     $mdrPray = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrPray',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         false,
         _t('全站暗淡'),
@@ -318,8 +298,8 @@ EOF;
     $mdrHitokoto = new Typecho_Widget_Helper_Form_Element_Radio(
         'mdrHitokoto',
         array(
-            true => _t('开'),
-            false => _t('关')
+            true => _t('启用'),
+            false => _t('关闭')
         ),
         true,
         _t('一言 API 开关'),
@@ -431,7 +411,7 @@ EOF;
         'mdrPostAuthor',
         array(
             true => _t('显示'),
-            false => _t('不显示')
+            false => _t('隐藏')
         ),
         false,
         _t('文章内页显示作者'),
