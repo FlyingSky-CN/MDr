@@ -14,7 +14,7 @@
     <br />&copy; <?php echo date('Y'); ?>
     <a href="<?php $this->options->siteUrl(); ?>"><?php ($this->options->mdrCopytext) ? $this->options->mdrCopytext() : $this->options->title() ?></a>.
     Powered by <a href="http://www.typecho.org" target="_blank">Typecho</a>.
-    Theme <a href="https://blog.fsky7.com/archives/60/">MDr</a> by <a href="https://fsky7.com">FlyingSky</a>.<br>
+    Theme <a href="https://github.com/FlyingSky-CN/MDr/tree/petals-dev">MDr-Petals</a> by <a href="https://fsky7.com">FlyingSky</a>.<br>
 </footer>
 </main>
 <?php if (!MDR_PJAX) : ?>
@@ -26,12 +26,12 @@
         const mdrVersion = '<?= MDR_VERSION ?>';
         const mdrSnackbar = '<?= $this->options->mdrSnackbar ?>';
         const mdrTab = new mdui.Tab('#mdrTab');
-        const mdrTabDom = mdui.JQ('#mdrTab');
+        const mdrTabDom = mdui.$('#mdrTab');
         const mdrAjaxLoadTimes = <?= $this->options->AjaxLoadTimes ?>;
     </script>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
-            var $$ = mdui.JQ;
+            var $$ = mdui.$;
 
             function mdrDebug() {
                 $$.each($$('a[href]'), function(i, item) {
@@ -315,14 +315,14 @@
             const mdrDarkModeFD = '<?= ($this->options->DarkModeFD && $this->options->DarkModeDomain) ? "domain=" . $this->options->DarkModeDomain : '' ?>';
             const mdrThemeColor = '<?= $this->options->mdrChrome ? $this->options->mdrChrome : "#FFFFFF" ?>';
         </script>
-        <script src="<?php cjUrl('js/darkmode.js') ?>"></script>
+        <script src="<?php cjUrl('js/darkmode.js?v=petals-dev-2') ?>"></script>
     <?php endif; ?>
     <?php if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null !== @$_GET['debug']) : ?>
         <script>
             mdrDebug();
         </script>
     <?php endif; ?>
-    <script src="<?= cjUrl('js/script.js?v=petals-dev-1' . (MDR_DEBUG ? '&ts=' . time() : '')) ?>"></script>
+    <script src="<?= cjUrl('js/script.js?v=petals-dev-2' . (MDR_DEBUG ? '&ts=' . time() : '')) ?>"></script>
 <?php endif; ?>
 </body>
 

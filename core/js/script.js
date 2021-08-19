@@ -77,10 +77,10 @@ const mdrCatalog = (data) => {
         return;
     }
     mdrTab.show(0);
-    var list = mdui.JQ('#mdrDrawerLtoc .mdui-list');
+    var list = mdui.$('#mdrDrawerLtoc .mdui-list');
     list.empty();
     data.forEach((value) => {
-        var dom = mdui.JQ(document.createElement('a'));
+        var dom = mdui.$(document.createElement('a'));
         dom.addClass('mdui-list-item mdui-ripple');
         dom.addClass('mdui-p-l-' + Math.min(value.depth * 2, 5));
         dom.attr('href', '#cl-' + value.count);

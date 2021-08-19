@@ -54,7 +54,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
         <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
         <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
     <?php else: ?>
-        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-1') ?>" />
+        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-3') ?>" />
     <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />

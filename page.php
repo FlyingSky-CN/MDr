@@ -17,8 +17,8 @@
         </div>
         <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
             <?php $this->content(); ?>
-            <?php license($this->fields->linceses); ?>
         </div>
+        <?php license($this->fields->linceses); ?>
     </div>
     <?php $this->need('comments.php'); ?>
 </div>
