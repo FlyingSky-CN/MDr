@@ -1,4 +1,4 @@
-name: Auto Build
+name: Build-Ci
 
 on:
   push:
@@ -9,14 +9,13 @@ jobs:
   run:
     runs-on: ubuntu-latest
     steps:
-    - name: Check
+    - name: Checkout
       uses: actions/checkout@v1
-    - name: Build
-      run: php .build.php
-    - name: Commit
-      uses: stefanzweifel/git-auto-commit-action@v2.5.0
+    - name: Build MDr-Petals
+      run: |
+        php .build.php
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v2
       with:
-        commit_message: Auto Build
-        branch: petals
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: sci-hub-p2p-frontend-${{ matrix.node-version }}
+          path: ./
