@@ -1,8 +1,8 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-    <div class="mdui-card breadcrumbs">
-        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
+    <div class="mdui-card mdr-breadcrumbs">
+        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">&#xe5cc;</i></span>
         <span class="mdui-chip-title mdui-p-l-0">
             <a href="<?php $this->options->siteUrl(); ?>">首页</a> &nbsp;&raquo;&nbsp;
             <?php $this->title() ?>
@@ -18,7 +18,7 @@
         <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
             <?php $this->content(); ?>
         </div>
-        <?php license($this->fields->linceses); ?>
+        <?= mdrLicense($this->fields->linceses) ?>
     </div>
     <?php $this->need('comments.php'); ?>
 </div>

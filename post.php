@@ -1,8 +1,8 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-    <div class="mdui-card breadcrumbs">
-        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
+    <div class="mdui-card mdr-breadcrumbs">
+        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">&#xe5cc;</i></span>
         <span class="mdui-chip-title mdui-p-l-0">
             <a href="<?php $this->options->siteUrl(); ?>">首页</a> &nbsp;&raquo;&nbsp;
             <?php $this->category(' & '); ?> &nbsp;&raquo;&nbsp;
@@ -53,9 +53,9 @@
             <?php $this->content(); ?>
         </div>
         <?php if (!$this->hidden) : ?>
-            <div class="tags"><?php mdrTags($this); ?></div>
-            <?php license($this->fields->linceses); ?>
-            <?php mdrSponsor($this->options); ?>
+            <?= mdrTags($this->tags); ?>
+            <?= mdrLicense($this->fields->linceses); ?>
+            <?= mdrSponsor($this->options->mdrSponsor); ?>
             <script defer>
                 <?php if (!MDR_PJAX) echo "window.onload = () => {"; ?>
                 mdrCatalog(<?= json_encode(getCatalog($this->content)) ?>)

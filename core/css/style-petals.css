@@ -1,197 +1,65 @@
 /**
- * MDr 是一套基于 MDUI 开发的 Typecho 模板
+ * Page
  */
 
-.ajaxload {
-    height: 36px;
-}
+/** Breadcrumbs */
 
-.ajaxload .next {
-    text-align: center;
-    width: 160px;
-    border-radius: 18px;
-    background: #e8e8e8;
-}
-
-.mdui-theme-layout-dark .ajaxload .next {
-    background: #424242;
-}
-
-.error-page {
-    margin: 256px 0!important;
-    text-align: center
-}
-
-/***** Helper ******/
-
-.mdui-container {
-    max-width: 896px;
-}
-
-#main {
-    margin-top: -12px;
-}
-
-#main>* {
-    margin: 24px 0;
-}
-
-@media (max-width: 599px) {
-    #main {
-        margin-top: -8px;
-    }
-    #main>* {
-        margin: 12px 0;
-    }
-}
-
-.hidden {
-    visibility: hidden;
-}
-
-/***** Material Design 2 ******/
-
-.mdr-appbar-title {
-    font-size: 1.25rem;
-    line-height: 1.5;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-body.mdui-theme-layout-dark, .mdui-theme-layout-dark header, .mdui-theme-layout-dark aside {
-    background: #121212 !important;
-}
-
-.mdui-theme-layout-dark .mdui-card {
-    background-color: #212121 !important;
-}
-
-.mdui-appbar {
-    transition: box-shadow .28s cubic-bezier(.4, 0, .2, 1);
-}
-
-footer {
-    font-size: .75rem !important;
-    line-height: 1.25rem !important;
-    opacity: 0.75 !important;
-}
-
-@media (min-width: 1024px) {
-    .mdui-list-item {
-        border-top-right-radius: 24px;
-        border-bottom-right-radius: 24px;
-    }
-    .mdui-list-dense .mdui-list-item {
-        border-top-right-radius: 20px;
-        border-bottom-right-radius: 20px;
-    }
-}
-
-.mdui-card, .mdui-menu {
-    border-radius: 7px !important;
-}
-
-/***** Post ******/
-
-/** Breadcrumbs **/
-
-.breadcrumbs {
+.mdr-breadcrumbs {
     margin-top: 20px;
     background-color: rgba(180, 180, 180, 0.25);
 }
 
-.breadcrumbs .mdui-chip-icon {
+.mdr-breadcrumbs .mdui-chip-icon {
     background: none;
 }
 
-.breadcrumbs .mdui-chip-icon .mdui-icon {
+.mdr-breadcrumbs .mdui-chip-icon .mdui-icon {
     color: #444;
 }
 
-.breadcrumbs .mdui-chip-title {
+.mdr-breadcrumbs .mdui-chip-title {
     width: calc(100% - 48px);
     height: 32px;
     text-overflow: ellipsis;
-    -webkit-line-clamp: 1;
     overflow: hidden;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 
-.mdui-theme-layout-dark .breadcrumbs .mdui-chip-icon .mdui-icon {
+.mdui-theme-layout-dark .mdr-breadcrumbs .mdui-chip-icon .mdui-icon {
     color: #fff;
 }
 
-/** Status Post **/
+/**
+ * Post
+ */
 
-.post.status {
-    background-color: #e8e8e8
+/** Tags */
+
+.mdr-tags {
+    padding: 0 16px 8px;
+    text-align: center
 }
 
-.mdui-theme-layout-dark .post.status {
-    background-color: #424242
+.mdr-tags .mdui-chip {
+    margin: 0 2px 8px;
 }
 
-.mdui-theme-layout-dark .post.status .inner {
-    color: hsla(0, 0%, 100%, .8) !important
-}
 
-.post.status .tag, .post.status .time {
-    position: absolute;
-    top: 0;
-    font-size: 15px
-}
+/** License */
 
-.mdui-theme-layout-dark .post.status .tag {
-    background-color: #424242;
-}
-
-.mdui-theme-layout-dark .post.status .time {
-    color: #5a5a5a;
-}
-
-.post.status .tag {
-    left: 15px;
-    padding: 10px;
-    border-radius: 0 0 5px 5px;
-    background-color: #dadada;
-    color: grey
-}
-
-.post.status .time {
-    right: 0;
-    padding: 14px 12px;
-    color: #bcbcbc;
-}
-
-.post.status .inner {
-    font-size: 16px;
-    padding: 70px 16px 24px
-}
-
-.mdr-icon-info {
-    font-size: 14px;
-    padding-bottom: 2px;
-}
-
-/** License **/
-
-.license {
+.mdr-license {
     padding: 24px;
     overflow: hidden;
     position: relative;
     background-color: #f5f5f5;
 }
 
-body.mdui-theme-layout-dark .license {
-    background-color: #383838;
-}
-
-.license, .license p {
+.mdr-license, .mdr-license p {
     margin: 0;
 }
 
-.license svg {
+.mdr-license svg {
     position: absolute;
     width: 128px;
     height: 128px;
@@ -200,11 +68,15 @@ body.mdui-theme-layout-dark .license {
     opacity: .25;
 }
 
-body.mdui-theme-layout-dark .license svg {
+body.mdui-theme-layout-dark .mdr-license {
+    background-color: #383838;
+}
+
+body.mdui-theme-layout-dark .mdr-license svg {
     filter: invert(1);
 }
 
-/** Sponsor **/
+/** Sponsor */
 
 .mdr-sponsor {
     text-align: center;
@@ -212,70 +84,4 @@ body.mdui-theme-layout-dark .license svg {
 
 .mdr-sponsor .mdui-btn {
     border-radius: 5px;
-}
-
-/** Tags **/
-
-.tags {
-    margin-bottom: 15px;
-    padding: 0 10px;
-    text-align: center
-}
-
-.tags .mdui-chip {
-    margin: 0 2px;
-}
-
-/* Page Navigator */
-
-.page-navigator {
-    list-style: none;
-    margin: 20px 0;
-    padding: 0px
-}
-
-.page-navigator li {
-    display: inline-block;
-    margin-right: 8px;
-    height: 36px;
-    border-radius: 3px;
-    line-height: 36px;
-    color: #000;
-    font-size: 14px;
-    background: #e8e8e8;
-    text-align: center;
-    -webkit-transition: -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
-    transition: -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
-    transition: box-shadow .25s cubic-bezier(.4, 0, .2, 1);
-    transition: box-shadow .25s cubic-bezier(.4, 0, .2, 1), -webkit-box-shadow .25s cubic-bezier(.4, 0, .2, 1);
-    will-change: box-shadow;
-}
-
-.mdui-theme-layout-dark .page-navigator li {
-    background: #444;
-    color: #fff
-}
-
-.page-navigator li:hover, .page-navigator li:focus {
-    -webkit-box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
-    box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
-}
-
-.page-navigator a, .page-navigator span {
-    padding: 11px 16px
-}
-
-.page-navigator.ajaxload .next {
-    width: 100%
-}
-
-/** Links Page **/
-
-.link-card {
-    padding-top: 100%;
-}
-
-.link-card>* {
-    position: absolute;
-    bottom: 0;
 }
