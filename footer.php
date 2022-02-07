@@ -116,7 +116,7 @@
                         mdui.Drawer('#mdrDrawerL').close();
                     }
                     <?php if ($this->options->mdrQrCode) : ?>
-                        getQrCode();
+                        genQrCode();
                     <?php endif; ?>
                     al();
                     ac();
@@ -293,20 +293,20 @@
         <!-- mdr | mdrQrCode -->
         <script src="<?= staticUrl('jquery.qrcode.min.js') ?>"></script>
         <script>
-            var mdrQrCode = new mdui.Menu('#switchQrCode', '#pageQrCode', {
+            new mdui.Menu('#switchQrCode', '#mdrQrCode', {
                 position: "bottom",
-                align: "right"
+                align: "right",
             });
 
-            function getQrCode() {
-                $('#pageQrCode').html('');
-                $('#pageQrCode').qrcode({
+            function genQrCode() {
+                $('#mdrQrCode').html('');
+                $('#mdrQrCode').qrcode({
                     width: 150,
                     height: 150,
                     text: window.location.href
                 })
             }
-            getQrCode();
+            genQrCode();
         </script>
     <?php endif; ?>
     <?php if ($this->options->DarkMode) : ?>

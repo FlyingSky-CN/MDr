@@ -40,21 +40,22 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
     <link rel="stylesheet" href="<?= staticUrl('mdui.min.css') ?>" />
     <?php if (!$this->options->mdrCornertool) : ?>
         <style>
-            *::-webkit-scrollbar { /* Chrome, Safari, Opera */
+            *::-webkit-scrollbar {
                 width: 0px;
                 height: 0px;
             }
+
             html {
-                -ms-overflow-style: none; /* IE, Edge */
-                scrollbar-width: none; /* Firefox */
+                -ms-overflow-style: none;
+                scrollbar-width: none;
             }
         </style>
     <?php endif; ?>
     <?php if (MDR_DEBUG) : ?>
         <link rel="stylesheet" href="<?php cjUrl('css/style-petals.css?ts=' . time()) ?>" />
         <link rel="stylesheet" href="<?php cjUrl('css/style.css?ts=' . time()) ?>" />
-    <?php else: ?>
-        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=petals-dev-3') ?>" />
+    <?php else : ?>
+        <link rel="stylesheet" href="<?php cjUrl('css/style.min.css?v=' . str_replace(' ', '-', strtolower(MDR_VERSION))) ?>" />
     <?php endif; ?>
     <?php if ($this->options->ViewImg) : ?>
         <link rel="stylesheet" href="<?= staticUrl('jquery.fancybox.min.css') ?>" />
@@ -80,7 +81,7 @@ if ($this->user->hasLogin() && $this->user->pass('administrator', true) and null
                 </a>
                 <div class="mdui-toolbar-spacer"></div>
                 <?php if ($this->options->mdrQrCode) : ?>
-                    <div id="pageQrCode" class="mdui-menu" onclick="mdrQrCode.close()"></div>
+                    <div id="mdrQrCode" class="mdui-menu mdr-qrcode" onclick="mdrQrCode.close()"></div>
                     <button class="mdui-btn mdui-btn-icon" id="switchQrCode"><i class="mdui-icon material-icons">phonelink</i></button>
                 <?php endif; ?>
             </div>

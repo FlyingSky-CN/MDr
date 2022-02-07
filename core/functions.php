@@ -487,7 +487,7 @@ function mdrIsStatus($post)
 {
     if (!$post->tags) return false;
     foreach ($post->tags as $tag)
-        if (in_array($tag, ['Status', 'status', '状态'])) return true;
+        if (in_array($tag['name'], ['Status', 'status', '状态'])) return true;
     return false;
 }
 

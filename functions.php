@@ -95,8 +95,6 @@ function themeConfig($form)
         <a href="#mdr-cdn"><button class="btn btn-s">CDN</button></a>
         <a href="#mdr-nav"><button class="btn btn-s">边栏</button></a>
         <a href="#mdr-pjax"><button class="btn btn-s">Ajax</button></a>
-        <a href="#mdr-dark"><button class="btn btn-s">黑暗模式</button></a>
-        <a href="#mdr-music"><button class="btn btn-s">背景音乐</button></a>
         <a href="#mdr-func"><button class="btn btn-s">附加功能</button></a>
 		<a href="#mdr-custom"><button class="btn btn-s">自定义</button></a>
 		<a href="#mdr-end"><button class="btn btn-s">完成</button></a>

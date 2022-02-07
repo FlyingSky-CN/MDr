@@ -1,4 +1,8 @@
 /**
+ * Main
+ */
+
+/**
  * Page
  */
 
@@ -28,6 +32,22 @@
 
 .mdui-theme-layout-dark .mdr-breadcrumbs .mdui-chip-icon .mdui-icon {
     color: #fff;
+}
+
+/** QR Code */
+
+.mdr-qrcode {
+    background: #fff !important;
+    line-height: 0px;
+    width: 170px;
+    height: 170px;
+    padding: 10px 0;
+}
+
+.mdr-qrcode canvas {
+    display: block !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
 }
 
 /**
