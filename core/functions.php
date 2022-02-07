@@ -405,73 +405,6 @@ function MyLinks($links)
     }
 }
 
-/* function 许可协议 */
-function license($license)
-{
-    $svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><path fill='#4a4a4a' d='m245.8 214.9-33.2 17.3c-9.4-19.6-25.2-20-27.4-20-22.2 0-33.3 14.6-33.3 43.9 0 23.5 9.2 43.8 33.3 43.8 14.4 0 24.6-7 30.5-21.3l30.6 15.5a73.2 73.2 0 0 1-65.1 39c-22.6 0-74-10.3-74-77 0-58.7 43-77 72.6-77 30.8-.1 52.7 11.9 66 35.8zm143 0-32.7 17.3c-9.5-19.8-25.7-20-27.9-20-22.1 0-33.2 14.6-33.2 43.9 0 23.5 9.2 43.8 33.2 43.8 14.5 0 24.7-7 30.5-21.3l31 15.5c-2 3.8-21.3 39-65 39-22.7 0-74-9.9-74-77 0-58.7 43-77 72.6-77C354 179 376 191 389 214.8zM247.7 8C104.7 8 0 123 0 256c0 138.4 113.6 248 247.6 248C377.5 504 496 403 496 256 496 118 389.4 8 247.6 8zm.8 450.8c-112.5 0-203.7-93-203.7-202.8 0-105.5 85.5-203.3 203.8-203.3A201.7 201.7 0 0 1 451.3 256c0 121.7-99.7 202.9-202.9 202.9z'/></svg>";
-    $licenselist = array(
-        'BY' => '署名 4.0 国际 (CC BY 4.0)',
-        'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
-        'BY-ND' => '署名-禁止演绎 4.0 国际 (CC BY-ND 4.0)',
-        'BY-NC' => '署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)',
-        'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
-        'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
-    );
-    $text =  (isset($license) && $license != 'NONE') ?
-        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/" target="_blank" class="external">' . $licenselist[$license] . '</a> 许可协议进行许可。' :
-        "本篇文章未指定许可协议。";
-
-    echo "<div class=\"mdui-typo license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
-}
-
-/* function Sponsor */
-function mdrSponsor($class)
-{
-    if (!isset($class->mdrSponsor)) return;
-    if (!is_array($class->mdrSponsor)) return;
-    if (count($class->mdrSponsor) < 1) return;
-    $buttons = '';
-    foreach ($class->mdrSponsor as list($name, $color, $link))
-        $buttons .= "<a href=\"$link\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
-
-    echo '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">喜欢这篇文章？为什么不考虑打赏一下作者呢？</p>' . $buttons . '</div>';
-}
-
-/* function 是否为状态 */
-function is_status($post)
-{
-    $tags = $post->tags;
-    $is = false;
-    foreach ($tags as $tag) {
-        if ($tag['name'] == '状态' || $tag['name'] == 'status' || $tag['name'] == 'Status') {
-            $is = true;
-            break;
-        }
-    }
-    return $is;
-}
-
-/* function 输出文章标签 */
-function mdrTags($post)
-{
-    if ($post->tags) {
-        $result = '';
-        foreach ($post->tags as $tag) {
-            $result .= '<div class="mdui-chip"><a href="' . $tag['permalink'] . '"><span class="mdui-chip-title">'
-                . $tag['name'] . '</span></a></div> ';
-        }
-        echo $result;
-    } else {
-        echo '<div class="mdui-chip"><span class="mdui-chip-title">None</span></div>';
-    }
-}
-
-/* function 公网安备logo */
-function mdrGWABlogo()
-{
-    return file_get_contents(__DIR__ . '/src/GWABlogo.txt');
-}
-
 /**
  * 获取静态资源 URL
  * 
@@ -538,4 +471,76 @@ function staticUrl($file = '')
         $which = Helper::options()->cjCDN;
     } else return '';
     return isset($links[$which]) ? '//' . $links[$which] : '';
+}
+
+/******************
+ *   MDr Petals   *
+ ******************/
+
+/**
+ * 判断文章是否为状态文章
+ * 
+ * @param $post
+ * @return bool
+ */
+function mdrIsStatus($post)
+{
+    if (!$post->tags) return false;
+    foreach ($post->tags as $tag)
+        if (in_array($tag['name'], ['Status', 'status', '状态'])) return true;
+    return false;
+}
+
+/**
+ * 输出文章标签
+ * 
+ * @param array $tags 标签数组
+ * @return string
+ */
+function mdrTags($tags)
+{
+    if (!$tags) return;
+    $result = '';
+    foreach ($tags as $tag)
+        $result .= '<div class="mdui-chip"><a href="' . $tag['permalink'] . '"><span class="mdui-chip-title">'
+            . $tag['name'] . '</span></a></div> ';
+    print "<div class=\"mdr-tags\">$result</div>";
+}
+
+/**
+ * 输出文章许可协议模块
+ * 
+ * @param string $license 文章许可协议
+ * @return string
+ */
+function mdrLicense($license)
+{
+    $svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><path fill='#4a4a4a' d='m245.8 214.9-33.2 17.3c-9.4-19.6-25.2-20-27.4-20-22.2 0-33.3 14.6-33.3 43.9 0 23.5 9.2 43.8 33.3 43.8 14.4 0 24.6-7 30.5-21.3l30.6 15.5a73.2 73.2 0 0 1-65.1 39c-22.6 0-74-10.3-74-77 0-58.7 43-77 72.6-77 30.8-.1 52.7 11.9 66 35.8zm143 0-32.7 17.3c-9.5-19.8-25.7-20-27.9-20-22.1 0-33.2 14.6-33.2 43.9 0 23.5 9.2 43.8 33.2 43.8 14.5 0 24.7-7 30.5-21.3l31 15.5c-2 3.8-21.3 39-65 39-22.7 0-74-9.9-74-77 0-58.7 43-77 72.6-77C354 179 376 191 389 214.8zM247.7 8C104.7 8 0 123 0 256c0 138.4 113.6 248 247.6 248C377.5 504 496 403 496 256 496 118 389.4 8 247.6 8zm.8 450.8c-112.5 0-203.7-93-203.7-202.8 0-105.5 85.5-203.3 203.8-203.3A201.7 201.7 0 0 1 451.3 256c0 121.7-99.7 202.9-202.9 202.9z'/></svg>";
+    $licenses = array(
+        'BY' => '署名 4.0 国际 (CC BY 4.0)',
+        'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
+        'BY-ND' => '署名-禁止演绎 4.0 国际 (CC BY-ND 4.0)',
+        'BY-NC' => '署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)',
+        'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
+        'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
+    );
+    $text =  (isset($license) && $license != 'NONE') ?
+        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/" target="_blank">' . ($licenses[$license] ?? $license) . '</a> 许可协议进行许可。' :
+        "本篇文章未指定许可协议。";
+    return "<div class=\"mdui-typo mdr-license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
+}
+
+/**
+ * 输出赞助模块
+ * 
+ * @param array $sponsor 赞助信息
+ * @return string
+ */
+function mdrSponsor($sponsor)
+{
+    if (count($sponsor) < 1) return;
+    $buttons = '';
+    foreach ($sponsor as list($name, $color, $link))
+        $buttons .= "<a href=\"$link\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
+    return '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">喜欢这篇文章？为什么不考虑打赏一下作者呢？</p>' . $buttons . '</div>';
 }

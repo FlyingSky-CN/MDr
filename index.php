@@ -4,7 +4,7 @@
  * 
  * @package MDr
  * @author FlyingSky
- * @version Petals Dev
+ * @version Petals 0.1
  * @link https://fsky7.com/
  */
 $this->need('header.php'); ?>
@@ -21,7 +21,7 @@ $this->need('header.php'); ?>
         </div>
     <?php endif; ?>
     <?php while ($this->next()) : ?>
-        <?php if (is_status($this) && !$this->hidden) : /* Status Post */ ?>
+        <?php if (mdrIsStatus($this) && !$this->hidden) : /* Status Post */ ?>
             <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
                 <div class="tag"><i class="mdui-icon material-icons">message</i></div>
                 <div class="time mdui-text-right">

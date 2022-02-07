@@ -1,24 +1,24 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit; ?>
 <?php $this->need('header.php'); ?>
 <div id="main">
-    <div class="mdui-card breadcrumbs">
-        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">chevron_right</i></span>
+    <div class="mdui-card mdr-breadcrumbs">
+        <span class="mdui-chip-icon"><i class="mdui-icon material-icons">&#xe5cc;</i></span>
         <span class="mdui-chip-title mdui-p-l-0">
             <a href="<?php $this->options->siteUrl(); ?>">首页</a> &nbsp;&raquo;&nbsp;
             <?php $this->archiveTitle([
-                'category'  =>  _t('分类 %s 下的文章'),
-                'search'    =>  _t('包含关键字 %s 的文章'),
-                'tag'       =>  _t('标签 %s 下的文章'),
-                'date'      =>  _t('在 %s 发布的文章'),
-                'author'    =>  _t('作者 %s 发布的文章')
+                'category'  =>  _t('分类「%s」下的文章'),
+                'search'    =>  _t('包含关键字「%s」的文章'),
+                'tag'       =>  _t('标签「%s」下的文章'),
+                'date'      =>  _t('在「%s」发布的文章'),
+                'author'    =>  _t('作者「%s」发布的文章')
             ], '', ''); ?>
         </span>
     </div>
     <?php if ($this->have()) : ?>
         <?php while ($this->next()) : ?>
-            <?php if (is_status($this) && !$this->hidden) : /* Status Post */ ?>
+            <?php if (mdrIsStatus($this) && !$this->hidden) : /* Status Post */ ?>
                 <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
-                    <div class="tag"><i class="mdui-icon material-icons">message</i></div>
+                    <div class="tag"><i class="mdui-icon material-icons">&#xe0c9;</i></div>
                     <div class="time mdui-text-right">
                         <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i> <?php $this->date(); ?>
                     </div>

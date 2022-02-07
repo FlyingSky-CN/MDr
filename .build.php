@@ -1,7 +1,31 @@
-<?php if (php_sapi_name() !== 'cli') exit();
+<?php
 
+/**
+ * MDr theme build script.
+ * 
+ * @author FlyingSky
+ * @package MDr
+ * @since petals
+ */
+
+/**
+ * 只允许在 CLI 下运行 
+ */
+if (php_sapi_name() !== 'cli') exit();
+
+/**
+ * 定义版权信息
+ * 
+ * @var string
+ */
 define('Copyright', 'https://github.com/FlyingSky-CN/MDr');
 
+/**
+ * 压缩 CSS 文件
+ * 
+ * @param string $buffer CSS 内容
+ * @return string
+ */
 function compressCSS($buffer)
 {
     $buffer = preg_replace('!/\*[^*]*\*+([^/][^*]*\*+)*/!', '', $buffer);
@@ -15,9 +39,12 @@ function compressCSS($buffer)
         ['{', ':', ',', '}', '!'],
         $buffer
     );
-    return '/* ' . Copyright . ' @time '.date('Y-m-d H:i:s').' */' . PHP_EOL . $buffer;
+    return '/* ' . Copyright . ' @time ' . date('Y-m-d H:i:s') . ' */' . PHP_EOL . $buffer;
 }
 
+/**
+ * 处理 CSS 文件
+ */
 file_put_contents(
     __DIR__ . '/core/css/style.min.css',
     compressCSS(
@@ -25,38 +52,3 @@ file_put_contents(
             file_get_contents(__DIR__ . '/core/css/style-petals.css')
     )
 );
-
-/**
- * exceptFiles
- * 排除的文件
- * 
- * @var array
- */
-define('exceptFiles', ['.git', '.github', '.build.php', 'style.css', 'hash.txt', '.gitignore']);
-
-/**
- * fetchFiles
- * 扫描目录下所有文件
- * 包含子目录
- * 排除 exceptFiles
- * 
- * @param string $subdir
- * @return array
- */
-function fetchFiles(string $subdir)
-{
-    $items = array_reverse(array_diff(scandir($subdir), ['.', '..']));
-    $files = [];
-
-    foreach ($items as $item) {
-        if (is_file($subdir . $item))
-            if (!in_array($item, exceptFiles))
-                $files[] = $subdir . $item;
-        if (is_dir($subdir . $item))
-            if (!in_array($item, exceptFiles))
-                foreach (fetchFiles($subdir . $item . '/') as $file)
-                    $files[] = $file;
-    }
-
-    return $files;
-}
