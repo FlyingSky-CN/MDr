@@ -8,9 +8,9 @@
             <?php $this->title() ?>
         </span>
     </div>
-    <div id="post" class="mdui-card <?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?> mdui-shadow-6" style="margin-top:20px;">
+    <article id="post" class="mdr-post mdui-card <?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?> mdui-shadow-6" style="margin-top:20px;">
         <div class="mdui-card-media">
-            <?php echo postThumb($this); ?>
+            <?= postThumb($this) ?>
         </div>
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
@@ -19,7 +19,7 @@
             <?php $this->content(); ?>
         </div>
         <?= mdrLicense($this->fields->linceses) ?>
-    </div>
+    </article>
     <?php $this->need('comments.php'); ?>
 </div>
 <?php $this->need('footer.php'); ?>

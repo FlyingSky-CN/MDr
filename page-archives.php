@@ -16,7 +16,7 @@
             </span>
         </div>
     <?php endif; ?>
-    <div id="post" class="mdui-card mdui-shadow-6" style="margin-top:20px;">
+    <article id="post" class="mdr-post mdui-card mdui-shadow-6" style="margin-top:20px;">
         <div class="mdui-card-media">
             <?php echo postThumb($this); ?>
         </div>
@@ -49,6 +49,6 @@
             echo $output;
             ?>
         </div>
-    </div>
+    </article>
 </div>
 <?php $this->need('footer.php'); ?>

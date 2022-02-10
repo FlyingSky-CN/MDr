@@ -27,14 +27,14 @@ $this->need('header.php'); ?>
                 <div class="time mdui-text-right">
                     <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i> <?php $this->date(); ?>
                 </div>
-                <article class="inner">
+                <article class="mdr-post inner">
                     <span class="mdui-typo">
                         <?php $this->content(); ?>
                     </span>
                 </article>
             </article>
         <?php else : /* Normal Post */ ?>
-            <article class="mdui-card mdui-hoverable post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
+            <article class="mdr-post mdui-card mdui-hoverable post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
                 <a href="<?php $this->permalink() ?>">
                     <?php if (!$this->hidden && postThumb($this)) : /* If theres thumb */ ?>
                         <div class="mdui-card-media">
@@ -44,7 +44,7 @@ $this->need('header.php'); ?>
                     <div class="mdui-card-primary mdui-p-b-0">
                         <div class="mdui-card-primary-title"><?php $this->title() ?></div>
                     </div>
-                    <div class="mdui-card-content mdui-p-b-1">
+                    <div class="mdui-card-content mdui-p-b-1 mdui-typo">
                         <?php if ($this->options->PjaxOption && $this->hidden)
                             _e('这篇文章受密码保护，输入密码才能看哦。');
                         else
