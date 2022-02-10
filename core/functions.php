@@ -478,6 +478,36 @@ function staticUrl($file = '')
  ******************/
 
 /**
+ * 发送使用情况统计给开发团队
+ * 
+ * 统计数据仅用于开发团队参考 MDr 主题的安装及升级情况，
+ * 只有有限的内容会被目标服务器记录。这些数据不会用于任
+ * 何商业目的，也不会被发送给任何第三方。如果您不希望向
+ * 我们发送任何数据，将该函数内第一行代码的注释删除即可。
+ * 详见隐私声明：https://docs.fsky7.com/mdr/privacy/
+ * 
+ * @return void
+ */
+function mdrReportStatistics()
+{
+    // return;
+    if (!is_writeable(__DIR__)) return;
+    if (file_exists(__DIR__ . '/.statistics'))
+        if (file_get_contents(__DIR__ . '/.statistics') == MDR_VERSION)
+            return;
+    $url = 'https://api.fsky7.com/mdr/statistics';
+    $version = 'MDr ' . MDR_VERSION;
+    $hostname = $_SERVER['HTTP_HOST'];
+    $context = stream_context_create(['http' => [
+        'method' => 'PUT',
+        'user_agent' => "MDr Statistics Reporter",
+        'timeout' => 2.5,
+    ]]);
+    file_put_contents(__DIR__ . '/.statistics', MDR_VERSION);
+    file_get_contents("$url?version=$version&hostname=$hostname", false, $context);
+}
+
+/**
  * 判断文章是否为状态文章
  * 
  * @param $post
