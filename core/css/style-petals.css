@@ -54,17 +54,36 @@
  * Post
  */
 
+/** Content */
+
+.mdr-post .mdui-typo {
+    font-size: 16px;
+    line-height: 1.75;
+}
+
+.mdr-post .mdui-card-primary,
+.mdr-post .mdui-card-content {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 20px;
+}
+
+.mdr-post .mdui-typo blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 24px;
+}
+
 /** Tags */
 
 .mdr-tags {
-    padding: 0 16px 8px;
+    padding: 0 24px 16px;
     text-align: center
 }
 
 .mdr-tags .mdui-chip {
     margin: 0 2px 8px;
 }
-
 
 /** License */
 

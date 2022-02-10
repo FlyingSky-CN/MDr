@@ -9,7 +9,7 @@
             <?= $this->title() ?>
         </span>
     </div>
-    <div id="post" class="mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?> mdui-shadow-6" style="margin-top:20px;">
+    <article id="post" class="mdr-post mdui-card<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?> mdui-shadow-6" style="margin-top:20px;">
         <?php if (postThumb($this) && !$this->hidden) : ?>
             <div class="mdui-card-media">
                 <?php echo postThumb($this); ?>
@@ -62,7 +62,7 @@
                 <?php if (!MDR_PJAX) echo "}"; ?>
             </script>
         <?php endif; ?>
-    </div>
+    </article>
     <?php if (!$this->hidden) : ?>
         <?php $this->need('comments.php'); ?>
     <?php endif; ?>

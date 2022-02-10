@@ -16,7 +16,7 @@
             </span>
         </div>
     <?php endif; ?>
-    <div id="post" class="mdui-card mdui-shadow-6" style="margin-top:20px;">
+    <article id="post" class="mdr-post mdui-card mdui-shadow-6" style="margin-top:20px;">
         <div class="mdui-card-primary">
             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
             <div class="mdui-card-primary-subtitle">Links</div>
@@ -24,7 +24,7 @@
         <div class="mdui-card-content mdui-typo" style="padding: 0px 16px 16px 16px;">
             <?php $this->content(); ?>
         </div>
-    </div>
+    </article>
     <div class="mdui-row-xs-1 mdui-row-sm-2 mdui-row-md-3" style="margin: -16px -8px 0;">
         <?php Links(); ?>
         <?php if ($this->options->RandomLinks) : ?>

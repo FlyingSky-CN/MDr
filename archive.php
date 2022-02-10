@@ -17,7 +17,7 @@
     <?php if ($this->have()) : ?>
         <?php while ($this->next()) : ?>
             <?php if (mdrIsStatus($this) && !$this->hidden) : /* Status Post */ ?>
-                <article class="mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
+                <article class="mdr-post mdui-card mdui-shadow-0 status post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
                     <div class="tag"><i class="mdui-icon material-icons">&#xe0c9;</i></div>
                     <div class="time mdui-text-right">
                         <i class="mdui-icon material-icons mdr-icon-info">&#xe192;</i> <?php $this->date(); ?>
@@ -29,7 +29,7 @@
                     </article>
                 </article>
             <?php else : /* Normal Post */ ?>
-                <article class="mdui-card mdui-hoverable post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
+                <article class="mdr-post mdui-card mdui-hoverable post<?php if ($this->options->PjaxOption && $this->hidden) : ?> protected<?php endif; ?>">
                     <a href="<?php $this->permalink() ?>">
                         <?php if (!$this->hidden && postThumb($this)) : /* If theres thumb */ ?>
                             <div class="mdui-card-media">
@@ -39,7 +39,7 @@
                         <div class="mdui-card-primary mdui-p-b-0">
                             <div class="mdui-card-primary-title"><?php $this->title() ?></div>
                         </div>
-                        <div class="mdui-card-content mdui-p-b-1">
+                        <div class="mdui-card-content mdui-p-b-1 mdui-typo">
                             <?php if ($this->options->PjaxOption && $this->hidden) : ?>
                                 这篇文章受密码保护，输入密码才能看哦
                             <?php else : ?>
