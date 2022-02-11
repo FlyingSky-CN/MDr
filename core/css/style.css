@@ -164,49 +164,56 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     .mdui-container {
         padding: 0
     }
+
     footer {
         padding: 0 8px
     }
 }
 
-html.pray {
-    -webkit-filter: grayscale(100%);
-    -moz-filter: grayscale(100%);
-    -ms-filter: grayscale(100%);
-    -o-filter: grayscale(100%);
-    filter: grayscale(100%);
-    filter: gray;
-}
-
 @media print {
+
     header,
     .mdui-fab,
+    .mdr-breadcrumbs,
+    .footer-nav,
     .respond {
         display: none !important
     }
+
     body {
         padding-top: 0px !important
     }
+
     .mdui-card {
         box-shadow: none !important
     }
+
+    * {
+        border-radius: 0 !important;
+    }
+
     #post p a::after,
     #post li a::after {
         content: " ("attr(href) ") "
     }
+
     #main .mdui-card:first-child {
         margin-top: 0px !important
     }
+
     html>body {
         background-color: white !important
     }
+
     .mdui-theme-layout-dark main p,
     .mdui-theme-layout-dark main li {
         color: rgba(0, 0, 0, .95) !important
     }
+
     img {
         filter: brightness(100%) !important
     }
+
     body {
         font: 13pt Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif !important
     }
@@ -362,14 +369,6 @@ div.mdui-card-header-avatar img {
     margin-left: 10px
 }
 
-#loading {
-    left: 0;
-    display: none;
-    border-radius: 0px;
-    z-index: 9999;
-    position: fixed
-}
-
 .mdui-fab {
     z-index: 9999;
 }
@@ -402,7 +401,7 @@ div.mdui-card-header-avatar img {
 }
 
 .error-page {
-    margin: 256px 0!important;
+    margin: 256px 0 !important;
     text-align: center
 }
 
@@ -410,18 +409,11 @@ div.mdui-card-header-avatar img {
     max-width: 896px;
 }
 
-#main {
-    margin-top: -12px;
-}
-
 #main>* {
     margin: 24px 0;
 }
 
 @media (max-width: 599px) {
-    #main {
-        margin-top: -8px;
-    }
     #main>* {
         margin: 12px 0;
     }
@@ -464,6 +456,7 @@ footer {
         border-top-right-radius: 24px;
         border-bottom-right-radius: 24px;
     }
+
     .mdui-list-dense .mdui-list-item {
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
@@ -471,7 +464,7 @@ footer {
 }
 
 .mdui-card, .mdui-menu {
-    border-radius: 7px !important;
+    border-radius: 7px;
 }
 
 /***** Post ******/

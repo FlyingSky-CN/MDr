@@ -1,33 +1,18 @@
 <?php if (!defined('__TYPECHO_ROOT_DIR__')) exit;
-$showLimited = false;
-if (count(FindContents('page-whisper.php')) > 0)
-    if (FindContents('page-whisper.php')[0]["permalink"] == $this->permalink) :
-        if (!$this->user->hasLogin()) :
-            $showLimited = true;
-        else :
-            if (!$this->user->pass('editor', true)) :
-                $showLimited = true;
-            endif;
-        endif;
-    endif;
-if ($showLimited) :
-    echo '<style>.respond{display:none}</style>';
-endif;
+
 function threadedComments($comments, $options)
 {
     $commentClass = '';
-    if ($comments->authorId) {
-        if ($comments->authorId == $comments->ownerId) {
+    if ($comments->authorId)
+        if ($comments->authorId == $comments->ownerId)
             $commentClass .= ' comment-by-author';
-        } else {
+        else
             $commentClass .= ' comment-by-user';
-        }
-    }
     if ($comments->type == 'pingback') : ?>
-        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php echo $commentClass; ?> mdui-shadow-0 pingback">
+        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?= $commentClass ?> mdui-shadow-0 pingback">
             <div class="mdui-card-header">
                 <div class="mdui-card-header-avatar" mdui-tooltip="{content: 'Pingback'}">
-                    <i class="mdui-icon material-icons">reply</i>
+                    <i class="mdui-icon material-icons">&#xe15e;</i>
                 </div>
                 <div class="mdui-card-header-title">
                     <?php CommentAuthor($comments); ?>
@@ -36,16 +21,16 @@ function threadedComments($comments, $options)
             </div>
         </div>
     <?php else : ?>
-        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?php echo $commentClass; ?>">
+        <div id="<?php $comments->theId(); ?>" class="mdui-card comment-body<?= $commentClass ?>">
             <div class="mdui-card-header">
                 <div class="mdui-card-header-avatar">
                     <?php $comments->gravatar('40'); ?>
                 </div>
                 <div class="mdui-card-header-title">
                     <?php CommentAuthor($comments); ?>
-                    <?php if ($comments->authorId == $comments->ownerId) { ?>
-                        <span class="author-icon">博主</span>
-                    <?php } ?>
+                    <?php if ($comments->authorId == $comments->ownerId) : ?>
+                        <span class="author-icon"><?= _t('博主') ?></span>
+                    <?php endif; ?>
                 </div>
                 <div class="mdui-card-header-subtitle"><?php $comments->date(); ?></div>
             </div>
@@ -54,7 +39,7 @@ function threadedComments($comments, $options)
             </div>
             <div class="mdui-card-actions" style="text-align: right">
                 <?php if ($comments->status == 'waiting') { ?>
-                    <span class="mdui-btn mdui-btn-dense">您的评论正等待审核！</span>
+                    <span class="mdui-btn mdui-btn-dense"><?= _t('您的评论正等待审核！') ?></span>
                 <?php } ?>
                 <span class="mdui-btn mdui-ripple mdui-btn-dense"><?php $comments->reply(); ?></span>
             </div>
@@ -64,59 +49,58 @@ function threadedComments($comments, $options)
                 </div>
             <?php endif; ?>
         </div>
-<?php
-    endif;
-} ?>
+    <?php endif; ?>
+<?php } ?>
 <!-- mdr | Comments -->
-<div id="comments" <?php if ($showLimited) : ?> class="limited" <?php endif; ?>>
+<div id="comments">
     <?php $this->comments()->to($comments); ?>
     <?php if ($this->allow('comment')) : ?>
         <!-- mdr | allowComment -->
         <div class="mdui-card respond" id="<?php $this->respondId(); ?>">
             <div class="mdui-card-primary">
-                <div class="mdui-card-primary-title" id="response">发表评论</div>
+                <div class="mdui-card-primary-title" id="response"><?= _t('发表评论') ?></div>
                 <div class="mdui-card-primary-subtitle"><?php $this->commentsNum(_t('暂无评论'), _t('已有 <span class="comment-num">%d</span> 条评论')); ?></div>
             </div>
             <div class="mdui-card-content">
                 <form method="post" action="<?php $this->commentUrl() ?>" id="comment-form" class="comment-form mdui-row">
                     <div class="mdui-textfield mdui-textfield-floating-label mdui-col-md-12">
-                        <i class="mdui-icon material-icons">textsms</i>
-                        <label class="mdui-textfield-label">说点什么...</label>
+                        <i class="mdui-icon material-icons">&#xe0d8;</i>
+                        <label class="mdui-textfield-label"><?= _t('说点什么……') ?></label>
                         <textarea class="mdui-textfield-input" name="text" id="textarea" require><?php $this->remember('text'); ?></textarea>
-                        <div class="mdui-textfield-error" role="alert">内容不能为空</div>
+                        <div class="mdui-textfield-error" role="alert"><?= _t('内容不能为空') ?></div>
                     </div>
                     <?php if ($this->user->hasLogin()) : ?>
                         <div class="mdui-textfield mdui-textfield-floating-label mdui-col-md-12">
-                            <i class="mdui-icon material-icons">account_circle</i>
-                            <label class="mdui-textfield-label">登录身份</label>
+                            <i class="mdui-icon material-icons">&#xe853;</i>
+                            <label class="mdui-textfield-label"><?= _t('登录身份') ?></label>
                             <input class="mdui-textfield-input text" value="<?php $this->user->screenName(); ?>" readonly>
-                            <div class="mdui-textfield-error" role="alert">昵称不能为空</div>
+                            <div class="mdui-textfield-error" role="alert"><?= _t('昵称不能为空') ?></div>
                         </div>
                     <?php else : ?>
                         <div class="mdui-textfield mdui-textfield-floating-label mdui-col-md-4">
-                            <i class="mdui-icon material-icons">account_circle</i>
-                            <label class="mdui-textfield-label">昵称</label>
+                            <i class="mdui-icon material-icons">&#xe853;</i>
+                            <label class="mdui-textfield-label"><?= _t('昵称') ?></label>
                             <input class="mdui-textfield-input text" type="text" name="author" id="author" value="<?php $this->remember('author'); ?>" required>
-                            <div class="mdui-textfield-error" role="alert">昵称不能为空</div>
+                            <div class="mdui-textfield-error" role="alert"><?= _t('昵称不能为空') ?></div>
                         </div>
                         <div class="mdui-textfield mdui-textfield-floating-label mdui-col-md-4">
-                            <i class="mdui-icon material-icons">email</i>
-                            <label class="mdui-textfield-label">邮箱</label>
+                            <i class="mdui-icon material-icons">&#xe0be;</i>
+                            <label class="mdui-textfield-label"><?= _t('邮箱') ?></label>
                             <input class="mdui-textfield-input text" type="email" name="mail" id="mail" value="<?php $this->remember('mail'); ?>" <?php if ($this->options->commentsRequireMail) : ?> required<?php endif; ?>>
-                            <div class="mdui-textfield-error" role="alert">请按格式填写邮箱</div>
+                            <div class="mdui-textfield-error" role="alert"><?= _t('请按格式填写邮箱') ?></div>
                         </div>
                         <div class="mdui-textfield mdui-textfield-floating-label mdui-col-md-4">
-                            <i class="mdui-icon material-icons">link</i>
-                            <label class="mdui-textfield-label">网站</label>
+                            <i class="mdui-icon material-icons">&#xe157;</i>
+                            <label class="mdui-textfield-label"><?= _t('网站') ?></label>
                             <input class="mdui-textfield-input text" type="url" name="url" id="url" value="<?php $this->remember('url'); ?>" <?php if ($this->options->commentsRequireURL) : ?> required<?php endif; ?>>
-                            <div class="mdui-textfield-error" role="alert">请按格式填写网站</div>
+                            <div class="mdui-textfield-error" role="alert"><?= _t('请按格式填写网站') ?></div>
                         </div>
                     <?php endif; ?>
                     <div class="mdui-col-md-12">
                         <div class="mdui-btn mdui-ripple cancel-comment-reply" style="display:none">
                             <?php $comments->cancelReply(); ?>
                         </div>
-                        <button type="submit" class="submit mdui-btn mdui-ripple mdui-color-theme-accent mdui-float-right">提交评论</button>
+                        <button type="submit" class="submit mdui-btn mdui-ripple mdui-color-theme-accent mdui-float-right"><?= _t('提交评论') ?></button>
                     </div>
                 </form>
             </div>
@@ -199,6 +183,6 @@ function threadedComments($comments, $options)
     <?php endif; ?>
     <?php if ($comments->have()) : ?>
         <?php $comments->listComments(); ?>
-        <?php $comments->pageNav('上一页', '下一页', 0, '..'); ?>
+        <?php $comments->pageNav(_t('上一页'), _t('下一页'), 0, '...'); ?>
     <?php endif; ?>
 </div>

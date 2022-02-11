@@ -50,6 +50,39 @@
     margin-left: auto !important;
 }
 
+/** Pray */
+
+.mdr-pray {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+}
+
+/** No Scrollbar */
+
+.mdr-noscrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.mdr-noscrollbar *::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+}
+
+/** Loading */
+
+#mdr-loading {
+    left: 0;
+    display: none;
+    border-radius: 0px;
+    z-index: 9999;
+    position: fixed
+}
+
 /**
  * Post
  */
