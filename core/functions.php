@@ -418,14 +418,14 @@ function staticUrl($file = '')
         'mdui.min.css' => [
             'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css',
             'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
-            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/css/mdui.min.css',
+            'bootcss' => 'cdn.bootcdn.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'mdui.min.js' => [
             'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js',
             'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
-            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/js/mdui.min.js',
+            'bootcss' => 'cdn.bootcdn.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ]
@@ -433,31 +433,31 @@ function staticUrl($file = '')
     $lists = explode("\r\n", Helper::options()->mdrcjCDNlink);
     $cjCDNlinks = [
         'jquery.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery/3.4.1/jquery.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'jquery.pjax.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ],
         'jquery.qrcode.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery.qrcode@1.0/jquery.qrcode.min.js',
             'custom' => isset($lists[2]) ? $lists[2] : ''
         ],
         'jquery.fancybox.min.css' => [
-            'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
             'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.css',
             'custom' => isset($lists[3]) ? $lists[3] : ''
         ],
         'jquery.fancybox.min.js' => [
-            'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js',
             'custom' => isset($lists[4]) ? $lists[4] : ''
