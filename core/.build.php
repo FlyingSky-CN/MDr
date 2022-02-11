@@ -46,9 +46,9 @@ function compressCSS($buffer)
  * 处理 CSS 文件
  */
 file_put_contents(
-    __DIR__ . '/core/css/style.min.css',
+    __DIR__ . '/css/style.min.css',
     compressCSS(
-        file_get_contents(__DIR__ . '/core/css/style.css') .
-            file_get_contents(__DIR__ . '/core/css/style-petals.css')
+        file_get_contents(__DIR__ . '/css/style.css') .
+            file_get_contents(__DIR__ . '/css/style-petals.css')
     )
 );
