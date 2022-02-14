@@ -160,16 +160,3 @@
 </body>
 
 </html>
-<?php
-
-/** MDr HTML 压缩 */
-if ($this->options->compressHtml) {
-    return;
-    /**
-     * 请注意，该功能与 JavaScript 冲突，待修复。
-     */
-    $html_source = ob_get_contents();
-    ob_clean();
-    print compressHtml($html_source);
-    ob_end_flush();
-}
