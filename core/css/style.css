@@ -115,22 +115,6 @@ ul li p {
     margin: 0
 }
 
-body::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-    background: transparent;
-    -webkit-box-shadow: inset 2px 0 2px 0 rgba(0, 0, 0, .25);
-    box-shadow: inset 2px 0 2px 0 rgba(0, 0, 0, .25)
-}
-
-body::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, .2)
-}
-
-body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, .3) !important
-}
-
 .mdui-theme-layout-dark img {
     filter: brightness(75%)
 }
@@ -150,12 +134,6 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     font-size: 12px;
     line-height: 19px;
     text-align: center
-}
-
-.copyright {
-    color: #999;
-    font-size: .875em;
-    line-height: 1.5
 }
 
 @media(max-width: 1023px) {
