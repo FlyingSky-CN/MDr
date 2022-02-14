@@ -142,9 +142,7 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
 #post img,
 #post video,
 .comment-content img,
-.comment-content video,
-.whisper img,
-.whisper video {
+.comment-content video {
     max-width: 100%
 }
 

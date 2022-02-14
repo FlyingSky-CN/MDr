@@ -114,6 +114,9 @@ function getCatalog()
     return $catalog;
 }
 
+/**
+ * 获取评论发送者
+ */
 function CommentAuthor($obj, $autoLink = NULL, $noFollow = NULL)
 {
     $options = Helper::options();
@@ -123,52 +126,6 @@ function CommentAuthor($obj, $autoLink = NULL, $noFollow = NULL)
         echo '<a href="' . $obj->url . '"' . ($noFollow ? ' rel="external nofollow"' : NULL) . (strstr($obj->url, $options->index) == $obj->url ? NULL : ' target="_blank"') . '>' . $obj->author . '</a>';
     } else {
         echo $obj->author;
-    }
-}
-
-function Contents_Post_Initial($limit = 10, $order = 'created')
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $posts = $db->fetchAll($db->select()->from('table.contents')
-        ->where('type = ? AND status = ? AND created < ?', 'post', 'publish', $options->time)
-        ->order($order, Typecho_Db::SORT_DESC)
-        ->limit($limit), array(Typecho_Widget::widget('Widget_Abstract_Contents'), 'filter'));
-    if ($posts) {
-        foreach ($posts as $post) {
-            echo '<li><a' . ($post['hidden'] && $options->PjaxOption ? '' : ' href="' . $post['permalink'] . '"') . '>' . htmlspecialchars($post['title']) . '</a></li>' . "\n";
-        }
-    } else {
-        echo '<li>' . _t('暂时没有文章') . '</li>' . "\n";
-    }
-}
-
-function Contents_Comments_Initial($limit = 10, $ignoreAuthor = 0)
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $select = $db->select()->from('table.comments')
-        ->where('status = ? AND created < ?', 'approved', $options->time)
-        ->order('coid', Typecho_Db::SORT_DESC)
-        ->limit($limit);
-    if ($options->commentsShowCommentOnly) {
-        $select->where('type = ?', 'comment');
-    }
-    if ($ignoreAuthor == 1) {
-        $select->where('ownerId <> authorId');
-    }
-    $page_whisper = FindContents('page-whisper.php', 'commentsNum', 'd');
-    if (!empty($page_whisper)) {
-        $select->where('cid <> ? OR (cid = ? AND parent <> ?)', $page_whisper[0]['cid'], $page_whisper[0]['cid'], '0');
-    }
-    $comments = $db->fetchAll($select);
-    if ($comments) {
-        foreach ($comments as $comment) {
-            $parent = FindContent($comment['cid']);
-            echo '<li><a' . ($parent['hidden'] && $options->PjaxOption ? '' : ' href="' . permaLink($comment) . '"') . ' title="来自: ' . $parent['title'] . '">' . $comment['author'] . '</a>: ' . ($parent['hidden'] && $options->PjaxOption ? '内容被隐藏' : Typecho_Common::subStr(strip_tags($comment['text']), 0, 35, '...')) . '</li>' . "\n";
-        }
-    } else {
-        echo '<li>' . _t('暂时没有回复') . '</li>' . "\n";
     }
 }
 
@@ -237,39 +194,6 @@ function FindContents($val = NULL, $order = 'order', $sort = 'a', $publish = NUL
     return $db->fetchAll($select, array(Typecho_Widget::widget('Widget_Abstract_Contents'), 'filter'));
 }
 
-/* function 输出轻语 */
-function Whisper()
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $page = FindContents('page-whisper.php', 'commentsNum', 'd');
-    if (isset($page[0])) {
-        $page = $page[0];
-        $comment = $db->fetchAll($db->select()->from('table.comments')
-            ->where('cid = ? AND status = ? AND parent = ?', $page['cid'], 'approved', '0')
-            ->order('coid', Typecho_Db::SORT_DESC)
-            ->limit(1));
-        if ($comment) {
-            $content = hrefOpen(Markdown::convert($comment[0]['text']));
-            return array(
-                strip_tags($content, '<p><br><strong><a><img><pre><code>' . $options->commentsHTMLTagAllowed),
-                $page['permalink'],
-                $page['title']
-            );
-        } else {
-            return array(
-                '<p>' . _t('暂时没有内容') . '</p>',
-                $page['permalink'],
-                $page['title']
-            );
-        }
-    } else {
-        return array(
-            '<p>' . _t('暂时没有内容') . '</p>'
-        );
-    }
-}
-
 function Links_list()
 {
     $db = Typecho_Db::get();
@@ -330,15 +254,6 @@ function Links($short = false)
         }
     }
     echo $link ? $link : '<div class="mdui-chip"><span class="mdui-chip-icon"><i class="mdui-icon material-icons">label_outline</i></span><span class="mdui-chip-title">暂无链接</span></div>' . "\n";
-}
-
-/* function 总访问量 */
-function theAllViews()
-{
-    $db = Typecho_Db::get();
-    $prefix = $db->getPrefix();
-    $row = $db->fetchAll('SELECT SUM(VIEWS) FROM `' . $prefix . 'contents`');
-    return number_format($row[0]['SUM(VIEWS)']);
 }
 
 /* function 导航位内容 */
@@ -506,11 +421,7 @@ function mdrLicense($license)
     );
     $text =  ($license == 'NONE' || !isset($licenses[$license])) ?
         _t('本篇文章未指定许可协议。') :
-        str_replace(
-            '%s',
-            '<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/">' . $licenses[$license] . '</a>',
-            _t('本篇文章采用 %s 许可协议进行许可。')
-        );
+        _t('本篇文章采用 %s 许可协议进行许可。', '<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/">' . $licenses[$license] . '</a>');
     return "<div class=\"mdui-typo mdr-license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
 }
 
