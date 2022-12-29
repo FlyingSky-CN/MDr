@@ -491,6 +491,16 @@ footer {
 
 /***** Post ******/
 
+@media (max-width: 600px) {
+    .mdui-card-media {
+        height: 175px;
+    }
+    .mdui-card-media img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
 /** Status Post **/
 
 .post.status {
