@@ -25,29 +25,22 @@
             <div class="mdui-card-primary-subtitle">Archives</div>
         </div>
         <div class="mdui-card-content" style="padding: 0px;">
-            <?php
-            $stat = Typecho_Widget::widget('Widget_Stat');
-            $this->widget('Widget_Contents_Post_Recent', 'pageSize=' . $stat->publishedPostsNum)->to($archives);
-            $year = 0;
-            $mon = 0;
-            $i = 0;
-            $j = 0;
-            $output = '<div class="mdui-list mdui-list-dense">';
-            while ($archives->next()) {
-                $year_tmp = date('Y', $archives->created);
-                if ($year != $year_tmp) {
-                    $year = $year_tmp;
-                    $output .= '<li class="mdui-subheader">' . date('Y', $archives->created) . '</li>';
-                }
-                if ($this->options->PjaxOption && $archives->hidden) {
-                    $output .= '<li class="mdui-list-item mdui-ripple"><div class="mdui-list-item-content">' . date('m/d ', $archives->created) . $archives->title . '</div></li>';
-                } else {
-                    $output .= '<a href="' . $archives->permalink . '"><li class="mdui-list-item mdui-ripple"><div class="mdui-list-item-content">' . date('m/d ', $archives->created) . $archives->title . '</div></li></a>';
-                }
-            }
-            $output .= '</div>';
-            echo $output;
-            ?>
+            <div class="mdui-list mdui-list-dense">
+                <?php
+                $this->widget(
+                    'Widget_Contents_Post_Recent',
+                    'pageSize=' . Typecho_Widget::widget('Widget_Stat')->publishedPostsNum
+                )->to($archives);
+                $current_year = 0;
+                while ($archives->next()) {
+                    $year_tmp = date('Y', $archives->created);
+                    if ($current_year != $year_tmp) {
+                        $current_year = $year_tmp;
+                        print('<li class="mdui-subheader">' . date('Y', $archives->created) . '</li>');
+                    }
+                    print('<a href="' . $archives->permalink . '"><li class="mdui-list-item mdui-ripple"><div class="mdui-list-item-content">' . date('m/d ', $archives->created) . $archives->title . '</div></li></a>');
+                } ?>
+            </div>
         </div>
     </article>
 </div>
