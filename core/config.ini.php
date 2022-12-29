@@ -14,4 +14,5 @@ define('MDR_CONFIG', [
     'mdrSponsor' => [
         //['爱发电', 'deep-purple-accent', 'https://afdian.net'],
     ], //参照上述格式
+    'mdrSiteArchived' => false,
 ]);
