@@ -164,6 +164,7 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     .mdui-container {
         padding: 0
     }
+
     footer {
         padding: 0 8px
     }
@@ -179,34 +180,43 @@ html.pray {
 }
 
 @media print {
+
     header,
     .mdui-fab,
     .respond {
         display: none !important
     }
+
     body {
         padding-top: 0px !important
     }
+
     .mdui-card {
         box-shadow: none !important
     }
+
     #post p a::after,
     #post li a::after {
-        content: " ("attr(href) ") "
+        content: " (" attr(href) ") "
     }
+
     #main .mdui-card:first-child {
         margin-top: 0px !important
     }
+
     html>body {
         background-color: white !important
     }
+
     .mdui-theme-layout-dark main p,
     .mdui-theme-layout-dark main li {
         color: rgba(0, 0, 0, .95) !important
     }
+
     img {
         filter: brightness(100%) !important
     }
+
     body {
         font: 13pt Georgia, "Nimbus Roman No9 L", "Songti SC", "Noto Serif CJK SC", "Source Han Serif SC", "Source Han Serif CN", STSong, "AR PL New Sung", "AR PL SungtiL GB", NSimSun, SimSun, "TW\-Sung", "WenQuanYi Bitmap Song", "AR PL UMing CN", "AR PL UMing HK", "AR PL UMing TW", "AR PL UMing TW MBE", PMingLiU, MingLiU, serif !important
     }
@@ -402,7 +412,7 @@ div.mdui-card-header-avatar img {
 }
 
 .error-page {
-    margin: 256px 0!important;
+    margin: 256px 0 !important;
     text-align: center
 }
 
@@ -422,6 +432,7 @@ div.mdui-card-header-avatar img {
     #main {
         margin-top: -8px;
     }
+
     #main>* {
         margin: 12px 0;
     }
@@ -441,7 +452,9 @@ div.mdui-card-header-avatar img {
     white-space: nowrap;
 }
 
-body.mdui-theme-layout-dark, .mdui-theme-layout-dark header, .mdui-theme-layout-dark aside {
+body.mdui-theme-layout-dark,
+.mdui-theme-layout-dark header,
+.mdui-theme-layout-dark aside {
     background: #121212 !important;
 }
 
@@ -464,13 +477,15 @@ footer {
         border-top-right-radius: 24px;
         border-bottom-right-radius: 24px;
     }
+
     .mdui-list-dense .mdui-list-item {
         border-top-right-radius: 20px;
         border-bottom-right-radius: 20px;
     }
 }
 
-.mdui-card, .mdui-menu {
+.mdui-card,
+.mdui-menu {
     border-radius: 7px !important;
 }
 
@@ -490,7 +505,8 @@ footer {
     color: hsla(0, 0%, 100%, .8) !important
 }
 
-.post.status .tag, .post.status .time {
+.post.status .tag,
+.post.status .time {
     position: absolute;
     top: 0;
     font-size: 15px
@@ -558,12 +574,14 @@ footer {
     color: #fff
 }
 
-.page-navigator li:hover, .page-navigator li:focus {
+.page-navigator li:hover,
+.page-navigator li:focus {
     -webkit-box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
-.page-navigator a, .page-navigator span {
+.page-navigator a,
+.page-navigator span {
     padding: 11px 16px
 }
 
