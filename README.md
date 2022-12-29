@@ -2,10 +2,10 @@
 
 Typecho Theme | MDr - 书写你的篇章
 
-![Version](https://img.shields.io/badge/version-Petals-e16b8c.svg?style=flat)
-![Typecho](https://img.shields.io/badge/Typecho-1.1%2B-467b96.svg?style=flat)
-![License](https://img.shields.io/badge/license-MIT-orange.svg?style=flat)
-![Docs](https://github.com/FlyingSky-CN/MDr-docs/workflows/docs%20publish/badge.svg?branch=master)
+[![MDr Version](https://img.shields.io/badge/Version-Petals%200.2%20Dev-e16b8c.svg?style=flat)](https://github.com/FlyingSky-CN/MDr/tree/petals)
+[![Typecho Version](https://img.shields.io/badge/Typecho-1.1%2B-467b96.svg?style=flat)](https://typecho.org/)
+[![PHP Version](https://img.shields.io/badge/PHP-7.0+-4f5b93.svg?style=flat&logo=php&logoColor=white)](https://www.php.net/)
+[![License](https://img.shields.io/badge/License-MIT-orange.svg?style=flat)](https://github.com/FlyingSky-CN/MDr/blob/petals/LICENSE)
 
 ## 演示
 
@@ -19,7 +19,7 @@ Typecho Theme | MDr - 书写你的篇章
 
 使用指南 : <https://blog.fsky7.com/archives/93>
 
-主题文档 : <https://mdr.docs.fsky7.com>
+主题文档 : <https://docs.fsky7.com/mdr/>
 
 ## 划水
 

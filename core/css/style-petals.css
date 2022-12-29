@@ -1,9 +1,50 @@
 /**
  * Main
+ * 与网页本身有关的样式
  */
+
+/** Pray */
+
+.mdr-pray {
+    -webkit-filter: grayscale(100%);
+    -moz-filter: grayscale(100%);
+    -ms-filter: grayscale(100%);
+    -o-filter: grayscale(100%);
+    filter: grayscale(100%);
+    filter: gray;
+}
+
+/** Scrollbar */
+
+body::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background: transparent;
+    -webkit-box-shadow: inset 2px 0 2px 0 rgba(0, 0, 0, .25);
+    box-shadow: inset 2px 0 2px 0 rgba(0, 0, 0, .25);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, .2);
+}
+
+body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, .3) !important;
+}
+
+.mdr-noscrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.mdr-noscrollbar *::-webkit-scrollbar {
+    width: 0px !important;
+    height: 0px !important;
+}
 
 /**
  * Page
+ * 与整个网页有关的样式
  */
 
 /** Breadcrumbs */
@@ -87,8 +128,19 @@
     height: 0px;
 }
 
+/** Loading */
+
+#mdr-loading {
+    left: 0;
+    display: none;
+    border-radius: 0px;
+    z-index: 9999;
+    position: fixed
+}
+
 /**
  * Post
+ * 文章相关的样式
  */
 
 /** Content */

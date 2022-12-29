@@ -114,6 +114,9 @@ function getCatalog()
     return $catalog;
 }
 
+/**
+ * 获取评论发送者
+ */
 function CommentAuthor($obj, $autoLink = NULL, $noFollow = NULL)
 {
     $options = Helper::options();
@@ -123,52 +126,6 @@ function CommentAuthor($obj, $autoLink = NULL, $noFollow = NULL)
         echo '<a href="' . $obj->url . '"' . ($noFollow ? ' rel="external nofollow"' : NULL) . (strstr($obj->url, $options->index) == $obj->url ? NULL : ' target="_blank"') . '>' . $obj->author . '</a>';
     } else {
         echo $obj->author;
-    }
-}
-
-function Contents_Post_Initial($limit = 10, $order = 'created')
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $posts = $db->fetchAll($db->select()->from('table.contents')
-        ->where('type = ? AND status = ? AND created < ?', 'post', 'publish', $options->time)
-        ->order($order, Typecho_Db::SORT_DESC)
-        ->limit($limit), array(Typecho_Widget::widget('Widget_Abstract_Contents'), 'filter'));
-    if ($posts) {
-        foreach ($posts as $post) {
-            echo '<li><a' . ($post['hidden'] && $options->PjaxOption ? '' : ' href="' . $post['permalink'] . '"') . '>' . htmlspecialchars($post['title']) . '</a></li>' . "\n";
-        }
-    } else {
-        echo '<li>' . _t('暂时没有文章') . '</li>' . "\n";
-    }
-}
-
-function Contents_Comments_Initial($limit = 10, $ignoreAuthor = 0)
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $select = $db->select()->from('table.comments')
-        ->where('status = ? AND created < ?', 'approved', $options->time)
-        ->order('coid', Typecho_Db::SORT_DESC)
-        ->limit($limit);
-    if ($options->commentsShowCommentOnly) {
-        $select->where('type = ?', 'comment');
-    }
-    if ($ignoreAuthor == 1) {
-        $select->where('ownerId <> authorId');
-    }
-    $page_whisper = FindContents('page-whisper.php', 'commentsNum', 'd');
-    if (!empty($page_whisper)) {
-        $select->where('cid <> ? OR (cid = ? AND parent <> ?)', $page_whisper[0]['cid'], $page_whisper[0]['cid'], '0');
-    }
-    $comments = $db->fetchAll($select);
-    if ($comments) {
-        foreach ($comments as $comment) {
-            $parent = FindContent($comment['cid']);
-            echo '<li><a' . ($parent['hidden'] && $options->PjaxOption ? '' : ' href="' . permaLink($comment) . '"') . ' title="来自: ' . $parent['title'] . '">' . $comment['author'] . '</a>: ' . ($parent['hidden'] && $options->PjaxOption ? '内容被隐藏' : Typecho_Common::subStr(strip_tags($comment['text']), 0, 35, '...')) . '</li>' . "\n";
-        }
-    } else {
-        echo '<li>' . _t('暂时没有回复') . '</li>' . "\n";
     }
 }
 
@@ -237,39 +194,6 @@ function FindContents($val = NULL, $order = 'order', $sort = 'a', $publish = NUL
     return $db->fetchAll($select, array(Typecho_Widget::widget('Widget_Abstract_Contents'), 'filter'));
 }
 
-/* function 输出轻语 */
-function Whisper()
-{
-    $db = Typecho_Db::get();
-    $options = Helper::options();
-    $page = FindContents('page-whisper.php', 'commentsNum', 'd');
-    if (isset($page[0])) {
-        $page = $page[0];
-        $comment = $db->fetchAll($db->select()->from('table.comments')
-            ->where('cid = ? AND status = ? AND parent = ?', $page['cid'], 'approved', '0')
-            ->order('coid', Typecho_Db::SORT_DESC)
-            ->limit(1));
-        if ($comment) {
-            $content = hrefOpen(Markdown::convert($comment[0]['text']));
-            return array(
-                strip_tags($content, '<p><br><strong><a><img><pre><code>' . $options->commentsHTMLTagAllowed),
-                $page['permalink'],
-                $page['title']
-            );
-        } else {
-            return array(
-                '<p>' . _t('暂时没有内容') . '</p>',
-                $page['permalink'],
-                $page['title']
-            );
-        }
-    } else {
-        return array(
-            '<p>' . _t('暂时没有内容') . '</p>'
-        );
-    }
-}
-
 function Links_list()
 {
     $db = Typecho_Db::get();
@@ -332,65 +256,6 @@ function Links($short = false)
     echo $link ? $link : '<div class="mdui-chip"><span class="mdui-chip-icon"><i class="mdui-icon material-icons">label_outline</i></span><span class="mdui-chip-title">暂无链接</span></div>' . "\n";
 }
 
-function compressHtml($html_source)
-{
-    $chunks = preg_split('/(<!--<nocompress>-->.*?<!--<\/nocompress>-->|<nocompress>.*?<\/nocompress>|<pre.*?\/pre>|<textarea.*?\/textarea>|<script.*?\/script>)/msi', $html_source, -1, PREG_SPLIT_DELIM_CAPTURE);
-    $compress = '';
-    foreach ($chunks as $c) {
-        if (strtolower(substr($c, 0, 19)) == '<!--<nocompress>-->') {
-            $c = substr($c, 19, strlen($c) - 19 - 20);
-            $compress .= $c;
-            continue;
-        } else if (strtolower(substr($c, 0, 12)) == '<nocompress>') {
-            $c = substr($c, 12, strlen($c) - 12 - 13);
-            $compress .= $c;
-            continue;
-        } else if (strtolower(substr($c, 0, 4)) == '<pre' || strtolower(substr($c, 0, 9)) == '<textarea') {
-            $compress .= $c;
-            continue;
-        } else if (strtolower(substr($c, 0, 7)) == '<script' && strpos($c, '//') != false && (strpos($c, "\r") !== false || strpos($c, "\n") !== false)) {
-            $tmps = preg_split('/(\r|\n)/ms', $c, -1, PREG_SPLIT_NO_EMPTY);
-            $c = '';
-            foreach ($tmps as $tmp) {
-                if (strpos($tmp, '//') !== false) {
-                    if (substr(trim($tmp), 0, 2) == '//') {
-                        continue;
-                    }
-                    $chars = preg_split('//', $tmp, -1, PREG_SPLIT_NO_EMPTY);
-                    $is_quot = $is_apos = false;
-                    foreach ($chars as $key => $char) {
-                        if ($char == '"' && $chars[$key - 1] != '\\' && !$is_apos) {
-                            $is_quot = !$is_quot;
-                        } else if ($char == '\'' && $chars[$key - 1] != '\\' && !$is_quot) {
-                            $is_apos = !$is_apos;
-                        } else if ($char == '/' && $chars[$key + 1] == '/' && !$is_quot && !$is_apos) {
-                            $tmp = substr($tmp, 0, $key);
-                            break;
-                        }
-                    }
-                }
-                $c .= $tmp;
-            }
-        }
-        $c = preg_replace('/[\\n\\r\\t]+/', ' ', $c);
-        $c = preg_replace('/\\s{2,}/', ' ', $c);
-        $c = preg_replace('/>\\s</', '> <', $c);
-        $c = preg_replace('/\\/\\*.*?\\*\\//i', '', $c);
-        $c = preg_replace('/<!--[^!]*-->/', '', $c);
-        $compress .= $c;
-    }
-    return $compress;
-}
-
-/* function 总访问量 */
-function theAllViews()
-{
-    $db = Typecho_Db::get();
-    $prefix = $db->getPrefix();
-    $row = $db->fetchAll('SELECT SUM(VIEWS) FROM `' . $prefix . 'contents`');
-    return number_format($row[0]['SUM(VIEWS)']);
-}
-
 /* function 导航位内容 */
 function MyLinks($links)
 {
@@ -418,14 +283,14 @@ function staticUrl($file = '')
         'mdui.min.css' => [
             'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/css/mdui.min.css',
             'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
-            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/css/mdui.min.css',
+            'bootcss' => 'cdn.bootcdn.net/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/css/mdui.min.css',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'mdui.min.js' => [
             'jsdelivr' => 'cdn.jsdelivr.net/npm/mdui@1.0.1/dist/js/mdui.min.js',
             'cssnet' => 'cdnjs.loli.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
-            'bootcss' => 'cdn.bootcss.com/mdui/1.0.1/js/mdui.min.js',
+            'bootcss' => 'cdn.bootcdn.net/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'cdnjs' => 'cdnjs.cloudflare.com/ajax/libs/mdui/1.0.1/js/mdui.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ]
@@ -433,31 +298,31 @@ function staticUrl($file = '')
     $lists = explode("\r\n", Helper::options()->mdrcjCDNlink);
     $cjCDNlinks = [
         'jquery.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery/3.4.1/jquery.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery/3.4.1/jquery.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js',
             'custom' => isset($lists[0]) ? $lists[0] : ''
         ],
         'jquery.pjax.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery.pjax/2.0.1/jquery.pjax.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery.pjax/2.0.1/jquery.pjax.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery-pjax@2.0.1/jquery.pjax.min.js',
             'custom' => isset($lists[1]) ? $lists[1] : ''
         ],
         'jquery.qrcode.min.js' => [
-            'bc' => 'cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/jquery.qrcode@1.0/jquery.qrcode.min.js',
             'custom' => isset($lists[2]) ? $lists[2] : ''
         ],
         'jquery.fancybox.min.css' => [
-            'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.css',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css',
             'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.css',
             'custom' => isset($lists[3]) ? $lists[3] : ''
         ],
         'jquery.fancybox.min.js' => [
-            'bc' => 'cdn.bootcss.com/fancybox/3.5.7/jquery.fancybox.min.js',
+            'bc' => 'cdn.bootcdn.net/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
             'cf' => 'cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js',
             'jd' => 'cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js',
             'custom' => isset($lists[4]) ? $lists[4] : ''
@@ -517,12 +382,12 @@ function mdrIsStatus($post)
 {
     if (!$post->tags) return false;
     foreach ($post->tags as $tag)
-        if (in_array($tag['name'], ['Status', 'status', '状态'])) return true;
+        if (in_array($tag['name'], ['Status', 'status', '状态', _t('状态')])) return true;
     return false;
 }
 
 /**
- * 输出文章标签
+ * 渲染文章标签模块
  * 
  * @param array $tags 标签数组
  * @return string
@@ -538,7 +403,7 @@ function mdrTags($tags)
 }
 
 /**
- * 输出文章许可协议模块
+ * 渲染文章许可协议模块
  * 
  * @param string $license 文章许可协议
  * @return string
@@ -547,21 +412,21 @@ function mdrLicense($license)
 {
     $svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 496 512'><path fill='#4a4a4a' d='m245.8 214.9-33.2 17.3c-9.4-19.6-25.2-20-27.4-20-22.2 0-33.3 14.6-33.3 43.9 0 23.5 9.2 43.8 33.3 43.8 14.4 0 24.6-7 30.5-21.3l30.6 15.5a73.2 73.2 0 0 1-65.1 39c-22.6 0-74-10.3-74-77 0-58.7 43-77 72.6-77 30.8-.1 52.7 11.9 66 35.8zm143 0-32.7 17.3c-9.5-19.8-25.7-20-27.9-20-22.1 0-33.2 14.6-33.2 43.9 0 23.5 9.2 43.8 33.2 43.8 14.5 0 24.7-7 30.5-21.3l31 15.5c-2 3.8-21.3 39-65 39-22.7 0-74-9.9-74-77 0-58.7 43-77 72.6-77C354 179 376 191 389 214.8zM247.7 8C104.7 8 0 123 0 256c0 138.4 113.6 248 247.6 248C377.5 504 496 403 496 256 496 118 389.4 8 247.6 8zm.8 450.8c-112.5 0-203.7-93-203.7-202.8 0-105.5 85.5-203.3 203.8-203.3A201.7 201.7 0 0 1 451.3 256c0 121.7-99.7 202.9-202.9 202.9z'/></svg>";
     $licenses = array(
-        'BY' => '署名 4.0 国际 (CC BY 4.0)',
-        'BY-SA' => '署名-相同方式共享 4.0 国际 (CC BY-SA 4.0)',
-        'BY-ND' => '署名-禁止演绎 4.0 国际 (CC BY-ND 4.0)',
-        'BY-NC' => '署名-非商业性使用 4.0 国际 (CC BY-NC 4.0)',
-        'BY-NC-SA' => '署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0)',
-        'BY-NC-ND' => '署名-非商业性使用-禁止演绎 4.0 国际 (CC BY-NC-ND 4.0)'
+        'BY' => 'CC BY 4.0',
+        'BY-SA' => 'CC BY-SA 4.0',
+        'BY-ND' => 'CC BY-ND 4.0',
+        'BY-NC' => 'CC BY-NC 4.0',
+        'BY-NC-SA' => 'CC BY-NC-SA 4.0',
+        'BY-NC-ND' => 'CC BY-NC-ND 4.0'
     );
-    $text =  (isset($license) && $license != 'NONE') ?
-        '本篇文章采用 <a rel="noopener" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/" target="_blank">' . ($licenses[$license] ?? $license) . '</a> 许可协议进行许可。' :
-        "本篇文章未指定许可协议。";
+    $text =  ($license == 'NONE' || !isset($licenses[$license])) ?
+        _t('本篇文章未指定许可协议。') :
+        _t('本篇文章采用 %s 许可协议进行许可。', '<a target="_blank" rel="noopener noreferrer" href="https://creativecommons.org/licenses/' . strtolower($license) . '/4.0/">' . $licenses[$license] . '</a>');
     return "<div class=\"mdui-typo mdr-license\"><p>$text</p><p>转载或引用本文时请遵守许可协议，注明出处。</p>$svg</div>";
 }
 
 /**
- * 输出赞助模块
+ * 渲染文章赞助模块
  * 
  * @param array $sponsor 赞助信息
  * @return string
@@ -571,6 +436,6 @@ function mdrSponsor($sponsor)
     if (count($sponsor) < 1) return;
     $buttons = '';
     foreach ($sponsor as list($name, $color, $link))
-        $buttons .= "<a href=\"$link\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
-    return '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">喜欢这篇文章？为什么不考虑打赏一下作者呢？</p>' . $buttons . '</div>';
+        $buttons .= "<a href=\"$link\" rel=\"noopener noreferrer\" target=\"_blank\"><div class=\"mdui-btn mdui-ripple mdui-m-x-1 mdui-color-$color\">$name</div></a>";
+    return '<div class="mdui-card-content mdr-sponsor mdui-p-a-3"><p class="mdui-m-t-0">' . _t('喜欢这篇文章？为什么不考虑打赏一下作者呢？') . '</p>' . $buttons . '</div>';
 }
