@@ -170,7 +170,7 @@ ul li p {
 
     #post p a::after,
     #post li a::after {
-        content: " ("attr(href) ") "
+        content: " (" attr(href) ") "
     }
 
     #main .mdui-card:first-child {
@@ -390,6 +390,11 @@ div.mdui-card-header-avatar img {
 }
 
 @media (max-width: 599px) {
+
+    #main {
+        margin-top: -8px;
+    }
+
     #main>* {
         margin: 12px 0;
     }
@@ -409,7 +414,9 @@ div.mdui-card-header-avatar img {
     white-space: nowrap;
 }
 
-body.mdui-theme-layout-dark, .mdui-theme-layout-dark header, .mdui-theme-layout-dark aside {
+body.mdui-theme-layout-dark,
+.mdui-theme-layout-dark header,
+.mdui-theme-layout-dark aside {
     background: #121212 !important;
 }
 
@@ -439,11 +446,22 @@ footer {
     }
 }
 
-.mdui-card, .mdui-menu {
-    border-radius: 7px;
+.mdui-card,
+.mdui-menu {
+    border-radius: 7px !important;
 }
 
 /***** Post ******/
+
+@media (max-width: 600px) {
+    .mdui-card-media {
+        height: 175px;
+    }
+    .mdui-card-media img {
+        height: 100%;
+        object-fit: cover;
+    }
+}
 
 /** Status Post **/
 
@@ -459,7 +477,8 @@ footer {
     color: hsla(0, 0%, 100%, .8) !important
 }
 
-.post.status .tag, .post.status .time {
+.post.status .tag,
+.post.status .time {
     position: absolute;
     top: 0;
     font-size: 15px
@@ -527,12 +546,14 @@ footer {
     color: #fff
 }
 
-.page-navigator li:hover, .page-navigator li:focus {
+.page-navigator li:hover,
+.page-navigator li:focus {
     -webkit-box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
     box-shadow: 0 5px 5px -3px rgb(0 0 0 / 20%), 0 8px 10px 1px rgb(0 0 0 / 14%), 0 3px 14px 2px rgb(0 0 0 / 12%);
 }
 
-.page-navigator a, .page-navigator span {
+.page-navigator a,
+.page-navigator span {
     padding: 11px 16px
 }
 

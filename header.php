@@ -64,6 +64,16 @@ endif; ?>
         <div class="mdui-progress" id="mdr-loading" style="<?= ($this->options->mdrLoading == 'bottom') ? 'bottom: 0' : 'top: 0' ?>">
             <div class="mdui-progress-indeterminate"></div>
         </div>
+        <?php if ($this->options->mdrSiteArchived) : ?>
+            <div class="mdr-site-archived">
+                <div class="mdui-chip">
+                    <span class="mdui-chip-icon">
+                        <i class="mdui-icon material-icons">archive</i>
+                    </span>
+                    <span class="mdui-chip-title">This website has been archived by the owner. It is now read-only.</span>
+                </div>
+            </div>
+        <?php endif; ?>
         <header class="mdui-appbar mdui-appbar-fixed" style="background: <?= (@$_COOKIE['dark'] == '1') ? '#212121' : '#fff' ?>;z-index:5000;">
             <div class="mdui-toolbar <?= $this->options->mdrToolbarThemeColor ? 'mdui-color-theme' : '' ?>">
                 <a class="mdui-btn mdui-btn-icon" mdui-drawer="{target: '#mdrDrawerL'}">

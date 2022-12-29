@@ -91,6 +91,43 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     margin-left: auto !important;
 }
 
+/** Site Archived Notive */
+
+.mdr-site-archived {
+    padding: 8px;
+    height: 32px;
+    text-align: center;
+}
+
+.mdr-site-archived .mdui-chip {
+    max-width: 100%;
+    overflow-x: scroll;
+    background-color: #fff8e1;
+    color: #aa6800;
+}
+
+.mdr-site-archived .mdui-chip-icon {
+    background-color: #aa6800;
+}
+
+.mdr-site-archived .mdui-icon {
+    color: #fff8e1;
+}
+
+.mdui-theme-layout-dark .mdr-site-archived .mdui-chip {
+    background-color: #272116;
+    color: #aa6800;
+}
+
+.mdui-theme-layout-dark .mdr-site-archived .mdui-icon {
+    color: #272116;
+}
+
+.mdr-site-archived .mdui-chip::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
 /** Loading */
 
 #mdr-loading {
@@ -146,7 +183,8 @@ body.mdui-theme-layout-dark::-webkit-scrollbar-thumb {
     background-color: #f5f5f5;
 }
 
-.mdr-license, .mdr-license p {
+.mdr-license,
+.mdr-license p {
     margin: 0;
 }
 
